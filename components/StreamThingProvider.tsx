@@ -15,7 +15,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
           <>
             <StickyHeader />
             {/* Make sure the top positioning of this matches the height of the header component */}
-            <main className="fixed top-24 h-full w-full overscroll-contain">
+            <main className="h-fit w-full overscroll-y-contain overflow-y-hidden flex items-center">
               {children}
             </main>
           </>
