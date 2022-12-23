@@ -1,10 +1,13 @@
-import { ChevronDownIcon } from "@heroicons/react/24/solid";
+import {
+  ArrowRightOnRectangleIcon,
+  ChevronDownIcon,
+} from "@heroicons/react/20/solid";
 import { Menu, Transition } from "@headlessui/react";
 import { Fragment } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 
 export const StickyHeader = () => {
-  const { isAuthenticated } = useAuth0();
+  const { isAuthenticated, loginWithPopup, user } = useAuth0();
   return isAuthenticated ? (
     <header className="fixed top-0 h-24 w-full p-4 bg-slate-600 flex items-center justify-between z-50">
       <button
@@ -12,11 +15,11 @@ export const StickyHeader = () => {
         data-dropdown-toggle="network-info-dropdown"
         className="bg-pink-300 h-full w-16 rounded-xl"
       ></button>
-
+      <span className="text-4xl text-white">StreamThing</span>
       <Menu as="span" className="relative inline-block text-left">
         <div>
           <Menu.Button className="inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-            Ryne
+            <span>{user?.name}</span>
             <ChevronDownIcon
               className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
               aria-hidden="true"
@@ -61,14 +64,15 @@ export const StickyHeader = () => {
       </Menu>
     </header>
   ) : (
-    <header className="fixed top-0 h-24 w-full bg-slate-600 flex items-center justify-end z-50">
-      <div className="border-2 border-yellow-300 p-4 w-1/5 rounded-lg flex items-center justify-between">
-        <button className="border-2 px-4 py-2 w-24 rounded-lg text-white">
-          Log In
-        </button>
-        <button className="border-2 px-4 py-2 w-24 rounded-lg text-white">
-          {" "}
-          Sign Up
+    <header className="fixed top-0 h-24 w-full p-4 bg-slate-600 z-50">
+      <div className="p-4 w-full h-full rounded-lg flex items-center justify-between">
+        <span className="text-4xl text-white">StreamThing</span>
+        <button
+          onClick={() => loginWithPopup()}
+          className="border border-white w-fit h-fit p-4 rounded-lg text-white hover:ring-4 hover:ring-slate-500 flex items-center justify-center"
+        >
+          <span className="pr-2">Login</span>
+          <ArrowRightOnRectangleIcon className="w-6 h-6" />
         </button>
       </div>
     </header>

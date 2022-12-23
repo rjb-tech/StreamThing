@@ -8,7 +8,8 @@ export default function App({ Component, pageProps }: AppProps) {
     <Auth0Provider
       domain="stream-thing.us.auth0.com"
       clientId="cSOsosd0EQmMNRPHC7fZe2hwS1RL39NV"
-      redirectUri="localhost:3000"
+      redirectUri="http://localhost:3000"
+      cacheLocation="localstorage"
     >
       <StreamThingProvider>
         <Component {...pageProps} />
