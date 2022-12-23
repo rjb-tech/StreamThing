@@ -8,7 +8,7 @@ export const UnauthenticatedHeader = ({
   loginWithPopup,
 }: UnauthenticatedHeaderProps) => {
   return (
-    <header className="sticky top-0 h-24 w-full p-4 bg-gradient-to-r from-[#006687] to-[#3C1E46] z-50">
+    <header className="fixed top-0 h-24 w-full p-4 bg-gradient-to-r from-[#006687] to-[#3C1E46] z-50">
       <div className="p-4 w-full h-full rounded-lg flex items-center justify-between">
         <span className="text-4xl text-white">StreamThing</span>
         <button

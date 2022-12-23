@@ -15,7 +15,7 @@ export const AuthenticatedHeader = ({
   logout,
 }: AuthenticatedHeaderProps) => {
   return (
-    <header className="sticky top-0 h-24 w-full p-4 bg-gradient-to-r from-[#006687] to-[#3C1E46] flex items-center justify-between z-50">
+    <header className="fixed top-0 h-24 w-full p-4 bg-gradient-to-r from-[#006687] to-[#3C1E46] flex items-center justify-between z-50">
       <span className="text-4xl text-white">StreamThing</span>
       <Menu as="span" className="relative inline-block text-left">
         <div>
