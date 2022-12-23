@@ -1,7 +1,7 @@
 import Head from "next/head";
 import { ChannelRow } from "./ChannelRow";
 
-export const NetworkHomePage = () => {
+export const ChannelGuidePage = () => {
   return (
     <>
       <Head>
