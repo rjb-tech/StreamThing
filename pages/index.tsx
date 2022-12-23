@@ -1,6 +1,4 @@
-import Head from "next/head";
 import { Inter } from "@next/font/google";
-import { ChannelGuidePage } from "../components/ChannelGuidePage";
 import { useAuth0 } from "@auth0/auth0-react";
 import { LandingPage } from "../components/LandingPage";
 import { TheaterView } from "../components/TheaterView";

@@ -1,6 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
+import mainSlice from "./slices/mainSlice";
 
-export const store = configureStore({ reducer: {} });
+export const store = configureStore({
+  reducer: {
+    main: mainSlice,
+  },
+});
 
 // Infer the `RootState` and `AppDispatch` types from the store itself
 export type RootState = ReturnType<typeof store.getState>;
