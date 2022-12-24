@@ -1,7 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { setShowAuthModal } from "../redux/slices/mainSlice";
-import { Auth, ThemeSupa } from "@supabase/auth-ui-react";
 import { Session, useSupabaseClient } from "@supabase/auth-helpers-react";
 import twitchLogo from "../images/TwitchGlitchPurple.png";
 import Image from "next/image";

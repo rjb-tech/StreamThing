@@ -4,11 +4,7 @@ import { Transition } from "@headlessui/react";
 import { useAppSelector } from "../redux/hooks";
 import { ChannelGuide } from "./ChannelGuide";
 import { AuthModal } from "./AuthModal";
-import {
-  useSession,
-  useSupabaseClient,
-  useUser,
-} from "@supabase/auth-helpers-react";
+import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 
 interface ProviderProps {
   children: ReactNode;

@@ -1,7 +1,6 @@
 import { ArrowLeftOnRectangleIcon } from "@heroicons/react/20/solid";
 import { useAppDispatch } from "../redux/hooks";
 import { setShowAuthModal } from "../redux/slices/mainSlice";
-import type { User } from "@supabase/supabase-js";
 
 interface UnauthenticatedHeaderProps {
   supabaseClient: any;
