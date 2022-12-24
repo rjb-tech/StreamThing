@@ -22,6 +22,7 @@ export const AuthenticatedHeader = ({
   return (
     <header className="fixed top-0 h-24 w-full p-4 bg-gradient-to-r from-[#006687] to-[#3C1E46] flex items-center justify-between z-50">
       <span className="text-4xl text-white">StreamThing</span>
+      <span className="rounded-full bg-pink-200 h-16 w-16"></span>
       <span className="w-72 flex justify-around">
         <button
           onClick={() => dispatch(setShowGuide(!showGuide))}
