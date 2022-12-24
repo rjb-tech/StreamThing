@@ -1,23 +1,30 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import { StreamThingProvider } from "../components/StreamThingProvider";
-import { Auth0Provider } from "@auth0/auth0-react";
 import { Provider } from "react-redux";
 import { store } from "../redux/store";
 
-export default function App({ Component, pageProps }: AppProps) {
+import { useState } from "react";
+import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { SessionContextProvider, Session } from "@supabase/auth-helpers-react";
+
+export default function App({
+  Component,
+  pageProps,
+}: AppProps<{
+  initialSession: Session;
+}>) {
+  const [supabaseClient] = useState(() => createBrowserSupabaseClient());
   return (
     <Provider store={store}>
-      <Auth0Provider
-        domain="stream-thing.us.auth0.com"
-        clientId="cSOsosd0EQmMNRPHC7fZe2hwS1RL39NV"
-        redirectUri="http://localhost:3000"
-        cacheLocation="localstorage"
+      <SessionContextProvider
+        supabaseClient={supabaseClient}
+        initialSession={pageProps.initialSession}
       >
         <StreamThingProvider>
           <Component {...pageProps} />
         </StreamThingProvider>
-      </Auth0Provider>
+      </SessionContextProvider>
     </Provider>
   );
 }
