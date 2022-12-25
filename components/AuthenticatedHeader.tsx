@@ -25,7 +25,7 @@ export const AuthenticatedHeader = ({
   const { username, fullName } = useAppSelector((state) => state.account);
 
   return (
-    <header className="fixed top-0 h-24 w-full p-4 bg-gradient-to-r from-[#006687] to-[#3C1E46] flex items-center justify-between z-50">
+    <header className="fixed top-0 h-24 w-full py-4 px-8 bg-gradient-to-r from-[#006687] to-[#3C1E46] flex items-center justify-between z-50">
       <span className="flex justify-around items-center space-x-8">
         <span className="rounded-full h-20 w-20 bg-pink-200 ring-2 ring-white ring-opacity-40"></span>
         <button
