@@ -5,6 +5,7 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 interface StreamThingMainState {
   showGuide: boolean;
   showAuthModal: boolean;
+  showAccountModal: boolean;
   activeNetwork: string;
   activeStream: string;
 }
@@ -13,6 +14,7 @@ interface StreamThingMainState {
 const initialState: StreamThingMainState = {
   showGuide: false,
   showAuthModal: false,
+  showAccountModal: false,
   activeNetwork: "",
   activeStream: "",
 };
@@ -27,6 +29,9 @@ export const mainSlice = createSlice({
     setShowAuthModal: (state, action: PayloadAction<boolean>) => {
       state.showAuthModal = action.payload;
     },
+    setShowAccountModal: (state, action: PayloadAction<boolean>) => {
+      state.showAccountModal = action.payload;
+    },
     setActiveNetwork: (state, action: PayloadAction<string>) => {
       state.activeNetwork = action.payload;
     },
@@ -39,6 +44,7 @@ export const mainSlice = createSlice({
 export const {
   setShowGuide,
   setShowAuthModal,
+  setShowAccountModal,
   setActiveNetwork,
   setActiveStream,
 } = mainSlice.actions;
