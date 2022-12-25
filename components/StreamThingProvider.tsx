@@ -12,7 +12,7 @@ import {
   setFullName,
   setUsername,
 } from "../redux/slices/accountSlice";
-import { setShowGuide } from "../redux/slices/mainSlice";
+import { setShowAccountModal, setShowGuide } from "../redux/slices/mainSlice";
 import { AccountModal } from "./AccountModal";
 
 interface ProviderProps {
@@ -21,7 +21,7 @@ interface ProviderProps {
 
 export const StreamThingProvider = ({ children }: ProviderProps) => {
   const dispatch = useAppDispatch();
-  const { showGuide } = useAppSelector((state) => state.main);
+  const { showGuide, showAccountModal } = useAppSelector((state) => state.main);
   const session = useSession();
   const user = useUser();
   const supabaseClient = useSupabaseClient();
@@ -91,6 +91,9 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
     const keyListener = (e: KeyboardEvent) => {
       if (e.key.toLowerCase() === "g" && !e.repeat) {
         dispatch(setShowGuide(!showGuide));
+      }
+      if (e.key.toLowerCase() === "a" && !e.repeat) {
+        dispatch(setShowAccountModal(!showAccountModal));
       }
     };
     window.addEventListener("keydown", keyListener);
