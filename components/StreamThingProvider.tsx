@@ -21,6 +21,7 @@ import {
   setShowUserMenu,
 } from "../redux/slices/mainSlice";
 import { AccountModal } from "./AccountModal";
+import { toast } from "react-toastify";
 
 interface ProviderProps {
   children: ReactNode;
@@ -99,11 +100,14 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
 
       let { error } = await supabaseClient.from("profiles").upsert(updates);
       if (error) throw error;
-      alert("Profile updated!");
+      toast.success("Username updated", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
       await getProfile();
     } catch (error) {
-      alert("Error updating the data!");
-      console.log(error);
+      toast.error("Error updating username", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
     } finally {
       dispatch(setAccountInfoLoading(false));
     }
@@ -118,13 +122,19 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
 
       if (error) throw error;
 
+      toast.success("Avatar updated", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
+
       const { data: urlData } = await supabaseClient.storage
         .from("avatars")
         .getPublicUrl(filename);
 
       await updateAvatarUrl(urlData.publicUrl);
     } catch {
-      alert("Error uploading image");
+      toast.error("Error updating avatar", {
+        position: toast.POSITION.BOTTOM_CENTER,
+      });
     } finally {
       dispatch(setAccountImageLoading(false));
     }
@@ -133,7 +143,8 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
   // e is a KeyboardEvent, but typescript says tagname doesn't exist on e.target even though it does
   // so I made e an any typed parameter
   function keyListener(e: any): void {
-    if (e.target.tagName !== "INPUT") {
+    const incomingTag = e.target.tagName;
+    if (incomingTag !== "INPUT") {
       switch (e.key.toLowerCase()) {
         case "a":
           dispatch(setShowAccountModal(!showAccountModal));

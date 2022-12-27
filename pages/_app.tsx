@@ -7,6 +7,9 @@ import { store } from "../redux/store";
 import { useState } from "react";
 import { createBrowserSupabaseClient } from "@supabase/auth-helpers-nextjs";
 import { SessionContextProvider, Session } from "@supabase/auth-helpers-react";
+import { ToastContainer } from "react-toastify";
+
+import "react-toastify/dist/ReactToastify.css";
 
 export default function App({
   Component,
@@ -22,6 +25,7 @@ export default function App({
         initialSession={pageProps.initialSession}
       >
         <StreamThingProvider>
+          <ToastContainer />
           <Component {...pageProps} />
         </StreamThingProvider>
       </SessionContextProvider>

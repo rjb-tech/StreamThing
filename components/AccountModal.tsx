@@ -1,11 +1,10 @@
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { Dialog, Transition } from "@headlessui/react";
 import { setShowAccountModal } from "../redux/slices/mainSlice";
-import { setUsername } from "../redux/slices/accountSlice";
 import Image from "next/image";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useFormik } from "formik";
-import { ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 
 interface AccountModalProps {
   // updateProfile(username: string, avatar_url: string): void;
@@ -28,6 +27,7 @@ export const AccountModal = ({
     },
     onSubmit: (values) => {
       updateUsername(values.username);
+      formik.setFieldValue("username", "");
     },
   });
 
@@ -39,10 +39,12 @@ export const AccountModal = ({
     const files = e.target?.files;
     const file = files ? files[0] : null;
     const filename = file?.name;
+
+    // Typescript made me do it
     if (file && filename) {
       const fileType = filename.substring(filename.length - 3);
 
-      await uploadImage(file, `users/${userId}.${fileType}`);
+      await uploadImage(file, `users/${userId}/avatar.${fileType}`);
     }
   }
 
