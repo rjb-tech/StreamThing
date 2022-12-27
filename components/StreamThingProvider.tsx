@@ -11,7 +11,6 @@ import {
   setAccountInfoLoading,
   setAvatarUrl,
   setFullName,
-  setUserId,
   setUsername,
 } from "../redux/slices/accountSlice";
 import {
@@ -51,7 +50,6 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
       }
 
       if (data) {
-        dispatch(setUserId(data.id));
         dispatch(setFullName(data.full_name));
         dispatch(setUsername(data.username));
         dispatch(setAvatarUrl(data.avatar_url));
@@ -147,7 +145,9 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
     if (incomingTag !== "INPUT") {
       switch (e.key.toLowerCase()) {
         case "a":
-          dispatch(setShowAccountModal(!showAccountModal));
+          if (user) {
+            dispatch(setShowAccountModal(!showAccountModal));
+          }
           break;
         case "g":
           dispatch(setShowGuide(!showGuide));

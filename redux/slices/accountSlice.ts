@@ -8,7 +8,6 @@ interface StreamThingAccountState {
   username: string | undefined;
   fullName: string | undefined;
   avatarUrl: string | undefined;
-  userId: string | undefined;
 }
 
 const initialState: StreamThingAccountState = {
@@ -17,7 +16,6 @@ const initialState: StreamThingAccountState = {
   username: undefined,
   fullName: undefined,
   avatarUrl: undefined,
-  userId: undefined,
 };
 
 export const accountSlice = createSlice({
@@ -39,9 +37,6 @@ export const accountSlice = createSlice({
     setAvatarUrl: (state, action: PayloadAction<string>) => {
       state.avatarUrl = action.payload;
     },
-    setUserId: (state, action: PayloadAction<string>) => {
-      state.userId = action.payload;
-    },
   },
 });
 
@@ -51,7 +46,6 @@ export const {
   setUsername,
   setFullName,
   setAvatarUrl,
-  setUserId,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;

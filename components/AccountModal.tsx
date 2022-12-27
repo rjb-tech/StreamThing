@@ -5,6 +5,7 @@ import Image from "next/image";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useFormik } from "formik";
 import { ChangeEvent, useState } from "react";
+import { useUser } from "@supabase/auth-helpers-react";
 
 interface AccountModalProps {
   uploadImage(file: File, filename: string): Promise<void>;
@@ -15,9 +16,10 @@ export const AccountModal = ({
   uploadImage,
   updateUsername,
 }: AccountModalProps) => {
+  const user = useUser();
   const dispatch = useAppDispatch();
   const { showAccountModal } = useAppSelector((state) => state.main);
-  const { username, avatarUrl, fullName, userId } = useAppSelector(
+  const { username, avatarUrl, fullName } = useAppSelector(
     (state) => state.account
   );
   const formik = useFormik({
@@ -43,7 +45,7 @@ export const AccountModal = ({
     if (file && filename) {
       const fileType = filename.substring(filename.length - 3);
 
-      await uploadImage(file, `users/${userId}/avatar.${fileType}`);
+      await uploadImage(file, `users/${user?.id}/avatar.${fileType}`);
     }
   }
 

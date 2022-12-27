@@ -29,7 +29,7 @@ export const AuthenticatedHeader = ({
     useAppSelector((state) => state.main);
   const { username, fullName } = useAppSelector((state) => state.account);
 
-  function CreateNewNetwork() {
+  async function CreateNewNetwork() {
     return;
   }
 
@@ -63,7 +63,7 @@ export const AuthenticatedHeader = ({
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                      onClick={CreateNewNetwork}
+                      onClick={async () => await CreateNewNetwork}
                       className={`${
                         active ? "opacity-80 text-white" : "text-white"
                       } group flex w-full items-center justify-between rounded-md px-2 py-2 text-sm`}
