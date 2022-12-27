@@ -185,8 +185,8 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
           <Transition
             as="div"
             show={showGuide}
-            enter="transition-all duration-[350ms]"
-            enterFrom="absolute -top-3/4 opacity-0"
+            enter="transition-all duration-500"
+            enterFrom="absolute opacity-0"
             enterTo="absolute top-0 h-fit w-full opacity-100"
             leave="transition-all duration-500"
             leaveFrom="h-fit w-full opacity-100"
