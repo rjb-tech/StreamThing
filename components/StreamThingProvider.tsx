@@ -83,22 +83,22 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
     }
   }
 
+  function keyListener(e: KeyboardEvent): void {
+    switch (e.key.toLowerCase()) {
+      case "a":
+        dispatch(setShowAccountModal(!showAccountModal));
+        break;
+      case "g":
+        dispatch(setShowGuide(!showGuide));
+        break;
+    }
+  }
+
   useEffect(() => {
     if (user) getProfile();
   }, [session]);
 
   useEffect(() => {
-    const keyListener = (e: KeyboardEvent) => {
-      switch (e.key.toLowerCase()) {
-        case "a":
-          dispatch(setShowAccountModal(!showAccountModal));
-          break;
-        case "g":
-          dispatch(setShowGuide(!showGuide));
-          break;
-      }
-    };
-
     window.addEventListener("keydown", keyListener);
 
     return () => {
