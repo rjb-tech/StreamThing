@@ -7,7 +7,6 @@ import { useFormik } from "formik";
 import { ChangeEvent, useState } from "react";
 
 interface AccountModalProps {
-  // updateProfile(username: string, avatar_url: string): void;
   uploadImage(file: File, filename: string): Promise<void>;
   updateUsername(username: string): Promise<void>;
 }
