@@ -34,7 +34,7 @@ export const AuthenticatedHeader = ({
   }
 
   return (
-    <header className="fixed top-0 h-24 w-full py-4 px-8 bg-gradient-to-r from-[#006687] to-[#3C1E46] flex items-center justify-between z-50">
+    <header className="fixed top-0 h-24 w-full py-4 px-8 bg-gradient-to-r from-[#7180B9] to-[#171738] flex items-center justify-between z-50">
       <span className="flex justify-around items-center space-x-8">
         <Menu as="span" className="relative inline-block text-left">
           <div>
@@ -44,7 +44,7 @@ export const AuthenticatedHeader = ({
             >
               <span
                 onClick={() => dispatch(setShowNetworkMenu(true))}
-                className="rounded-full h-20 w-20 bg-pink-200 ring-2 ring-white ring-opacity-40 text-sm font-medium opacity-100"
+                className="rounded-full h-20 w-20 bg-[#D6E5E3] ring-2 ring-white ring-opacity-40 text-sm font-medium opacity-100"
               ></span>
             </Menu.Button>
           </div>
