@@ -12,7 +12,11 @@ import {
   setFullName,
   setUsername,
 } from "../redux/slices/accountSlice";
-import { setShowAccountModal, setShowGuide } from "../redux/slices/mainSlice";
+import {
+  setShowAccountModal,
+  setShowGuide,
+  setShowNetworkMenu,
+} from "../redux/slices/mainSlice";
 import { AccountModal } from "./AccountModal";
 
 interface ProviderProps {
@@ -21,7 +25,9 @@ interface ProviderProps {
 
 export const StreamThingProvider = ({ children }: ProviderProps) => {
   const dispatch = useAppDispatch();
-  const { showGuide, showAccountModal } = useAppSelector((state) => state.main);
+  const { showGuide, showAccountModal, showNetworkMenu } = useAppSelector(
+    (state) => state.main
+  );
   const session = useSession();
   const user = useUser();
   const supabaseClient = useSupabaseClient();
@@ -91,6 +97,9 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
       case "g":
         dispatch(setShowGuide(!showGuide));
         break;
+      case "n":
+        dispatch(setShowNetworkMenu(!showNetworkMenu));
+        break;
     }
   }
 
@@ -98,6 +107,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
     if (user) getProfile();
   }, [session]);
 
+  // Event listeners
   useEffect(() => {
     window.addEventListener("keydown", keyListener);
 
