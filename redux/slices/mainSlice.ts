@@ -7,6 +7,7 @@ interface StreamThingMainState {
   showAuthModal: boolean;
   showAccountModal: boolean;
   showNetworkMenu: boolean;
+  showUserMenu: boolean;
   activeNetwork: string;
   activeStream: string;
 }
@@ -17,6 +18,7 @@ const initialState: StreamThingMainState = {
   showAuthModal: false,
   showAccountModal: false,
   showNetworkMenu: false,
+  showUserMenu: false,
   activeNetwork: "",
   activeStream: "",
 };
@@ -37,6 +39,9 @@ export const mainSlice = createSlice({
     setShowNetworkMenu: (state, action: PayloadAction<boolean>) => {
       state.showNetworkMenu = action.payload;
     },
+    setShowUserMenu: (state, action: PayloadAction<boolean>) => {
+      state.showUserMenu = action.payload;
+    },
     setActiveNetwork: (state, action: PayloadAction<string>) => {
       state.activeNetwork = action.payload;
     },
@@ -51,6 +56,7 @@ export const {
   setShowAuthModal,
   setShowAccountModal,
   setShowNetworkMenu,
+  setShowUserMenu,
   setActiveNetwork,
   setActiveStream,
 } = mainSlice.actions;

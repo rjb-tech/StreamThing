@@ -16,6 +16,7 @@ import {
   setShowAccountModal,
   setShowGuide,
   setShowNetworkMenu,
+  setShowUserMenu,
 } from "../redux/slices/mainSlice";
 import { AccountModal } from "./AccountModal";
 
@@ -25,9 +26,8 @@ interface ProviderProps {
 
 export const StreamThingProvider = ({ children }: ProviderProps) => {
   const dispatch = useAppDispatch();
-  const { showGuide, showAccountModal, showNetworkMenu } = useAppSelector(
-    (state) => state.main
-  );
+  const { showGuide, showAccountModal, showNetworkMenu, showUserMenu } =
+    useAppSelector((state) => state.main);
   const session = useSession();
   const user = useUser();
   const supabaseClient = useSupabaseClient();
@@ -99,6 +99,9 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
         break;
       case "n":
         dispatch(setShowNetworkMenu(!showNetworkMenu));
+        break;
+      case "u":
+        dispatch(setShowUserMenu(!showUserMenu));
         break;
     }
   }

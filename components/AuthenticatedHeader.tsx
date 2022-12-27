@@ -24,7 +24,9 @@ export const AuthenticatedHeader = ({
   user,
 }: AuthenticatedHeaderProps) => {
   const dispatch = useAppDispatch();
-  const { showGuide, showNetworkMenu } = useAppSelector((state) => state.main);
+  const { showGuide, showNetworkMenu, showUserMenu } = useAppSelector(
+    (state) => state.main
+  );
   const { username, fullName } = useAppSelector((state) => state.account);
 
   function CreateNewNetwork() {
@@ -95,6 +97,7 @@ export const AuthenticatedHeader = ({
             </Menu.Button>
           </div>
           <Transition
+            show={showUserMenu}
             as="div"
             enter="transition ease-out duration-100"
             enterFrom="transform opacity-0 scale-95"
