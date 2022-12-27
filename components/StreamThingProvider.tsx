@@ -7,9 +7,11 @@ import { AuthModal } from "./AuthModal";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useUser } from "@supabase/auth-helpers-react";
 import {
+  setAccountImageLoading,
   setAccountInfoLoading,
   setAvatarUrl,
   setFullName,
+  setUserId,
   setUsername,
 } from "../redux/slices/accountSlice";
 import {
@@ -39,7 +41,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
 
       let { data, error, status } = await supabaseClient
         .from("profiles")
-        .select(`username, avatar_url, full_name`)
+        .select(`username, avatar_url, full_name, id`)
         .eq("id", user.id)
         .single();
 
@@ -48,6 +50,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
       }
 
       if (data) {
+        dispatch(setUserId(data.id));
         dispatch(setFullName(data.full_name));
         dispatch(setUsername(data.username));
         dispatch(setAvatarUrl(data.avatar_url));
@@ -60,27 +63,21 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
     }
   }
 
-  async function updateProfile({
-    username,
-    avatar_url,
-  }: {
-    username: any;
-    avatar_url: any;
-  }) {
+  async function updateAvatarUrl(avatarUrl: string) {
     try {
       dispatch(setAccountInfoLoading(true));
       if (!user) throw new Error("No user");
 
       const updates = {
         id: user.id,
-        username,
-        avatar_url,
+        avatar_url: avatarUrl,
         updated_at: new Date().toISOString(),
       };
 
       let { error } = await supabaseClient.from("profiles").upsert(updates);
       if (error) throw error;
       alert("Profile updated!");
+      await getProfile();
     } catch (error) {
       alert("Error updating the data!");
       console.log(error);
@@ -89,20 +86,68 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
     }
   }
 
-  function keyListener(e: KeyboardEvent): void {
-    switch (e.key.toLowerCase()) {
-      case "a":
-        dispatch(setShowAccountModal(!showAccountModal));
-        break;
-      case "g":
-        dispatch(setShowGuide(!showGuide));
-        break;
-      case "n":
-        dispatch(setShowNetworkMenu(!showNetworkMenu));
-        break;
-      case "u":
-        dispatch(setShowUserMenu(!showUserMenu));
-        break;
+  async function updateUsername(username: string) {
+    try {
+      dispatch(setAccountInfoLoading(true));
+      if (!user) throw new Error("No user");
+
+      const updates = {
+        id: user.id,
+        username,
+        updated_at: new Date().toISOString(),
+      };
+
+      let { error } = await supabaseClient.from("profiles").upsert(updates);
+      if (error) throw error;
+      alert("Profile updated!");
+      await getProfile();
+    } catch (error) {
+      alert("Error updating the data!");
+      console.log(error);
+    } finally {
+      dispatch(setAccountInfoLoading(false));
+    }
+  }
+
+  async function uploadImage(file: File, filename: string) {
+    try {
+      dispatch(setAccountImageLoading(true));
+      const { data, error } = await supabaseClient.storage
+        .from("avatars")
+        .upload(filename, file, { upsert: true });
+
+      if (error) throw error;
+
+      const { data: urlData } = await supabaseClient.storage
+        .from("avatars")
+        .getPublicUrl(filename);
+
+      await updateAvatarUrl(urlData.publicUrl);
+    } catch {
+      alert("Error uploading image");
+    } finally {
+      dispatch(setAccountImageLoading(false));
+    }
+  }
+
+  // e is a KeyboardEvent, but typescript says tagname doesn't exist on e.target even though it does
+  // so I made e an any typed parameter
+  function keyListener(e: any): void {
+    if (e.target.tagName !== "INPUT") {
+      switch (e.key.toLowerCase()) {
+        case "a":
+          dispatch(setShowAccountModal(!showAccountModal));
+          break;
+        case "g":
+          dispatch(setShowGuide(!showGuide));
+          break;
+        case "n":
+          dispatch(setShowNetworkMenu(!showNetworkMenu));
+          break;
+        case "u":
+          dispatch(setShowUserMenu(!showUserMenu));
+          break;
+      }
     }
   }
 
@@ -123,7 +168,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
     <>
       {/* Do a session check here to render either login/logout modal */}
       <AuthModal session={session} supabaseClient={supabaseClient} />
-      <AccountModal />
+      <AccountModal uploadImage={uploadImage} updateUsername={updateUsername} />
       <div className="h-screen w-screen">
         <>
           <Transition

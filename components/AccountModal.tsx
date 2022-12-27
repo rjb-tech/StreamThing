@@ -1,18 +1,51 @@
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { Dialog, Transition } from "@headlessui/react";
 import { setShowAccountModal } from "../redux/slices/mainSlice";
-import { useSelector } from "react-redux";
+import { setUsername } from "../redux/slices/accountSlice";
 import Image from "next/image";
 import { XMarkIcon } from "@heroicons/react/20/solid";
+import { useFormik } from "formik";
+import { ChangeEvent } from "react";
 
-export const AccountModal = () => {
+interface AccountModalProps {
+  // updateProfile(username: string, avatar_url: string): void;
+  uploadImage(file: File, filename: string): Promise<void>;
+  updateUsername(username: string): Promise<void>;
+}
+
+export const AccountModal = ({
+  uploadImage,
+  updateUsername,
+}: AccountModalProps) => {
   const dispatch = useAppDispatch();
   const { showAccountModal } = useAppSelector((state) => state.main);
-  const { username, avatarUrl } = useAppSelector((state) => state.account);
+  const { username, avatarUrl, fullName, userId } = useAppSelector(
+    (state) => state.account
+  );
+  const formik = useFormik({
+    initialValues: {
+      username: "",
+    },
+    onSubmit: (values) => {
+      updateUsername(values.username);
+    },
+  });
 
-  const closeModal = () => {
+  function closeModal() {
     dispatch(setShowAccountModal(false));
-  };
+  }
+
+  async function handleImageChange(e: ChangeEvent<HTMLInputElement>) {
+    const files = e.target?.files;
+    const file = files ? files[0] : null;
+    const filename = file?.name;
+    if (file && filename) {
+      const fileType = filename.substring(filename.length - 3);
+
+      await uploadImage(file, `users/${userId}.${fileType}`);
+    }
+  }
+
   return (
     <>
       <Transition as="div" show={showAccountModal}>
@@ -39,28 +72,57 @@ export const AccountModal = () => {
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="flex flex-col justify-between w-full max-w-md h-fit space-y-4 transform overflow-hidden rounded-2xl bg-gray-700 p-6 text-left align-middle shadow-xl transition-all text-white">
-                  <button
-                    onClick={() => dispatch(setShowAccountModal(false))}
-                    className="w-full h-fit flex justify-end"
-                  >
-                    <XMarkIcon className="h-6 w-6" />
-                  </button>
-                  <div className="avatar-section w-fit text-center justify-items-center space-y-4">
-                    <div className="w-40 flex items-center justify-center">
+                <Dialog.Panel className="flex flex-col justify-between items-center w-72 max-w-md h-fit transform overflow-hidden rounded-2xl bg-gray-700 p-6 text-left align-middle shadow-xl transition-all text-white">
+                  <div className="w-full h-fit flex justify-end focus:border-none focus:ring-none focus:outline-none">
+                    <button
+                      onClick={() => dispatch(setShowAccountModal(false))}
+                      className="focus:border-none focus:ring-none focus:outline-none"
+                    >
+                      <XMarkIcon className="h-6 w-6" />
+                    </button>
+                  </div>
+                  <div className="avatar-section w-fit text-center justify-items-center space-y-6">
+                    <h3 className="text-lg">{`Hey ${username || fullName}`}</h3>
+                    <div className="w-full flex items-center justify-center">
                       <Image
-                        className="relative rounded-full h-16 w-16"
+                        className="relative rounded-full h-28 w-28"
                         src={avatarUrl || ""}
                         alt="user avatar"
                         height={100}
                         width={100}
                       />
                     </div>
-                    <button className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-                      Edit Avatar
-                    </button>
+                    <label className="avatar-label relative">
+                      <input
+                        type="file"
+                        onChange={handleImageChange}
+                        accept="image/png, image/jpeg, image/jpg, image/gif"
+                      ></input>
+                      <span className="avatar-file-text text-white font-medium text-sm">
+                        Change Avatar
+                      </span>
+                    </label>
+                    <form className="" onSubmit={formik.handleSubmit}>
+                      <span className="space-y-2 text-left">
+                        <p>Change Username</p>
+                        <input
+                          name="username"
+                          placeholder="New Username"
+                          value={formik.values.username}
+                          onChange={formik.handleChange}
+                          className="bg-transparent text-white border border-white rounded-md px-4 focus:ring focus:ring-white focus:ring-opacity-20 focus:outline-none"
+                        ></input>
+                        <span className="w-full flex justify-end pt-4">
+                          <button
+                            type="submit"
+                            className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                          >
+                            Save Changes
+                          </button>
+                        </span>
+                      </span>
+                    </form>
                   </div>
-                  <p>Hey</p>
                 </Dialog.Panel>
               </Transition.Child>
             </div>

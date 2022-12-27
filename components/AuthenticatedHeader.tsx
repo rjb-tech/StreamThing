@@ -11,6 +11,7 @@ import {
   setShowAccountModal,
   setShowGuide,
   setShowNetworkMenu,
+  setShowUserMenu,
 } from "../redux/slices/mainSlice";
 import type { User } from "@auth0/auth0-react";
 
@@ -24,9 +25,8 @@ export const AuthenticatedHeader = ({
   user,
 }: AuthenticatedHeaderProps) => {
   const dispatch = useAppDispatch();
-  const { showGuide, showNetworkMenu, showUserMenu } = useAppSelector(
-    (state) => state.main
-  );
+  const { showGuide, showNetworkMenu, showUserMenu, showAccountModal } =
+    useAppSelector((state) => state.main);
   const { username, fullName } = useAppSelector((state) => state.account);
 
   function CreateNewNetwork() {
@@ -38,10 +38,13 @@ export const AuthenticatedHeader = ({
       <span className="flex justify-around items-center space-x-8">
         <Menu as="span" className="relative inline-block text-left">
           <div>
-            <Menu.Button className="network-button inline-flex w-full h-full justify-center rounded-full bg-white bg-opacity-0 p-2 text-sm font-medium text-white hover:bg-opacity-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+            <Menu.Button
+              onClick={() => dispatch(setShowNetworkMenu(!showNetworkMenu))}
+              className="network-button inline-flex w-full h-full justify-center rounded-full bg-white bg-opacity-0 p-2 text-sm font-medium text-white hover:bg-opacity-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+            >
               <span
                 onClick={() => dispatch(setShowNetworkMenu(true))}
-                className="rounded-full h-20 w-20 bg-pink-200 ring-2 ring-white ring-opacity-40"
+                className="rounded-full h-20 w-20 bg-pink-200 ring-2 ring-white ring-opacity-40 text-sm font-medium opacity-100"
               ></span>
             </Menu.Button>
           </div>
@@ -88,7 +91,10 @@ export const AuthenticatedHeader = ({
       <span className="w-3/4 sm:w-1/3 lg:w-1/5 flex justify-end">
         <Menu as="span" className="relative inline-block text-left">
           <div>
-            <Menu.Button className="user-button inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+            <Menu.Button
+              onClick={() => dispatch(setShowUserMenu(!showUserMenu))}
+              className="user-button inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+            >
               <span>{username || fullName}</span>
               <ChevronDownIcon
                 className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
@@ -111,7 +117,9 @@ export const AuthenticatedHeader = ({
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                      onClick={() => dispatch(setShowAccountModal(true))}
+                      onClick={() =>
+                        dispatch(setShowAccountModal(!showAccountModal))
+                      }
                       className={`${
                         active ? "opacity-80 text-white" : "text-white"
                       } group flex w-full items-center justify-between rounded-md px-2 py-2 text-sm`}

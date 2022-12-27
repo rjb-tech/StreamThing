@@ -4,16 +4,20 @@ import type { PayloadAction } from "@reduxjs/toolkit";
 // Define a type for the slice state
 interface StreamThingAccountState {
   accountInfoLoading: boolean;
-  username: string | null;
-  fullName: string | null;
-  avatarUrl: string | null;
+  accountImageUploading: boolean;
+  username: string | undefined;
+  fullName: string | undefined;
+  avatarUrl: string | undefined;
+  userId: string | undefined;
 }
 
 const initialState: StreamThingAccountState = {
   accountInfoLoading: false,
-  username: null,
-  fullName: null,
-  avatarUrl: null,
+  accountImageUploading: false,
+  username: undefined,
+  fullName: undefined,
+  avatarUrl: undefined,
+  userId: undefined,
 };
 
 export const accountSlice = createSlice({
@@ -22,6 +26,9 @@ export const accountSlice = createSlice({
   reducers: {
     setAccountInfoLoading: (state, action: PayloadAction<boolean>) => {
       state.accountInfoLoading = action.payload;
+    },
+    setAccountImageLoading: (state, action: PayloadAction<boolean>) => {
+      state.accountImageUploading = action.payload;
     },
     setUsername: (state, action: PayloadAction<string>) => {
       state.username = action.payload;
@@ -32,10 +39,19 @@ export const accountSlice = createSlice({
     setAvatarUrl: (state, action: PayloadAction<string>) => {
       state.avatarUrl = action.payload;
     },
+    setUserId: (state, action: PayloadAction<string>) => {
+      state.userId = action.payload;
+    },
   },
 });
 
-export const { setAccountInfoLoading, setUsername, setFullName, setAvatarUrl } =
-  accountSlice.actions;
+export const {
+  setAccountInfoLoading,
+  setAccountImageLoading,
+  setUsername,
+  setFullName,
+  setAvatarUrl,
+  setUserId,
+} = accountSlice.actions;
 
 export default accountSlice.reducer;
