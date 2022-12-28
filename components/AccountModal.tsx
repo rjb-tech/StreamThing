@@ -4,19 +4,13 @@ import { setShowAccountModal } from "../redux/slices/mainSlice";
 import Image from "next/image";
 import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useFormik } from "formik";
-import { ChangeEvent, useState } from "react";
-import { useUser } from "@supabase/auth-helpers-react";
+import { ChangeEvent } from "react";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
+import { uploadImage, updateUsername } from "./SupabaseHelpers";
 
-interface AccountModalProps {
-  uploadImage(file: File, filename: string): Promise<void>;
-  updateUsername(username: string): Promise<void>;
-}
-
-export const AccountModal = ({
-  uploadImage,
-  updateUsername,
-}: AccountModalProps) => {
+export const AccountModal = () => {
   const user = useUser();
+  const supabaseClient = useSupabaseClient();
   const dispatch = useAppDispatch();
   const { showAccountModal } = useAppSelector((state) => state.main);
   const { username, avatarUrl, fullName } = useAppSelector(
@@ -27,8 +21,10 @@ export const AccountModal = ({
       username: "",
     },
     onSubmit: (values) => {
-      updateUsername(values.username);
-      formik.setFieldValue("username", "");
+      if (user) {
+        updateUsername(user, values.username, supabaseClient, dispatch);
+        formik.setFieldValue("username", "");
+      }
     },
   });
 
@@ -42,10 +38,11 @@ export const AccountModal = ({
     const filename = file?.name;
 
     // Typescript made me do it
-    if (file && filename) {
-      const fileType = filename.substring(filename.length - 3);
+    if (file && filename && user) {
+      const fileType: string = filename.substring(filename.length - 3);
+      const uploadPath = `users/${user?.id}/avatar.${fileType}`;
 
-      await uploadImage(file, `users/${user?.id}/avatar.${fileType}`);
+      await uploadImage(file, uploadPath, user, supabaseClient, dispatch);
     }
   }
 

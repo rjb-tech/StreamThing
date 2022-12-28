@@ -13,7 +13,7 @@ import {
   setShowNetworkMenu,
   setShowUserMenu,
 } from "../redux/slices/mainSlice";
-import type { User } from "@auth0/auth0-react";
+import type { User } from "@supabase/supabase-js";
 
 interface AuthenticatedHeaderProps {
   supabaseClient: any;
@@ -29,8 +29,24 @@ export const AuthenticatedHeader = ({
     useAppSelector((state) => state.main);
   const { username, fullName } = useAppSelector((state) => state.account);
 
-  async function CreateNewNetwork() {
-    return;
+  async function CreateNewNetwork({
+    name,
+    logoUrl,
+  }: {
+    name: string;
+    logoUrl: string;
+  }) {
+    try {
+      if (!user) throw new Error();
+
+      const insertData = {
+        members: [user.id],
+        admins: [user.id],
+        name,
+        logo_url: logoUrl,
+      };
+      const { data, error } = supabaseClient.from("networks").insert();
+    } catch {}
   }
 
   return (

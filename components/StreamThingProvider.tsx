@@ -7,20 +7,13 @@ import { AuthModal } from "./AuthModal";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useUser } from "@supabase/auth-helpers-react";
 import {
-  setAccountImageLoading,
-  setAccountInfoLoading,
-  setAvatarUrl,
-  setFullName,
-  setUsername,
-} from "../redux/slices/accountSlice";
-import {
   setShowAccountModal,
   setShowGuide,
   setShowNetworkMenu,
   setShowUserMenu,
 } from "../redux/slices/mainSlice";
 import { AccountModal } from "./AccountModal";
-import { toast } from "react-toastify";
+import { getProfile } from "./SupabaseHelpers";
 
 interface ProviderProps {
   children: ReactNode;
@@ -33,110 +26,6 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
   const session = useSession();
   const user = useUser();
   const supabaseClient = useSupabaseClient();
-
-  async function getProfile() {
-    try {
-      dispatch(setAccountInfoLoading(true));
-      if (!user) throw new Error("No user");
-
-      let { data, error, status } = await supabaseClient
-        .from("profiles")
-        .select(`username, avatar_url, full_name, id`)
-        .eq("id", user.id)
-        .single();
-
-      if (error && status !== 406) {
-        throw error;
-      }
-
-      if (data) {
-        dispatch(setFullName(data.full_name));
-        dispatch(setUsername(data.username));
-        dispatch(setAvatarUrl(data.avatar_url));
-      }
-    } catch (error) {
-      alert("Error loading user data!");
-      console.log(error);
-    } finally {
-      dispatch(setAccountInfoLoading(false));
-    }
-  }
-
-  async function updateAvatarUrl(avatarUrl: string) {
-    try {
-      dispatch(setAccountInfoLoading(true));
-      if (!user) throw new Error("No user");
-
-      const updates = {
-        id: user.id,
-        avatar_url: avatarUrl,
-        updated_at: new Date().toISOString(),
-      };
-
-      let { error } = await supabaseClient.from("profiles").upsert(updates);
-      if (error) throw error;
-      alert("Profile updated!");
-      await getProfile();
-    } catch (error) {
-      alert("Error updating the data!");
-      console.log(error);
-    } finally {
-      dispatch(setAccountInfoLoading(false));
-    }
-  }
-
-  async function updateUsername(username: string) {
-    try {
-      dispatch(setAccountInfoLoading(true));
-      if (!user) throw new Error("No user");
-
-      const updates = {
-        id: user.id,
-        username,
-        updated_at: new Date().toISOString(),
-      };
-
-      let { error } = await supabaseClient.from("profiles").upsert(updates);
-      if (error) throw error;
-      toast.success("Username updated", {
-        position: toast.POSITION.BOTTOM_CENTER,
-      });
-      await getProfile();
-    } catch (error) {
-      toast.error("Error updating username", {
-        position: toast.POSITION.BOTTOM_CENTER,
-      });
-    } finally {
-      dispatch(setAccountInfoLoading(false));
-    }
-  }
-
-  async function uploadImage(file: File, filename: string) {
-    try {
-      dispatch(setAccountImageLoading(true));
-      const { data, error } = await supabaseClient.storage
-        .from("avatars")
-        .upload(filename, file, { upsert: true });
-
-      if (error) throw error;
-
-      toast.success("Avatar updated", {
-        position: toast.POSITION.BOTTOM_CENTER,
-      });
-
-      const { data: urlData } = await supabaseClient.storage
-        .from("avatars")
-        .getPublicUrl(filename);
-
-      await updateAvatarUrl(urlData.publicUrl);
-    } catch {
-      toast.error("Error updating avatar", {
-        position: toast.POSITION.BOTTOM_CENTER,
-      });
-    } finally {
-      dispatch(setAccountImageLoading(false));
-    }
-  }
 
   // e is a KeyboardEvent, but typescript says tagname doesn't exist on e.target even though it does
   // so I made e an any typed parameter
@@ -163,7 +52,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
   }
 
   useEffect(() => {
-    if (user) getProfile();
+    if (user) getProfile(user, supabaseClient, dispatch);
   }, [session]);
 
   // Event listeners
@@ -179,7 +68,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
     <>
       {/* Do a session check here to render either login/logout modal */}
       <AuthModal session={session} supabaseClient={supabaseClient} />
-      <AccountModal uploadImage={uploadImage} updateUsername={updateUsername} />
+      <AccountModal />
       <div className="h-screen w-screen">
         <>
           <Transition
