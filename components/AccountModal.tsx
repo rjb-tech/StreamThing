@@ -62,6 +62,14 @@ export const AccountModal = () => {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="flex flex-col justify-between items-center w-72 max-w-md h-fit transform overflow-hidden rounded-2xl bg-gray-700 p-6 text-left align-middle shadow-xl transition-all text-white">
+                  <div className="w-full h-fit flex justify-end focus:border-none focus:ring-none focus:outline-none">
+                    <button
+                      onClick={() => dispatch(setShowAccountModal(false))}
+                      className="focus:border-none focus:ring-none focus:outline-none"
+                    >
+                      <XMarkIcon className="h-6 w-6" />
+                    </button>
+                  </div>
                   <div className="avatar-section w-fit text-center justify-items-center space-y-6">
                     <h3 className="text-lg">{`Hey ${username || fullName}`}</h3>
                     <div className="w-full flex items-center justify-center">
