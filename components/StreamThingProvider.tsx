@@ -14,6 +14,7 @@ import {
 } from "../redux/slices/mainSlice";
 import { AccountModal } from "./AccountModal";
 import { getProfile } from "./SupabaseHelpers";
+import { CreateNetworkModal } from "./CreateNetworkModal";
 
 interface ProviderProps {
   children: ReactNode;
@@ -21,8 +22,7 @@ interface ProviderProps {
 
 export const StreamThingProvider = ({ children }: ProviderProps) => {
   const dispatch = useAppDispatch();
-  const { showGuide, showAccountModal, showNetworkMenu, showUserMenu } =
-    useAppSelector((state) => state.main);
+  const { showGuide, showAccountModal } = useAppSelector((state) => state.main);
   const session = useSession();
   const user = useUser();
   const supabaseClient = useSupabaseClient();
@@ -40,12 +40,6 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
           break;
         case "g":
           dispatch(setShowGuide(!showGuide));
-          break;
-        case "n":
-          dispatch(setShowNetworkMenu(!showNetworkMenu));
-          break;
-        case "u":
-          dispatch(setShowUserMenu(!showUserMenu));
           break;
       }
     }
@@ -69,6 +63,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
       {/* Do a session check here to render either login/logout modal */}
       <AuthModal session={session} supabaseClient={supabaseClient} />
       <AccountModal />
+      <CreateNetworkModal />
       <div className="h-screen w-screen">
         <>
           <Transition

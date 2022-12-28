@@ -9,6 +9,7 @@ import {
 } from "@heroicons/react/20/solid";
 import {
   setShowAccountModal,
+  setShowCreateNetworkModal,
   setShowGuide,
   setShowNetworkMenu,
   setShowUserMenu,
@@ -29,43 +30,16 @@ export const AuthenticatedHeader = ({
     useAppSelector((state) => state.main);
   const { username, fullName } = useAppSelector((state) => state.account);
 
-  async function CreateNewNetwork({
-    name,
-    logoUrl,
-  }: {
-    name: string;
-    logoUrl: string;
-  }) {
-    try {
-      if (!user) throw new Error();
-
-      const insertData = {
-        members: [user.id],
-        admins: [user.id],
-        name,
-        logo_url: logoUrl,
-      };
-      const { data, error } = supabaseClient.from("networks").insert();
-    } catch {}
-  }
-
   return (
     <header className="fixed top-0 h-24 w-full py-4 px-8 bg-gradient-to-r from-[#7180B9] to-[#171738] flex items-center justify-between z-50">
       <span className="flex justify-around items-center space-x-8">
         <Menu as="span" className="relative inline-block text-left">
           <div>
-            <Menu.Button
-              onClick={() => dispatch(setShowNetworkMenu(!showNetworkMenu))}
-              className="network-button inline-flex w-full h-full justify-center rounded-full bg-white bg-opacity-0 p-2 text-sm font-medium text-white hover:bg-opacity-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-            >
-              <span
-                onClick={() => dispatch(setShowNetworkMenu(true))}
-                className="rounded-full h-20 w-20 bg-[#D6E5E3] ring-2 ring-white ring-opacity-40 text-sm font-medium opacity-100"
-              ></span>
+            <Menu.Button className="network-button inline-flex w-full h-full justify-center rounded-full bg-white bg-opacity-0 p-2 text-sm font-medium text-white hover:bg-opacity-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
+              <span className="rounded-full h-20 w-20 bg-[#D6E5E3] ring-2 ring-white ring-opacity-40 text-sm font-medium opacity-100"></span>
             </Menu.Button>
           </div>
           <Transition
-            show={showNetworkMenu}
             as="div"
             enter="transition ease-out duration-100"
             enterFrom="transform opacity-0 scale-95"
@@ -79,7 +53,7 @@ export const AuthenticatedHeader = ({
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                      onClick={async () => await CreateNewNetwork}
+                      onClick={() => dispatch(setShowCreateNetworkModal(true))}
                       className={`${
                         active ? "opacity-80 text-white" : "text-white"
                       } group flex w-full items-center justify-between rounded-md px-2 py-2 text-sm`}
@@ -107,10 +81,7 @@ export const AuthenticatedHeader = ({
       <span className="w-3/4 sm:w-1/3 lg:w-1/5 flex justify-end">
         <Menu as="span" className="relative inline-block text-left">
           <div>
-            <Menu.Button
-              onClick={() => dispatch(setShowUserMenu(!showUserMenu))}
-              className="user-button inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-            >
+            <Menu.Button className="user-button inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
               <span>{username || fullName}</span>
               <ChevronDownIcon
                 className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
@@ -119,7 +90,6 @@ export const AuthenticatedHeader = ({
             </Menu.Button>
           </div>
           <Transition
-            show={showUserMenu}
             as="div"
             enter="transition ease-out duration-100"
             enterFrom="transform opacity-0 scale-95"
