@@ -21,6 +21,7 @@ export const CreateNetworkModal = () => {
     onSubmit: async (values) => {
       if (user) {
         await createNetwork(user, values.name, supabaseClient, dispatch);
+        formik.setFieldValue("name", "");
       }
     },
   });

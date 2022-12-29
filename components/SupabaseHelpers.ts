@@ -7,8 +7,18 @@ import {
   setUsername,
   setAvatarUrl,
   setAccountImageLoading,
+  setNetworks,
+  setActiveNetwork,
 } from "../redux/slices/accountSlice";
 import { setShowCreateNetworkModal } from "../redux/slices/mainSlice";
+import {
+  setNetworkAdmins,
+  setNetworkId,
+  setNetworkLogoUrl,
+  setNetworkMembers,
+  setNetworkName,
+  setNetworkOwner,
+} from "../redux/slices/networkSlice";
 
 export async function getProfile(
   user: User,
@@ -21,15 +31,17 @@ export async function getProfile(
 
     const { data, error, status } = await supabaseClient
       .from("profiles")
-      .select("username, avatar_url, full_name, id, default_network, networks")
+      .select("username, avatar_url, full_name, id, active_network, networks")
       .eq("id", user.id)
       .single();
 
-    if (error && status !== 406) {
+    if (error) {
       throw error;
     }
 
     if (data) {
+      dispatch(setNetworks(data.networks));
+      dispatch(setActiveNetwork(data.active_network));
       dispatch(setFullName(data.full_name));
       dispatch(setUsername(data.username));
       dispatch(setAvatarUrl(data.avatar_url));
@@ -40,6 +52,37 @@ export async function getProfile(
     });
   } finally {
     dispatch(setAccountInfoLoading(false));
+  }
+}
+
+export async function getNetwork(
+  networkId: string,
+  supabaseClient: SupabaseClient,
+  dispatch: AppDispatch
+) {
+  try {
+    const { data, error } = await supabaseClient
+      .from("networks")
+      .select("id, name, members, admins, logo_url, owner")
+      .eq("id", networkId)
+      .single();
+
+    if (error) {
+      throw error;
+    }
+
+    if (data) {
+      dispatch(setNetworkId(data.id));
+      dispatch(setNetworkName(data.name));
+      dispatch(setNetworkMembers(data.members));
+      dispatch(setNetworkAdmins(data.admins));
+      dispatch(setNetworkLogoUrl(data.logo_url));
+      dispatch(setNetworkOwner(data.owner));
+    }
+  } catch (error) {
+    toast.error("Error loading network data", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
   }
 }
 
@@ -121,10 +164,19 @@ export async function updateUsername(
       position: toast.POSITION.BOTTOM_CENTER,
     });
     await getProfile(user, supabaseClient, dispatch);
-  } catch (error) {
-    toast.error("Error updating username", {
-      position: toast.POSITION.BOTTOM_CENTER,
-    });
+  } catch (error: any) {
+    switch (error?.code) {
+      case "23505":
+        toast.error("That username is taken, try again", {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+        break;
+      default:
+        toast.error("Error updating username", {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+        break;
+    }
   } finally {
     dispatch(setAccountInfoLoading(false));
   }
@@ -241,6 +293,18 @@ export async function uploadNetworkImage(
   }
 }
 
+export async function getUserNetworks(
+  user: User,
+  supabaseClient: SupabaseClient
+) {
+  const { data } = await supabaseClient
+    .from("profiles")
+    .select("networks")
+    .eq("id", user.id);
+
+  return data ? data[0].networks : [];
+}
+
 export async function createNetwork(
   user: User,
   networkName: string,
@@ -253,17 +317,33 @@ export async function createNetwork(
       members: [user.id],
       admins: [user.id],
       owner: user.id,
+      logo_url:
+        "https://uieskineapnmdqwofpjx.supabase.co/storage/v1/object/public/avatars/networks/default.png",
       updated_at: new Date().toISOString(),
     };
 
-    const { data, error } = await supabaseClient
+    const { data: netData, error } = await supabaseClient
       .from("networks")
       .insert(insertData)
       .select();
 
     if (error) throw error;
 
+    const newNetwork = netData[0].id;
+
+    const currentNetworks = await getUserNetworks(user, supabaseClient);
+    const networksToUpdate = [...currentNetworks, newNetwork];
+
+    const { error: addUserNetError } = await supabaseClient
+      .from("profiles")
+      .update({ networks: networksToUpdate, active_network: newNetwork })
+      .eq("id", user.id);
+
+    if (addUserNetError) throw addUserNetError;
+
     dispatch(setShowCreateNetworkModal(false));
+
+    await getNetwork(newNetwork, supabaseClient, dispatch);
 
     toast.success("Network created", {
       position: toast.POSITION.BOTTOM_CENTER,

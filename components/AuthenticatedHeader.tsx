@@ -11,10 +11,9 @@ import {
   setShowAccountModal,
   setShowCreateNetworkModal,
   setShowGuide,
-  setShowNetworkMenu,
-  setShowUserMenu,
 } from "../redux/slices/mainSlice";
 import type { User } from "@supabase/supabase-js";
+import Image from "next/image";
 
 interface AuthenticatedHeaderProps {
   supabaseClient: any;
@@ -29,6 +28,7 @@ export const AuthenticatedHeader = ({
   const { showGuide, showNetworkMenu, showUserMenu, showAccountModal } =
     useAppSelector((state) => state.main);
   const { username, fullName } = useAppSelector((state) => state.account);
+  const { logoUrl } = useAppSelector((state) => state.network);
 
   return (
     <header className="fixed top-0 h-24 w-full py-4 px-8 bg-gradient-to-r from-[#7180B9] to-[#171738] flex items-center justify-between z-50">
@@ -36,7 +36,13 @@ export const AuthenticatedHeader = ({
         <Menu as="span" className="relative inline-block text-left">
           <div>
             <Menu.Button className="network-button inline-flex w-full h-full justify-center rounded-full bg-white bg-opacity-0 p-2 text-sm font-medium text-white hover:bg-opacity-10 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
-              <span className="rounded-full h-20 w-20 bg-[#D6E5E3] ring-2 ring-white ring-opacity-40 text-sm font-medium opacity-100"></span>
+              <Image
+                className="rounded-full h-20 w-20 bg-[#D6E5E3] ring-2 ring-white ring-opacity-40 text-sm font-medium opacity-100"
+                src={logoUrl || ""}
+                alt="network image"
+                height={100}
+                width={100}
+              />
             </Menu.Button>
           </div>
           <Transition

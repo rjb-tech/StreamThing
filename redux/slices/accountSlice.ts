@@ -8,6 +8,8 @@ interface StreamThingAccountState {
   username: string | undefined;
   fullName: string | undefined;
   avatarUrl: string | undefined;
+  networks: string[] | undefined;
+  activeNetwork: string | undefined;
 }
 
 const initialState: StreamThingAccountState = {
@@ -16,6 +18,8 @@ const initialState: StreamThingAccountState = {
   username: undefined,
   fullName: undefined,
   avatarUrl: undefined,
+  networks: undefined,
+  activeNetwork: undefined,
 };
 
 export const accountSlice = createSlice({
@@ -37,6 +41,12 @@ export const accountSlice = createSlice({
     setAvatarUrl: (state, action: PayloadAction<string>) => {
       state.avatarUrl = action.payload;
     },
+    setNetworks: (state, action: PayloadAction<string[]>) => {
+      state.networks = action.payload;
+    },
+    setActiveNetwork: (state, action: PayloadAction<string>) => {
+      state.activeNetwork = action.payload;
+    },
   },
 });
 
@@ -46,6 +56,8 @@ export const {
   setUsername,
   setFullName,
   setAvatarUrl,
+  setNetworks,
+  setActiveNetwork,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;
