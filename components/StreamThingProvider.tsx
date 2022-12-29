@@ -31,7 +31,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
   // so I made e an any typed parameter
   function keyListener(e: any): void {
     const incomingTag = e.target.tagName;
-    if (incomingTag !== "INPUT") {
+    if (incomingTag !== "INPUT" && !e.repeat) {
       switch (e.key.toLowerCase()) {
         case "a":
           if (user) {
