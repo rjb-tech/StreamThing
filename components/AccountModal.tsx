@@ -48,14 +48,6 @@ export const AccountModal = () => {
 
   return (
     <BaseModal showCondition={showAccountModal} closeModal={closeModal}>
-      <div className="w-full h-fit flex justify-end focus:border-none focus:ring-none focus:outline-none">
-        <button
-          onClick={() => dispatch(setShowAccountModal(false))}
-          className="focus:border-none focus:ring-none focus:outline-none"
-        >
-          <XMarkIcon className="h-6 w-6" />
-        </button>
-      </div>
       <div className="avatar-section w-fit text-center justify-items-center space-y-6">
         <h3 className="text-lg">{`Hey ${username || fullName}`}</h3>
         <div className="w-full flex items-center justify-center">
