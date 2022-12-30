@@ -24,7 +24,7 @@ export async function getProfile(
   user: User,
   supabaseClient: SupabaseClient,
   dispatch: AppDispatch
-) {
+): Promise<void> {
   try {
     dispatch(setAccountInfoLoading(true));
     if (!user) throw new Error("No user");
@@ -59,11 +59,38 @@ export async function getProfile(
   }
 }
 
+export async function getNetworkUserInfo(
+  userId: string,
+  supabaseClient: SupabaseClient
+): Promise<{
+  id: string;
+  username: string;
+  fullName: string;
+  avatarUrl: string;
+}> {
+  const { data, error } = await supabaseClient
+    .from("profiles")
+    .select("id, username, full_name, avatar_url")
+    .eq("id", userId)
+    .single();
+
+  if (error) throw error;
+
+  const returnData = {
+    id: data.id,
+    username: data.username,
+    fullName: data.full_name,
+    avatarUrl: data.avatar_url,
+  };
+
+  return returnData;
+}
+
 export async function getNetwork(
   networkId: string,
   supabaseClient: SupabaseClient,
   dispatch: AppDispatch
-) {
+): Promise<void> {
   try {
     const { data, error } = await supabaseClient
       .from("networks")
@@ -76,9 +103,14 @@ export async function getNetwork(
     }
 
     if (data) {
+      const membersInfo = await Promise.all(
+        data.members.map(async (member: string) => {
+          return await getNetworkUserInfo(member, supabaseClient);
+        })
+      );
+      dispatch(setNetworkMembers(membersInfo));
       dispatch(setNetworkId(data.id));
       dispatch(setNetworkName(data.name));
-      dispatch(setNetworkMembers(data.members));
       dispatch(setNetworkAdmins(data.admins));
       dispatch(setNetworkLogoUrl(data.logo_url));
       dispatch(setNetworkOwner(data.owner));
@@ -95,7 +127,7 @@ export async function updateUserAvatarUrl(
   avatarUrl: string,
   supabaseClient: SupabaseClient,
   dispatch: AppDispatch
-) {
+): Promise<void> {
   try {
     dispatch(setAccountInfoLoading(true));
     if (!user) throw new Error("No user");
@@ -123,7 +155,7 @@ export async function updateNetworkAvatarUrl(
   logoUrl: string,
   supabaseClient: SupabaseClient,
   dispatch: AppDispatch
-) {
+): Promise<void> {
   try {
     const updates = {
       id: networkId,
@@ -151,7 +183,7 @@ export async function updateUsername(
   username: string,
   supabaseClient: SupabaseClient,
   dispatch: AppDispatch
-) {
+): Promise<void> {
   try {
     dispatch(setAccountInfoLoading(true));
     if (!user) throw new Error("No user");
@@ -191,7 +223,7 @@ export async function updateUserNetworks(
   // networkId?: string,
   supabaseClient: SupabaseClient,
   dispatch: AppDispatch
-) {
+): Promise<void> {
   try {
     if (!user) throw new Error("No user");
 
@@ -237,7 +269,7 @@ export async function uploadUserImage(
   user: User,
   supabaseClient: SupabaseClient,
   dispatch: AppDispatch
-) {
+): Promise<void> {
   try {
     dispatch(setAccountImageLoading(true));
     const { data, error } = await supabaseClient.storage
@@ -274,7 +306,7 @@ export async function uploadNetworkImage(
   filename: string,
   supabaseClient: SupabaseClient,
   dispatch: AppDispatch
-) {
+): Promise<string | void> {
   try {
     dispatch(setAccountImageLoading(true));
     const { data, error } = await supabaseClient.storage
@@ -300,7 +332,7 @@ export async function uploadNetworkImage(
 export async function getUserNetworks(
   user: User,
   supabaseClient: SupabaseClient
-) {
+): Promise<string[]> {
   const { data } = await supabaseClient
     .from("profiles")
     .select("networks")
@@ -314,7 +346,7 @@ export async function createNetwork(
   networkName: string,
   supabaseClient: SupabaseClient,
   dispatch: AppDispatch
-) {
+): Promise<void> {
   try {
     const insertData = {
       name: networkName,

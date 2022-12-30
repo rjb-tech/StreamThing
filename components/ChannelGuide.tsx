@@ -1,10 +1,11 @@
 import { ChannelRow } from "./ChannelRow";
 import Image from "next/image";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { useAppSelector } from "../redux/hooks";
+import { NetworkMember } from "../redux/slices/networkSlice";
 
 export const ChannelGuide = () => {
-  const dispatch = useAppDispatch();
-  const { logoUrl, name } = useAppSelector((state) => state.network);
+  const { logoUrl, name, members } = useAppSelector((state) => state.network);
+
   return (
     <div className="absolute pt-24 h-fit w-full bg-gray-500">
       <div className="network-header py-3 px-6 w-full flex items-center justify-between">
@@ -19,11 +20,14 @@ export const ChannelGuide = () => {
         </div>
         <span className="text-3xl text-white">{name}</span>
       </div>
-      <ChannelRow streamUrl="https://www.twitch.tv/pobelter" user="Ryne" />
-      <ChannelRow
-        streamUrl="https://www.youtube.com/watch?v=V9Cb33efYEU&list=PLYqfXQ-ztmZLzp5veg5f3oWg9ZjaGG3kk&index=2"
-        user="Ryne"
-      />
+      {members?.map((member: NetworkMember) => {
+        return (
+          <ChannelRow
+            streamUrl="https://www.twitch.tv/pobelter"
+            user={member}
+          />
+        );
+      })}
     </div>
   );
 };

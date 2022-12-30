@@ -1,10 +1,17 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
+export interface NetworkMember {
+  id: string;
+  username: string | null;
+  fullName: string;
+  avatarUrl: string;
+}
+
 interface StreamThingNetworkState {
   id: string | undefined;
   name: string | undefined;
-  members: string[] | undefined;
+  members: NetworkMember[] | undefined;
   admins: string[] | undefined;
   logoUrl: string | undefined;
   owner: string | undefined;
@@ -29,7 +36,7 @@ export const networkSlice = createSlice({
     setNetworkName: (state, action: PayloadAction<string>) => {
       state.name = action.payload;
     },
-    setNetworkMembers: (state, action: PayloadAction<string[]>) => {
+    setNetworkMembers: (state, action: PayloadAction<NetworkMember[]>) => {
       state.members = action.payload;
     },
     setNetworkAdmins: (state, action: PayloadAction<string[]>) => {
