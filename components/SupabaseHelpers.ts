@@ -45,6 +45,10 @@ export async function getProfile(
       dispatch(setFullName(data.full_name));
       dispatch(setUsername(data.username));
       dispatch(setAvatarUrl(data.avatar_url));
+
+      if (data.active_network) {
+        getNetwork(data.active_network, supabaseClient, dispatch);
+      }
     }
   } catch (error) {
     toast.error("Error loading user data", {
