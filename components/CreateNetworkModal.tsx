@@ -33,7 +33,7 @@ export const CreateNetworkModal = () => {
     <BaseModal
       showCondition={showCreateNetworkModal}
       closeModal={closeModal}
-      showX={false}
+      hideX
     >
       <div className="avatar-section w-fit text-center justify-items-center space-y-6">
         <h3 className="text-lg">Create a New Network</h3>
