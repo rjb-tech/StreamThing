@@ -6,7 +6,14 @@ export const TheaterView = () => {
   return (
     <>
       <div className="video-player h-screen w-screen flex items-center justify-center">
-        <ReactPlayer url={activeStream} playing volume={1} muted={false} />
+        <ReactPlayer
+          url={activeStream}
+          playing
+          volume={1}
+          muted={false}
+          height={window.screen.availHeight - 192}
+          width={window.screen.availWidth}
+        />
       </div>
     </>
   );
