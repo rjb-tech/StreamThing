@@ -5,12 +5,7 @@ import { Session, useSupabaseClient } from "@supabase/auth-helpers-react";
 import twitchLogo from "../images/TwitchGlitchPurple.png";
 import Image from "next/image";
 
-interface LoginModalProps {
-  session: Session | null;
-  supabaseClient: any;
-}
-
-export const AuthModal = ({ session, supabaseClient }: LoginModalProps) => {
+export const AuthModal = () => {
   const dispatch = useAppDispatch();
   const supabase = useSupabaseClient();
   const { showAuthModal } = useAppSelector((state) => state.main);

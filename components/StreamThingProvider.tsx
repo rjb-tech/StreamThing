@@ -56,7 +56,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
   return (
     <>
       {/* Do a session check here to render either login/logout modal */}
-      <AuthModal session={session} supabaseClient={supabaseClient} />
+      <AuthModal />
       <AccountModal />
       <CreateNetworkModal />
       <div className="h-screen w-screen">
