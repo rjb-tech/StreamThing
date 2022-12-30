@@ -57,21 +57,7 @@ export const AuthenticatedHeader = ({
             leaveTo="transform opacity-0 scale-95"
           >
             <Menu.Items className="absolute left-0 mt-2 w-52 origin-center divide-y divide-gray-100 rounded-md bg-slate-500 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
-              <div className="px-1 py-1 ">
-                <Menu.Item>
-                  {({ active }) => (
-                    <button
-                      onClick={() => dispatch(setShowCreateNetworkModal(true))}
-                      className={`${
-                        active ? "opacity-80 text-white" : "text-white"
-                      } group flex w-full items-center justify-between rounded-md px-2 py-2 text-sm`}
-                    >
-                      <PlusIcon className="mr-2 h-5 w-5" aria-hidden="true" />
-                      Create New Network
-                    </button>
-                  )}
-                </Menu.Item>
-              </div>
+              <div className="px-1 py-1 "></div>
             </Menu.Items>
           </Transition>
         </Menu>
@@ -108,8 +94,21 @@ export const AuthenticatedHeader = ({
             leaveFrom="transform opacity-100 scale-100"
             leaveTo="transform opacity-0 scale-95"
           >
-            <Menu.Items className="absolute right-0 mt-2 w-40 origin-top-right divide-y divide-gray-100 rounded-md bg-slate-500 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-100 rounded-md bg-slate-500 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="px-1 py-1 ">
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      onClick={() => dispatch(setShowCreateNetworkModal(true))}
+                      className={`${
+                        active ? "opacity-80 text-white" : "text-white"
+                      } group flex w-full items-center justify-between rounded-md px-2 py-2 text-sm`}
+                    >
+                      <PlusIcon className="mr-2 h-5 w-5" aria-hidden="true" />
+                      Create Network
+                    </button>
+                  )}
+                </Menu.Item>
                 <Menu.Item>
                   {({ active }) => (
                     <button
