@@ -18,6 +18,17 @@ export const BaseModal = ({
   return (
     <>
       <Transition as="div" show={showCondition}>
+        <Transition.Child
+          as="div"
+          enter="ease-out duration-100"
+          enterFrom="opacity-0"
+          enterTo="opacity-40"
+          leave="ease-in duration-100"
+          leaveFrom="opacity-40"
+          leaveTo="opacity-0"
+        >
+          <div className="fixed inset-0 bg-black" />
+        </Transition.Child>
         <Dialog as="div" className="relative z-10" onClose={closeModal}>
           <div className="fixed inset-0 overflow-y-auto">
             <div className="flex min-h-full items-center justify-center p-4 text-center">
