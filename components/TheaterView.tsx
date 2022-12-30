@@ -11,7 +11,7 @@ export const TheaterView = () => {
           playing
           volume={1}
           muted={false}
-          height={window.screen.availHeight - 192}
+          height={window.screen.availHeight - 192} // This number is (header height in px * 2)
           width={window.screen.availWidth}
         />
       </div>
