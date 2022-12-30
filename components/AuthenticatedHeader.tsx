@@ -34,7 +34,7 @@ export const AuthenticatedHeader = ({
   return (
     <header className="fixed top-0 h-24 w-full py-4 px-8 bg-gradient-to-r from-[#7180B9] to-[#171738] flex items-center justify-between z-50">
       <span className="text-4xl text-white">StreamThing</span>
-      <span className="w-3/4 sm:w-1/3 lg:w-1/5 flex justify-around">
+      <span className="w-3/4 md:w-1/2 lg:w-1/5 flex justify-around">
         {activeNetwork && (
           <StreamThingButton
             clickFn={() => dispatch(setShowGuide(!showGuide))}
