@@ -48,7 +48,7 @@ export const AuthenticatedHeader = ({
         )}
         <Menu as="span" className="relative inline-block text-left">
           <div>
-            <Menu.Button>
+            <Menu.Button as="div">
               <StreamThingButton innerText={username || fullName}>
                 <ChevronDownIcon
                   className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
