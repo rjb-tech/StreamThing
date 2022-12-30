@@ -9,7 +9,7 @@ export const ChannelGuide = () => {
   return (
     <div className="absolute pt-24 h-fit w-full bg-gray-500">
       <div className="network-header py-3 px-6 w-full flex items-center justify-between">
-        <div className="w-fit flex space-x-4">
+        <div className="w-fit">
           <Image
             className="rounded-full h-20 w-20 bg-[#D6E5E3] ring-2 ring-white ring-opacity-40 text-sm font-medium opacity-100"
             src={logoUrl || ""}
