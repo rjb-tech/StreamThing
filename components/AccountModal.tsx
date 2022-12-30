@@ -7,6 +7,7 @@ import { ChangeEvent } from "react";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import { uploadUserImage, updateUsername } from "./SupabaseHelpers";
 import { BaseModal } from "./BaseModal";
+import { StreamThingButton } from "./StreamThingButton";
 
 export const AccountModal = () => {
   const user = useUser();
@@ -80,12 +81,7 @@ export const AccountModal = () => {
               className="bg-transparent text-white border border-white rounded-md px-4 focus:ring focus:ring-white focus:ring-opacity-20 focus:outline-none"
             ></input>
             <span className="w-full flex justify-end pt-4">
-              <button
-                type="submit"
-                className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-              >
-                Save Changes
-              </button>
+              <StreamThingButton innerText="Save Changes" />
             </span>
           </span>
         </form>
