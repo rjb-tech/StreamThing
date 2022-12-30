@@ -6,12 +6,7 @@ import { ChannelGuide } from "./ChannelGuide";
 import { AuthModal } from "./AuthModal";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useUser } from "@supabase/auth-helpers-react";
-import {
-  setShowAccountModal,
-  setShowGuide,
-  setShowNetworkMenu,
-  setShowUserMenu,
-} from "../redux/slices/mainSlice";
+import { setShowAccountModal, setShowGuide } from "../redux/slices/mainSlice";
 import { AccountModal } from "./AccountModal";
 import { getProfile } from "./SupabaseHelpers";
 import { CreateNetworkModal } from "./CreateNetworkModal";
@@ -38,7 +33,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
             dispatch(setShowAccountModal(!showAccountModal));
           }
           break;
-        case "g":
+        case "n":
           dispatch(setShowGuide(!showGuide));
           break;
       }

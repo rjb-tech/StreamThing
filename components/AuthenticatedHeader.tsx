@@ -3,9 +3,9 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import {
   ChevronDownIcon,
   ArrowRightOnRectangleIcon,
-  BookOpenIcon,
   UserCircleIcon,
   PlusIcon,
+  TvIcon,
 } from "@heroicons/react/20/solid";
 import {
   setShowAccountModal,
@@ -27,7 +27,9 @@ export const AuthenticatedHeader = ({
   const dispatch = useAppDispatch();
   const { showGuide, showNetworkMenu, showUserMenu, showAccountModal } =
     useAppSelector((state) => state.main);
-  const { username, fullName } = useAppSelector((state) => state.account);
+  const { username, fullName, activeNetwork } = useAppSelector(
+    (state) => state.account
+  );
   const { logoUrl } = useAppSelector((state) => state.network);
 
   return (
@@ -73,18 +75,20 @@ export const AuthenticatedHeader = ({
             </Menu.Items>
           </Transition>
         </Menu>
-        <button
-          onClick={() => dispatch(setShowGuide(!showGuide))}
-          className="guide-button inline-flex w-fit h-1/2 justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-        >
-          Guide
-          <BookOpenIcon
-            className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
-            aria-hidden="true"
-          />
-        </button>
       </span>
-      <span className="w-3/4 sm:w-1/3 lg:w-1/5 flex justify-end">
+      <span className="w-3/4 sm:w-1/3 lg:w-1/5 flex justify-around">
+        {activeNetwork && (
+          <button
+            onClick={() => dispatch(setShowGuide(!showGuide))}
+            className="guide-button inline-flex w-fit h-1/2 justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+          >
+            Network
+            <TvIcon
+              className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
+              aria-hidden="true"
+            />
+          </button>
+        )}
         <Menu as="span" className="relative inline-block text-left">
           <div>
             <Menu.Button className="user-button inline-flex w-full justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75">
