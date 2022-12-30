@@ -17,9 +17,9 @@ export const ChannelRow = ({ streamUrl, user }: ChannelProps) => {
     dispatch(setShowGuide(false));
   };
   return (
-    <div className="flex overscroll-y-contain overflow-y-scroll border-t-4">
+    <div className="flex overscroll-y-contain h-32 lg:h-24 overflow-y-scroll border-t-4">
       <section className="bg-black h-full w-1/5 flex justify-center">
-        <div className="bg-emerald-200 h-20 w-full lg:flex items-center justify-between lg:px-6">
+        <div className="bg-emerald-200 h-full w-full flex flex-col lg:flex-row items-center justify-around py-2 lg:px-8">
           <Image
             className="rounded-full h-12 w-12"
             src={user.avatarUrl}
@@ -42,7 +42,7 @@ export const ChannelRow = ({ streamUrl, user }: ChannelProps) => {
       <section className="bg-red-200 h-full w-full">
         <div
           onClick={handleStreamClick}
-          className="bg-emerald-400 h-20 w-full"
+          className="bg-emerald-400 h-full w-full"
         ></div>
       </section>
     </div>
