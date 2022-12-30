@@ -170,9 +170,13 @@ export async function updateNetworkAvatarUrl(
 
     if (error) throw error;
 
-    console.log(data);
+    toast.success("Logo updated", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+
+    await getNetwork(networkId, supabaseClient, dispatch);
   } catch (error) {
-    toast.error("Error creating new network", {
+    toast.error("Error updating network logo", {
       position: toast.POSITION.BOTTOM_CENTER,
     });
   }
@@ -215,6 +219,32 @@ export async function updateUsername(
     }
   } finally {
     dispatch(setAccountInfoLoading(false));
+  }
+}
+
+export async function updateNetworkName(
+  networkId: string,
+  networkName: string,
+  supabaseClient: SupabaseClient,
+  dispatch: AppDispatch
+): Promise<void> {
+  try {
+    const updates = {
+      id: networkId,
+      name: networkName,
+      updated_at: new Date().toISOString(),
+    };
+
+    let { error } = await supabaseClient.from("networks").upsert(updates);
+    if (error) throw error;
+    toast.success("Network updated", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+    await getNetwork(networkId, supabaseClient, dispatch);
+  } catch (error: any) {
+    toast.error("Error updating network", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
   }
 }
 
@@ -265,7 +295,7 @@ export async function updateUserNetworks(
 
 export async function uploadUserImage(
   file: File,
-  filename: string,
+  uploadPath: string,
   user: User,
   supabaseClient: SupabaseClient,
   dispatch: AppDispatch
@@ -274,7 +304,7 @@ export async function uploadUserImage(
     dispatch(setAccountImageLoading(true));
     const { data, error } = await supabaseClient.storage
       .from("avatars")
-      .upload(filename, file, { upsert: true });
+      .upload(uploadPath, file, { upsert: true });
 
     if (error) throw error;
 
@@ -284,7 +314,7 @@ export async function uploadUserImage(
 
     const { data: urlData } = await supabaseClient.storage
       .from("avatars")
-      .getPublicUrl(filename);
+      .getPublicUrl(uploadPath);
 
     await updateUserAvatarUrl(
       user,
@@ -293,7 +323,7 @@ export async function uploadUserImage(
       dispatch
     );
   } catch {
-    toast.error("Error updating avatar", {
+    toast.error("Error uploading logo", {
       position: toast.POSITION.BOTTOM_CENTER,
     });
   } finally {
@@ -302,8 +332,9 @@ export async function uploadUserImage(
 }
 
 export async function uploadNetworkImage(
+  networkId: string,
   file: File,
-  filename: string,
+  uploadPath: string,
   supabaseClient: SupabaseClient,
   dispatch: AppDispatch
 ): Promise<string | void> {
@@ -311,17 +342,28 @@ export async function uploadNetworkImage(
     dispatch(setAccountImageLoading(true));
     const { data, error } = await supabaseClient.storage
       .from("avatars")
-      .upload(filename, file, { upsert: true });
+      .upload(uploadPath, file, { upsert: true });
 
     if (error) throw error;
 
+    toast.success("Logo uploaded", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+
     const { data: urlData } = await supabaseClient.storage
       .from("avatars")
-      .getPublicUrl(filename);
+      .getPublicUrl(uploadPath);
+
+    await updateNetworkAvatarUrl(
+      networkId,
+      urlData.publicUrl,
+      supabaseClient,
+      dispatch
+    );
 
     return urlData.publicUrl;
   } catch {
-    toast.error("Error updating avatar", {
+    toast.error("Error uploading avatar", {
       position: toast.POSITION.BOTTOM_CENTER,
     });
   } finally {
