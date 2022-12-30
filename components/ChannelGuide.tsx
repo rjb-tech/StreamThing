@@ -1,9 +1,11 @@
 import { ChannelRow } from "./ChannelRow";
 import Image from "next/image";
-import { useAppSelector } from "../redux/hooks";
+import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { StreamThingButton } from "./StreamThingButton";
+import { setShowEditMembersModal } from "../redux/slices/mainSlice";
 
 export const ChannelGuide = () => {
+  const dispatch = useAppDispatch();
   const { logoUrl } = useAppSelector((state) => state.network);
   const { networks } = useAppSelector((state) => state.account);
   return (
@@ -23,7 +25,10 @@ export const ChannelGuide = () => {
           })}
         </div>
         <div className="w-fit flex justify-between space-x-4">
-          <StreamThingButton innerText="Edit Members" />
+          <StreamThingButton
+            innerText="Edit Members"
+            clickFn={() => dispatch(setShowEditMembersModal(true))}
+          />
         </div>
       </div>
       <ChannelRow streamUrl="https://www.twitch.tv/pobelter" user="Ryne" />
