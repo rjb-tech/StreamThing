@@ -35,7 +35,7 @@ export const CreateNetworkModal = () => {
       closeModal={closeModal}
       hideX
     >
-      <div className="avatar-section w-fit text-center justify-items-center space-y-6">
+      <div className="w-fit text-center justify-items-center space-y-6">
         <h3 className="text-lg">Create a New Network</h3>
         <form onSubmit={formik.handleSubmit}>
           <span className="space-y-6 text-left">

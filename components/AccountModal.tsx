@@ -48,7 +48,7 @@ export const AccountModal = () => {
 
   return (
     <BaseModal showCondition={showAccountModal} closeModal={closeModal}>
-      <div className="avatar-section w-fit text-center justify-items-center space-y-6">
+      <div className="w-fit text-center justify-items-center space-y-6">
         <h3 className="text-lg">{`Hey ${username || fullName}`}</h3>
         <div className="w-full flex items-center justify-center">
           <Image
