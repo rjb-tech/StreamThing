@@ -3,13 +3,11 @@ import { StickyHeader } from "./StickyHeader";
 import { Transition } from "@headlessui/react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { ChannelGuide } from "./ChannelGuide";
-import { AuthModal } from "./AuthModal";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useUser } from "@supabase/auth-helpers-react";
 import { setShowAccountModal, setShowGuide } from "../redux/slices/mainSlice";
-import { AccountModal } from "./AccountModal";
 import { getProfile } from "./SupabaseHelpers";
-import { CreateNetworkModal } from "./CreateNetworkModal";
+import { ModalProvider } from "./ModalProvider";
 
 interface ProviderProps {
   children: ReactNode;
@@ -56,9 +54,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
   return (
     <>
       {/* Do a session check here to render either login/logout modal */}
-      <AuthModal />
-      <AccountModal />
-      <CreateNetworkModal />
+      <ModalProvider />
       <div className="h-screen w-screen">
         <>
           <Transition
