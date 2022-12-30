@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { setShowCreateNetworkModal } from "../redux/slices/mainSlice";
 import { BaseModal } from "./BaseModal";
+import { StreamThingButton } from "./StreamThingButton";
 import { createNetwork } from "./SupabaseHelpers";
 
 export const CreateNetworkModal = () => {
@@ -43,12 +44,7 @@ export const CreateNetworkModal = () => {
               className="bg-transparent text-white border border-white rounded-md px-4 focus:ring focus:ring-white focus:ring-opacity-20 focus:outline-none"
             ></input>
             <span className="w-full flex justify-end">
-              <button
-                type="submit"
-                className="rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
-              >
-                Save Changes
-              </button>
+              <StreamThingButton innerText="Save Changes" buttonType="submit" />
             </span>
           </span>
         </form>
