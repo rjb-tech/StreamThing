@@ -22,9 +22,7 @@ export const AuthenticatedHeader = ({
 }: AuthenticatedHeaderProps) => {
   const dispatch = useAppDispatch();
   const { showGuide, showAccountModal } = useAppSelector((state) => state.main);
-  const { username, fullName, activeNetwork } = useAppSelector(
-    (state) => state.account
-  );
+  const { username, fullName } = useAppSelector((state) => state.account);
 
   return (
     <header className="fixed top-0 h-24 w-full py-4 px-8 bg-gradient-to-r from-[#006687] to-[#3C1E46] flex items-center justify-between z-50">
