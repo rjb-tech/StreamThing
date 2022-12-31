@@ -70,19 +70,6 @@ export const AuthenticatedHeader = ({
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                      onClick={() => dispatch(setShowCreateNetworkModal(true))}
-                      className={`${
-                        active ? "opacity-80 text-white" : "text-white"
-                      } group flex w-full items-center justify-between rounded-md px-2 py-2 text-sm`}
-                    >
-                      <PlusIcon className="mr-2 h-5 w-5" aria-hidden="true" />
-                      Create Network
-                    </button>
-                  )}
-                </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
-                    <button
                       onClick={() =>
                         dispatch(setShowAccountModal(!showAccountModal))
                       }

@@ -19,7 +19,7 @@ export const ChannelRow = ({ streamUrl, user }: ChannelProps) => {
   return (
     <div className="flex overscroll-y-contain h-32 lg:h-24 overflow-y-scroll border-t-4">
       <section className="bg-black h-full w-1/5 flex justify-center">
-        <div className="bg-emerald-200 h-full w-full flex flex-col lg:flex-row items-center justify-around py-2 px-2">
+        <div className="bg-emerald-200 h-full w-full flex flex-col lg:flex-row items-center justify-center space-x-8 py-2">
           <Image
             className="rounded-full h-12 w-12"
             src={user.avatarUrl}
@@ -28,19 +28,7 @@ export const ChannelRow = ({ streamUrl, user }: ChannelProps) => {
             alt={`${user.fullName} avatar`}
           />
 
-          <div className="w-fit flex flex-col items-center justify-center px-2">
-            {user.username || user.fullName}
-            {user.id === owner && (
-              <span className="flex w-full flex justify-center space-x-2 pt-1">
-                <button className="h-fit w-fit hover:scale-125 transition transition-duration-500 ease-in-out">
-                  <ChevronDoubleUpIcon className="h-5 w-5" />
-                </button>
-                <button className="h-fit w-fit hover:scale-125 transition transition-duration-500 ease-in-out">
-                  <UserMinusIcon className="h-5 w-5" />
-                </button>
-              </span>
-            )}
-          </div>
+          <div>{user.username || user.fullName}</div>
         </div>
       </section>
       <section className="bg-red-200 h-full w-full">
