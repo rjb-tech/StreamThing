@@ -57,7 +57,7 @@ export const AddFriendModal = () => {
               <StreamThingButton
                 innerText="Add Friend"
                 disabled={
-                  formik.values.username === "" ||
+                  formik.errors.username !== undefined ||
                   formik.values.username.length > 50
                 }
               />

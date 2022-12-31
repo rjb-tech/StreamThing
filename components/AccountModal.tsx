@@ -41,6 +41,7 @@ export const AccountModal = () => {
     setTimeout(() => {
       formik.resetForm();
     }, 200);
+    ("");
   }
 
   async function handleImageChange(e: ChangeEvent<HTMLInputElement>) {
@@ -104,9 +105,8 @@ export const AccountModal = () => {
                 innerText="Save Changes"
                 fullWidth
                 disabled={
-                  formik.errors.username || formik.values.username === ""
-                    ? true
-                    : false
+                  formik.errors.username !== undefined ||
+                  formik.values.username.length > 50
                 }
               />
             </span>
