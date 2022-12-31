@@ -7,8 +7,7 @@ import {
   setUsername,
   setAvatarUrl,
   setAccountImageLoading,
-  setNetworks,
-  setActiveNetwork,
+  setFriends,
 } from "../redux/slices/accountSlice";
 import { setShowCreateNetworkModal } from "../redux/slices/mainSlice";
 import {
@@ -31,7 +30,7 @@ export async function getProfile(
 
     const { data, error, status } = await supabaseClient
       .from("profiles")
-      .select("username, avatar_url, full_name, id, active_network, networks")
+      .select("username, avatar_url, full_name, id, friends")
       .eq("id", user.id)
       .single();
 
@@ -40,15 +39,10 @@ export async function getProfile(
     }
 
     if (data) {
-      dispatch(setNetworks(data.networks));
-      dispatch(setActiveNetwork(data.active_network));
+      dispatch(setFriends(data.friends));
       dispatch(setFullName(data.full_name));
       dispatch(setUsername(data.username));
       dispatch(setAvatarUrl(data.avatar_url));
-
-      if (data.active_network) {
-        getNetwork(data.active_network, supabaseClient, dispatch);
-      }
     }
   } catch (error) {
     toast.error("Error loading user data", {

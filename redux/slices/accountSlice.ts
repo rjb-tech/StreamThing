@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
+import type { FriendRecord } from "../../components/types";
 
 // Define a type for the slice state
 interface StreamThingAccountState {
@@ -8,8 +9,7 @@ interface StreamThingAccountState {
   username: string | undefined;
   fullName: string | undefined;
   avatarUrl: string | undefined;
-  networks: string[] | undefined;
-  activeNetwork: string | undefined;
+  friends: FriendRecord[] | undefined;
 }
 
 const initialState: StreamThingAccountState = {
@@ -18,8 +18,7 @@ const initialState: StreamThingAccountState = {
   username: undefined,
   fullName: undefined,
   avatarUrl: undefined,
-  networks: undefined,
-  activeNetwork: undefined,
+  friends: undefined,
 };
 
 export const accountSlice = createSlice({
@@ -41,11 +40,8 @@ export const accountSlice = createSlice({
     setAvatarUrl: (state, action: PayloadAction<string>) => {
       state.avatarUrl = action.payload;
     },
-    setNetworks: (state, action: PayloadAction<string[]>) => {
-      state.networks = action.payload;
-    },
-    setActiveNetwork: (state, action: PayloadAction<string>) => {
-      state.activeNetwork = action.payload;
+    setFriends: (state, action: PayloadAction<FriendRecord[]>) => {
+      state.friends = action.payload;
     },
   },
 });
@@ -56,8 +52,7 @@ export const {
   setUsername,
   setFullName,
   setAvatarUrl,
-  setNetworks,
-  setActiveNetwork,
+  setFriends,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;
