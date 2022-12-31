@@ -56,6 +56,7 @@ export const AddFriendModal = () => {
             <span className="w-full flex justify-end pt-4">
               <StreamThingButton
                 innerText="Add Friend"
+                fullWidth
                 disabled={
                   formik.errors.username !== undefined ||
                   formik.values.username.length > 50
