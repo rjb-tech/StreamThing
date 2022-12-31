@@ -1,3 +1,4 @@
+import classNames from "classnames";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { setShowAccountModal } from "../redux/slices/mainSlice";
 import Image from "next/image";
@@ -23,6 +24,15 @@ export const AccountModal = () => {
         updateUsername(user, values.username, supabaseClient, dispatch);
         formik.setFieldValue("username", "");
       }
+    },
+    validate: (values) => {
+      const errors: { username?: string } = {};
+
+      if (values.username === "") errors.username = "Username Required";
+      if (values.username.length > 50)
+        errors.username = "Must be less than 50 characters";
+
+      return errors;
     },
   });
 
@@ -69,7 +79,16 @@ export const AccountModal = () => {
         </label>
         <form className="" onSubmit={formik.handleSubmit}>
           <span className="space-y-2 w-11/12">
-            <label className="w-full flex justify-start">Change Username</label>
+            <label
+              className={classNames("w-full flex justify-start", {
+                "text-red-500": formik.errors.username !== undefined,
+              })}
+            >
+              {formik.errors.username
+                ? formik.errors.username
+                : "Change Username"}
+            </label>
+
             <input
               name="username"
               placeholder="New Username"
@@ -82,8 +101,9 @@ export const AccountModal = () => {
                 innerText="Save Changes"
                 fullWidth
                 disabled={
-                  formik.values.username === "" ||
-                  formik.values.username.length > 50
+                  formik.errors.username || formik.values.username === ""
+                    ? true
+                    : false
                 }
               />
             </span>
