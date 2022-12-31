@@ -28,6 +28,8 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
 
   useEffect(() => {
     if (user) getProfile(user, supabaseClient, dispatch);
+
+    // Realtime connection to keep track of incoming friend requests
     if (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
       const client = createClient(
         "https://uieskineapnmdqwofpjx.supabase.co/realtime/v1",
