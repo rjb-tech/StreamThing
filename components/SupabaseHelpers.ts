@@ -9,7 +9,8 @@ import {
   setAccountImageLoading,
   setFriends,
 } from "../redux/slices/accountSlice";
-import { setShowCreateNetworkModal } from "../redux/slices/mainSlice";
+
+import type { FriendRecord } from "./types";
 
 export async function getProfile(
   user: User,
@@ -26,15 +27,19 @@ export async function getProfile(
       .eq("id", user.id)
       .single();
 
-    if (error) {
-      throw error;
-    }
+    if (error) throw error;
 
     if (data) {
-      dispatch(setFriends(data.friends));
+      const formattedFriends = await Promise.all(
+        data.friends.map(async (friendId: string) => {
+          return await getFriendRecordFromId(friendId, supabaseClient);
+        })
+      );
+
       dispatch(setFullName(data.full_name));
       dispatch(setUsername(data.username));
       dispatch(setAvatarUrl(data.avatar_url));
+      dispatch(setFriends(formattedFriends));
     }
   } catch (error) {
     toast.error("Error loading user data", {
@@ -176,4 +181,23 @@ export async function uploadUserImage(
   } finally {
     dispatch(setAccountImageLoading(false));
   }
+}
+
+async function getFriendRecordFromId(
+  friendId: string,
+  supabaseClient: SupabaseClient
+): Promise<FriendRecord | void> {
+  const { data, error } = await supabaseClient
+    .from("profiles")
+    .select("id, username, full_name, avatar_url")
+    .eq("id", friendId)
+    .single();
+
+  if (data)
+    return {
+      id: data?.id,
+      username: data?.username,
+      fullName: data?.full_name,
+      avatarUrl: data?.avatar_url,
+    };
 }
