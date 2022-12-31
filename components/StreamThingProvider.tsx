@@ -8,7 +8,11 @@ import { useUser } from "@supabase/auth-helpers-react";
 import { setShowAccountModal, setShowGuide } from "../redux/slices/mainSlice";
 import { getProfile } from "./SupabaseHelpers";
 import { ModalProvider } from "./ModalProvider";
-import { createClient, RealtimeClient } from "@supabase/supabase-js";
+import {
+  createClient,
+  RealtimePostgresUpdatePayload,
+} from "@supabase/supabase-js";
+import { setFriendRequests } from "../redux/slices/accountSlice";
 
 interface ProviderProps {
   children: ReactNode;
@@ -41,13 +45,22 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
         .on(
           "postgres_changes",
           {
-            event: "*",
+            event: "UPDATE",
             schema: "public",
             table: "profiles",
             filter: `id=eq.${user?.id}`,
           },
-          (payload) => {
-            console.log(payload);
+          (
+            payload: RealtimePostgresUpdatePayload<{
+              ["avatar_url"]: string;
+              ["content_sources"]: string[];
+              ["friends"]: string[];
+              ["friend_requests"]: string[];
+              ["id"]: string;
+              ["username"]: string;
+            }>
+          ) => {
+            dispatch(setFriendRequests(payload.new.friend_requests));
           }
         )
         .subscribe();

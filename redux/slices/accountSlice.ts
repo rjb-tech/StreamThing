@@ -9,6 +9,7 @@ interface StreamThingAccountState {
   username: string | undefined;
   avatarUrl: string | undefined;
   friends: FriendRecord[] | undefined;
+  friendRequests: string[];
 }
 
 const initialState: StreamThingAccountState = {
@@ -17,6 +18,7 @@ const initialState: StreamThingAccountState = {
   username: undefined,
   avatarUrl: undefined,
   friends: undefined,
+  friendRequests: [],
 };
 
 export const accountSlice = createSlice({
@@ -38,6 +40,9 @@ export const accountSlice = createSlice({
     setFriends: (state, action: PayloadAction<FriendRecord[]>) => {
       state.friends = action.payload;
     },
+    setFriendRequests: (state, action: PayloadAction<string[]>) => {
+      state.friendRequests = action.payload;
+    },
   },
 });
 
@@ -47,6 +52,7 @@ export const {
   setUsername,
   setAvatarUrl,
   setFriends,
+  setFriendRequests,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;
