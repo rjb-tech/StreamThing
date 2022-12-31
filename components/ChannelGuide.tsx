@@ -5,14 +5,13 @@ import { useUser } from "@supabase/auth-helpers-react";
 
 export const ChannelGuide = () => {
   const user = useUser();
-  const { friends, username, fullName, avatarUrl } = useAppSelector(
+  const { friends, username, avatarUrl } = useAppSelector(
     (state) => state.account
   );
 
   const userRecord: FriendRecord = {
     id: user?.id || "",
     username: username || "",
-    fullName: fullName || "",
     avatarUrl: avatarUrl || "",
   };
 

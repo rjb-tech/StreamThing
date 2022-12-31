@@ -41,7 +41,7 @@ export const BaseModal = ({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="flex flex-col justify-between items-center w-72 max-w-md h-fit transform overflow-hidden rounded-2xl bg-gray-700 p-6 text-left align-middle shadow-xl transition-all text-white">
+                <Dialog.Panel className="flex flex-col justify-between items-center w-80 max-w-md h-fit transform overflow-hidden rounded-2xl bg-gray-700 p-6 text-left align-middle shadow-xl transition-all text-white">
                   {!hideX && (
                     <div className="w-full h-fit flex justify-end focus:border-none focus:ring-none focus:outline-none">
                       <button

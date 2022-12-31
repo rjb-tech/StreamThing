@@ -3,7 +3,6 @@ import { toast } from "react-toastify";
 import { AppDispatch } from "../redux/store";
 import {
   setAccountInfoLoading,
-  setFullName,
   setUsername,
   setAvatarUrl,
   setAccountImageLoading,
@@ -23,7 +22,7 @@ export async function getProfile(
 
     const { data, error, status } = await supabaseClient
       .from("profiles")
-      .select("username, avatar_url, full_name, id, friends")
+      .select("username, avatar_url, id, friends")
       .eq("id", user.id)
       .single();
 
@@ -36,7 +35,6 @@ export async function getProfile(
         })
       );
 
-      dispatch(setFullName(data.full_name));
       dispatch(setUsername(data.username));
       dispatch(setAvatarUrl(data.avatar_url));
       dispatch(setFriends(formattedFriends));
@@ -53,24 +51,18 @@ export async function getProfile(
 export async function getNetworkUserInfo(
   userId: string,
   supabaseClient: SupabaseClient
-): Promise<{
-  id: string;
-  username: string;
-  fullName: string;
-  avatarUrl: string;
-}> {
+): Promise<FriendRecord> {
   const { data, error } = await supabaseClient
     .from("profiles")
-    .select("id, username, full_name, avatar_url")
+    .select("id, username, avatar_url")
     .eq("id", userId)
     .single();
 
   if (error) throw error;
 
-  const returnData = {
+  const returnData: FriendRecord = {
     id: data.id,
     username: data.username,
-    fullName: data.full_name,
     avatarUrl: data.avatar_url,
   };
 
@@ -189,7 +181,7 @@ async function getFriendRecordFromId(
 ): Promise<FriendRecord | void> {
   const { data, error } = await supabaseClient
     .from("profiles")
-    .select("id, username, full_name, avatar_url")
+    .select("id, username,  avatar_url")
     .eq("id", friendId)
     .single();
 
@@ -197,7 +189,6 @@ async function getFriendRecordFromId(
     return {
       id: data?.id,
       username: data?.username,
-      fullName: data?.full_name,
       avatarUrl: data?.avatar_url,
     };
 }

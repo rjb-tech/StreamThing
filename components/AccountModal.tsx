@@ -13,9 +13,7 @@ export const AccountModal = () => {
   const supabaseClient = useSupabaseClient();
   const dispatch = useAppDispatch();
   const { showAccountModal } = useAppSelector((state) => state.main);
-  const { username, avatarUrl, fullName } = useAppSelector(
-    (state) => state.account
-  );
+  const { username, avatarUrl } = useAppSelector((state) => state.account);
   const formik = useFormik({
     initialValues: {
       username: "",
@@ -49,7 +47,7 @@ export const AccountModal = () => {
   return (
     <BaseModal showCondition={showAccountModal} closeModal={closeModal}>
       <div className="w-fit text-center justify-items-center space-y-6 p-2">
-        <h3 className="text-lg">{`Hey ${username || fullName}`}</h3>
+        <h3 className="text-lg">{`Hey ${username}`}</h3>
         <div className="w-full flex items-center justify-center">
           <Image
             className="relative rounded-full h-28 w-28"
@@ -77,10 +75,10 @@ export const AccountModal = () => {
               placeholder="New Username"
               value={formik.values.username}
               onChange={formik.handleChange}
-              className=" w-full text-white border border-white rounded-md px-4 focus:ring focus:ring-white focus:ring-opacity-20 focus:outline-none"
+              className=" w-full text-black border border-white rounded-md px-4 focus:ring focus:ring-white focus:ring-opacity-20 focus:outline-none"
             />
-            <span className="w-full flex justify-end pt-4">
-              <StreamThingButton innerText="Save Changes" />
+            <span className="w-full flex items-center pt-4">
+              <StreamThingButton innerText="Save Changes" fullWidth />
             </span>
           </span>
         </form>

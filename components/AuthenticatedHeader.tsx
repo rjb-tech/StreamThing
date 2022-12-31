@@ -27,7 +27,7 @@ export const AuthenticatedHeader = ({
 }: AuthenticatedHeaderProps) => {
   const dispatch = useAppDispatch();
   const { showGuide } = useAppSelector((state) => state.main);
-  const { username, fullName } = useAppSelector((state) => state.account);
+  const { username } = useAppSelector((state) => state.account);
 
   return (
     <header className="fixed top-0 h-24 w-full py-4 px-8 bg-gradient-to-r from-[#006687] to-[#3C1E46] flex items-center justify-between z-50">
@@ -46,7 +46,7 @@ export const AuthenticatedHeader = ({
         <Menu as="span" className="relative inline-block text-left">
           <div>
             <Menu.Button as="div">
-              <StreamThingButton innerText={username || fullName}>
+              <StreamThingButton innerText={username}>
                 <ChevronDownIcon
                   className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
                   aria-hidden="true"

@@ -7,7 +7,6 @@ interface StreamThingAccountState {
   accountInfoLoading: boolean;
   accountImageUploading: boolean;
   username: string | undefined;
-  fullName: string | undefined;
   avatarUrl: string | undefined;
   friends: FriendRecord[] | undefined;
 }
@@ -16,7 +15,6 @@ const initialState: StreamThingAccountState = {
   accountInfoLoading: false,
   accountImageUploading: false,
   username: undefined,
-  fullName: undefined,
   avatarUrl: undefined,
   friends: undefined,
 };
@@ -34,9 +32,6 @@ export const accountSlice = createSlice({
     setUsername: (state, action: PayloadAction<string>) => {
       state.username = action.payload;
     },
-    setFullName: (state, action: PayloadAction<string>) => {
-      state.fullName = action.payload;
-    },
     setAvatarUrl: (state, action: PayloadAction<string>) => {
       state.avatarUrl = action.payload;
     },
@@ -50,7 +45,6 @@ export const {
   setAccountInfoLoading,
   setAccountImageLoading,
   setUsername,
-  setFullName,
   setAvatarUrl,
   setFriends,
 } = accountSlice.actions;

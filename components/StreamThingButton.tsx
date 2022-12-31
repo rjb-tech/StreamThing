@@ -7,6 +7,7 @@ interface StreamThingButtonProps {
   clickFn?(): void;
   buttonType?: "button" | "submit" | "reset" | undefined;
   disabled?: boolean;
+  fullWidth?: boolean;
 }
 
 export const StreamThingButton = ({
@@ -15,6 +16,7 @@ export const StreamThingButton = ({
   children,
   buttonType = undefined,
   disabled = false,
+  fullWidth = false,
 }: StreamThingButtonProps) => {
   return (
     <button
@@ -22,11 +24,13 @@ export const StreamThingButton = ({
       onClick={clickFn}
       type={buttonType}
       className={classNames(
-        "inline-flex w-fit h-1/2 justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white",
+        "inline-flex h-1/2 justify-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white",
         {
           "transition-all hover:bg-opacity-30 hover:scale-105 active:scale-100 duration-250":
             !disabled,
           "bg-opacity-10 text-gray-800": disabled,
+          "w-fit": !fullWidth,
+          "w-full": fullWidth,
         }
       )}
     >
