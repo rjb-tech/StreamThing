@@ -28,6 +28,7 @@ export const ChannelGuide = () => {
       {members?.map((member: NetworkMember) => {
         return (
           <ChannelRow
+            key={member.id}
             streamUrl="https://www.twitch.tv/pobelter"
             user={member}
           />
