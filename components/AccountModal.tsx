@@ -70,14 +70,14 @@ export const AccountModal = () => {
           </span>
         </label>
         <form className="" onSubmit={formik.handleSubmit}>
-          <span className="space-y-2 text-left">
-            <p className="pl-2">Change Username</p>
+          <span className="space-y-2 w-11/12">
+            <label className="w-full flex justify-start">Change Username</label>
             <input
               name="username"
               placeholder="New Username"
               value={formik.values.username}
               onChange={formik.handleChange}
-              className=" w-11/12 text-white border border-white rounded-md px-4 focus:ring focus:ring-white focus:ring-opacity-20 focus:outline-none"
+              className=" w-full text-white border border-white rounded-md px-4 focus:ring focus:ring-white focus:ring-opacity-20 focus:outline-none"
             />
             <span className="w-full flex justify-end pt-4">
               <StreamThingButton innerText="Save Changes" />
