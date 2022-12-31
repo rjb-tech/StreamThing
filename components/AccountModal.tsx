@@ -78,7 +78,14 @@ export const AccountModal = () => {
               className=" w-full text-black border border-white rounded-md px-4 focus:ring focus:ring-white focus:ring-opacity-20 focus:outline-none"
             />
             <span className="w-full flex items-center pt-4">
-              <StreamThingButton innerText="Save Changes" fullWidth />
+              <StreamThingButton
+                innerText="Save Changes"
+                fullWidth
+                disabled={
+                  formik.values.username === "" ||
+                  formik.values.username.length > 50
+                }
+              />
             </span>
           </span>
         </form>

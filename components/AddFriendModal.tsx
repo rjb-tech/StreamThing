@@ -21,7 +21,9 @@ export const AddFriendModal = () => {
   return (
     <BaseModal showCondition={showAddFriendModal} closeModal={closeModal}>
       <div className="w-fit justify-items-center space-y-6 p-2">
-        <div />
+        <div className="text-2xl">
+          Add your friends to see their channel in your network
+        </div>
         <form onSubmit={formik.handleSubmit}>
           <span className="space-y-2 w-11/12">
             <input
@@ -33,7 +35,13 @@ export const AddFriendModal = () => {
               className="w-full text-black border border-white rounded-md px-4 focus:ring focus:ring-white focus:ring-opacity-20 focus:outline-none"
             />
             <span className="w-full flex justify-end pt-4">
-              <StreamThingButton innerText="Add Friend" />
+              <StreamThingButton
+                innerText="Add Friend"
+                disabled={
+                  formik.values.friendUsername === "" ||
+                  formik.values.friendUsername.length > 50
+                }
+              />
             </span>
           </span>
         </form>
