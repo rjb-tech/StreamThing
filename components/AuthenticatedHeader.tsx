@@ -38,7 +38,7 @@ export const AuthenticatedHeader = ({
         {activeNetwork && (
           <StreamThingButton
             clickFn={() => dispatch(setShowGuide(!showGuide))}
-            innerText="Network Menu"
+            innerText="Network"
           >
             <TvIcon
               className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
