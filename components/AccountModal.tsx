@@ -1,7 +1,6 @@
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { setShowAccountModal } from "../redux/slices/mainSlice";
 import Image from "next/image";
-import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useFormik } from "formik";
 import { ChangeEvent } from "react";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
@@ -49,7 +48,7 @@ export const AccountModal = () => {
 
   return (
     <BaseModal showCondition={showAccountModal} closeModal={closeModal}>
-      <div className="w-fit text-center justify-items-center space-y-6">
+      <div className="w-fit text-center justify-items-center space-y-6 p-2">
         <h3 className="text-lg">{`Hey ${username || fullName}`}</h3>
         <div className="w-full flex items-center justify-center">
           <Image
