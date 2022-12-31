@@ -1,13 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import accountSlice from "./slices/accountSlice";
 import mainSlice from "./slices/mainSlice";
-import networkSlice from "./slices/networkSlice";
 
 export const store = configureStore({
   reducer: {
     main: mainSlice,
     account: accountSlice,
-    network: networkSlice,
   },
 });
 

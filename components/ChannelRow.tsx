@@ -1,12 +1,11 @@
 import Image from "next/image";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { useAppDispatch } from "../redux/hooks";
 import { setActiveStream, setShowGuide } from "../redux/slices/mainSlice";
-import type { NetworkMember } from "../redux/slices/networkSlice";
-import { ChevronDoubleUpIcon, UserMinusIcon } from "@heroicons/react/20/solid";
+import type { FriendRecord } from "./types";
 
 interface ChannelProps {
   streamUrl: string;
-  user: NetworkMember;
+  user: FriendRecord;
 }
 
 export const ChannelRow = ({ streamUrl, user }: ChannelProps) => {
