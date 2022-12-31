@@ -22,20 +22,29 @@ export const NetworkModal = () => {
     initialValues: {
       networkName: "",
     },
+    validate: (values) => {
+      const errors: { networkName?: string } = {};
+
+      if (values.networkName === "") errors.networkName = "Required";
+
+      return errors;
+    },
     onSubmit: (values) => {
-      if (networkId)
+      if (networkId) {
         updateNetworkName(
           networkId,
           values.networkName,
           supabaseClient,
           dispatch
         );
-      formik.setFieldValue("networkName", "");
+        formik.setFieldValue("networkName", "");
+      }
     },
   });
 
   function closeModal() {
     dispatch(setShowNetworkModal(false));
+    formik.resetForm();
   }
 
   async function handleImageChange(e: ChangeEvent<HTMLInputElement>) {
@@ -84,6 +93,11 @@ export const NetworkModal = () => {
         <form className="" onSubmit={formik.handleSubmit}>
           <span className="space-y-2 text-left">
             <p>Change Network Name</p>
+            {formik.errors.networkName && formik.touched.networkName && (
+              <p className="text-red-500 text-sm">
+                {formik.errors.networkName}
+              </p>
+            )}
             <input
               name="networkName"
               value={formik.values.networkName}
@@ -96,7 +110,11 @@ export const NetworkModal = () => {
                 innerText="Delete Network"
                 buttonType="button"
               />
-              <StreamThingButton innerText="Save Changes" buttonType="submit" />
+              <StreamThingButton
+                innerText="Submit Name"
+                buttonType="submit"
+                disabled={formik.values.networkName === ""}
+              />
             </span>
           </span>
         </form>
