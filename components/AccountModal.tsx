@@ -38,6 +38,9 @@ export const AccountModal = () => {
 
   function closeModal() {
     dispatch(setShowAccountModal(false));
+    setTimeout(() => {
+      formik.resetForm();
+    }, 200);
   }
 
   async function handleImageChange(e: ChangeEvent<HTMLInputElement>) {

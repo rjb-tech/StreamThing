@@ -27,6 +27,9 @@ export const AddFriendModal = () => {
 
   function closeModal() {
     dispatch(setShowAddFriendModal(false));
+    setTimeout(() => {
+      formik.resetForm();
+    }, 200);
   }
   return (
     <BaseModal showCondition={showAddFriendModal} closeModal={closeModal}>
