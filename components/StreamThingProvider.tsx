@@ -8,6 +8,7 @@ import { useUser } from "@supabase/auth-helpers-react";
 import { setShowAccountModal, setShowGuide } from "../redux/slices/mainSlice";
 import { getProfile } from "./SupabaseHelpers";
 import { ModalProvider } from "./ModalProvider";
+import { createClient, RealtimeClient } from "@supabase/supabase-js";
 
 interface ProviderProps {
   children: ReactNode;
@@ -22,6 +23,35 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
 
   useEffect(() => {
     if (user) getProfile(user, supabaseClient, dispatch);
+    if (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+      const client = createClient(
+        "https://uieskineapnmdqwofpjx.supabase.co/realtime/v1",
+        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+        {
+          realtime: {
+            params: {
+              eventsPerSecond: 10,
+            },
+          },
+        }
+      );
+
+      const channel = supabaseClient
+        .channel("value-db-changes")
+        .on(
+          "postgres_changes",
+          {
+            event: "*",
+            schema: "public",
+            table: "profiles",
+            filter: `id=eq.${user?.id}`,
+          },
+          (payload) => {
+            console.log(payload);
+          }
+        )
+        .subscribe();
+    }
   }, [session]);
 
   // Event listeners
