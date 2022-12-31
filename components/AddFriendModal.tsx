@@ -1,4 +1,5 @@
 import { useFormik } from "formik";
+import classNames from "classnames";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { setShowAddFriendModal } from "../redux/slices/mainSlice";
 import { BaseModal } from "./BaseModal";
@@ -10,9 +11,18 @@ export const AddFriendModal = () => {
 
   const formik = useFormik({
     initialValues: {
-      friendUsername: "",
+      username: "",
     },
     onSubmit: (values) => {},
+    validate: (values) => {
+      const errors: { username?: string } = {};
+
+      if (values.username === "") errors.username = "Username Required";
+      if (values.username.length > 50)
+        errors.username = "Must be less than 50 characters";
+
+      return errors;
+    },
   });
 
   function closeModal() {
@@ -21,15 +31,21 @@ export const AddFriendModal = () => {
   return (
     <BaseModal showCondition={showAddFriendModal} closeModal={closeModal}>
       <div className="w-fit justify-items-center space-y-6 p-2">
-        <div className="text-2xl">
-          Add your friends to see their channel in your network
-        </div>
         <form onSubmit={formik.handleSubmit}>
           <span className="space-y-2 w-11/12">
+            <label
+              className={classNames("w-full flex justify-start", {
+                "text-red-500": formik.errors.username !== undefined,
+              })}
+            >
+              {formik.errors.username
+                ? formik.errors.username
+                : "Add a friend to your network"}
+            </label>
             <input
               type="text"
-              name="friendUsername"
-              value={formik.values.friendUsername}
+              name="username"
+              value={formik.values.username}
               onChange={formik.handleChange}
               placeholder="Username"
               className="w-full text-black border border-white rounded-md px-4 focus:ring focus:ring-white focus:ring-opacity-20 focus:outline-none"
@@ -38,8 +54,8 @@ export const AddFriendModal = () => {
               <StreamThingButton
                 innerText="Add Friend"
                 disabled={
-                  formik.values.friendUsername === "" ||
-                  formik.values.friendUsername.length > 50
+                  formik.values.username === "" ||
+                  formik.values.username.length > 50
                 }
               />
             </span>
