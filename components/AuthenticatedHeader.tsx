@@ -30,17 +30,16 @@ export const AuthenticatedHeader = ({
     <header className="fixed top-0 h-24 w-full py-4 px-8 bg-gradient-to-r from-[#006687] to-[#3C1E46] flex items-center justify-between z-50">
       <span className="text-4xl text-white">StreamThing</span>
       <span className="w-full flex justify-end space-x-4">
-        {activeNetwork && (
-          <StreamThingButton
-            clickFn={() => dispatch(setShowGuide(!showGuide))}
-            innerText="Network"
-          >
-            <TvIcon
-              className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
-              aria-hidden="true"
-            />
-          </StreamThingButton>
-        )}
+        <StreamThingButton
+          clickFn={() => dispatch(setShowGuide(!showGuide))}
+          innerText="Network"
+        >
+          <TvIcon
+            className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
+            aria-hidden="true"
+          />
+        </StreamThingButton>
+
         <Menu as="span" className="relative inline-block text-left">
           <div>
             <Menu.Button as="div">
