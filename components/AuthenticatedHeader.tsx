@@ -7,9 +7,14 @@ import {
   TvIcon,
   UserPlusIcon,
 } from "@heroicons/react/20/solid";
-import { setShowAccountModal, setShowGuide } from "../redux/slices/mainSlice";
-import type { User } from "@supabase/supabase-js";
+import {
+  setShowAccountModal,
+  setShowAddFriendModal,
+  setShowGuide,
+} from "../redux/slices/mainSlice";
+
 import { StreamThingButton } from "./StreamThingButton";
+import type { User } from "@supabase/supabase-js";
 
 interface AuthenticatedHeaderProps {
   supabaseClient: any;
@@ -63,9 +68,7 @@ export const AuthenticatedHeader = ({
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                      onClick={() =>
-                        dispatch(setShowAccountModal(!showAccountModal))
-                      }
+                      onClick={() => dispatch(setShowAddFriendModal(true))}
                       className={`${
                         active ? "opacity-80 text-white" : "text-white"
                       } group flex w-full items-center justify-between rounded-md px-2 py-2 text-sm`}
@@ -81,9 +84,7 @@ export const AuthenticatedHeader = ({
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                      onClick={() =>
-                        dispatch(setShowAccountModal(!showAccountModal))
-                      }
+                      onClick={() => dispatch(setShowAccountModal(true))}
                       className={`${
                         active ? "opacity-80 text-white" : "text-white"
                       } group flex w-full items-center justify-between rounded-md px-2 py-2 text-sm`}
