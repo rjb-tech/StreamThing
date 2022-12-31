@@ -4,14 +4,10 @@ import {
   ChevronDownIcon,
   ArrowRightOnRectangleIcon,
   UserCircleIcon,
-  PlusIcon,
   TvIcon,
+  UserPlusIcon,
 } from "@heroicons/react/20/solid";
-import {
-  setShowAccountModal,
-  setShowCreateNetworkModal,
-  setShowGuide,
-} from "../redux/slices/mainSlice";
+import { setShowAccountModal, setShowGuide } from "../redux/slices/mainSlice";
 import type { User } from "@supabase/supabase-js";
 import { StreamThingButton } from "./StreamThingButton";
 
@@ -67,6 +63,24 @@ export const AuthenticatedHeader = ({
           >
             <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-100 rounded-md bg-slate-500 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="px-1 py-1 ">
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      onClick={() =>
+                        dispatch(setShowAccountModal(!showAccountModal))
+                      }
+                      className={`${
+                        active ? "opacity-80 text-white" : "text-white"
+                      } group flex w-full items-center justify-between rounded-md px-2 py-2 text-sm`}
+                    >
+                      <UserPlusIcon
+                        className="mr-2 h-5 w-5"
+                        aria-hidden="true"
+                      />
+                      Add Friends
+                    </button>
+                  )}
+                </Menu.Item>
                 <Menu.Item>
                   {({ active }) => (
                     <button
