@@ -20,6 +20,7 @@ interface ProviderProps {
 
 export const StreamThingProvider = ({ children }: ProviderProps) => {
   const dispatch = useAppDispatch();
+  const { friendRequests } = useAppSelector((state) => state.account);
   const { showGuide, showAccountModal } = useAppSelector((state) => state.main);
   const session = useSession();
   const user = useUser();
@@ -60,7 +61,8 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
               ["username"]: string;
             }>
           ) => {
-            dispatch(setFriendRequests(payload.new.friend_requests));
+            if (friendRequests !== payload.new.friend_requests)
+              dispatch(setFriendRequests(payload.new.friend_requests));
           }
         )
         .subscribe();
