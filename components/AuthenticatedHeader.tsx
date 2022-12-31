@@ -13,7 +13,6 @@ import {
   setShowGuide,
 } from "../redux/slices/mainSlice";
 import type { User } from "@supabase/supabase-js";
-import Image from "next/image";
 import { StreamThingButton } from "./StreamThingButton";
 
 interface AuthenticatedHeaderProps {
@@ -34,7 +33,7 @@ export const AuthenticatedHeader = ({
   return (
     <header className="fixed top-0 h-24 w-full py-4 px-8 bg-gradient-to-r from-[#006687] to-[#3C1E46] flex items-center justify-between z-50">
       <span className="text-4xl text-white">StreamThing</span>
-      <span className="w-3/4 md:w-1/2 lg:w-1/5 flex justify-around">
+      <span className="w-full flex justify-end space-x-4">
         {activeNetwork && (
           <StreamThingButton
             clickFn={() => dispatch(setShowGuide(!showGuide))}
