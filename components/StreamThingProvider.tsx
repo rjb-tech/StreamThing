@@ -20,30 +20,30 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
   const user = useUser();
   const supabaseClient = useSupabaseClient();
 
-  // e is a KeyboardEvent, but typescript says tagname doesn't exist on e.target even though it does
-  // so I made e an any typed parameter
-  function keyListener(e: any): void {
-    const incomingTag = e.target.tagName;
-    if (incomingTag !== "INPUT" && !e.repeat) {
-      switch (e.key.toLowerCase()) {
-        case "a":
-          if (user) {
-            dispatch(setShowAccountModal(!showAccountModal));
-          }
-          break;
-        case "n":
-          dispatch(setShowGuide(!showGuide));
-          break;
-      }
-    }
-  }
-
   useEffect(() => {
     if (user) getProfile(user, supabaseClient, dispatch);
   }, [session]);
 
   // Event listeners
   useEffect(() => {
+    // e is a KeyboardEvent, but typescript says tagname doesn't exist on e.target even though it does
+    // so I made e an any typed parameter
+    function keyListener(e: any): void {
+      const incomingTag = e.target.tagName;
+      if (incomingTag !== "INPUT" && !e.repeat) {
+        switch (e.key.toLowerCase()) {
+          case "a":
+            if (user) {
+              dispatch(setShowAccountModal(!showAccountModal));
+            }
+            break;
+          case "n":
+            dispatch(setShowGuide(!showGuide));
+            break;
+        }
+      }
+    }
+
     window.addEventListener("keydown", keyListener);
 
     return () => {
