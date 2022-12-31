@@ -32,10 +32,10 @@ export const ChannelRow = ({ streamUrl, user }: ChannelProps) => {
             {user.username || user.fullName}
             {user.id === owner && (
               <span className="flex w-full flex justify-center space-x-2 pt-1">
-                <button className="h-fit w-fit hover:scale-125 transition transition-duration-500 ease-out">
+                <button className="h-fit w-fit hover:scale-125 transition transition-duration-500 ease-in-out">
                   <ChevronDoubleUpIcon className="h-5 w-5" />
                 </button>
-                <button className="h-fit w-fit hover:scale-125 transition transition-duration-500 ease-out">
+                <button className="h-fit w-fit hover:scale-125 transition transition-duration-500 ease-in-out">
                   <UserMinusIcon className="h-5 w-5" />
                 </button>
               </span>
