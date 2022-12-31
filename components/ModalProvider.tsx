@@ -2,7 +2,6 @@ import { AccountModal } from "./AccountModal";
 import { AuthModal } from "./AuthModal";
 import { CreateNetworkModal } from "./CreateNetworkModal";
 import { EditMembersModal } from "./EditMembersModal";
-import { NetworkModal } from "./NetworkModal";
 
 export const ModalProvider = () => {
   return (
@@ -11,7 +10,6 @@ export const ModalProvider = () => {
       <AccountModal />
       <CreateNetworkModal />
       <EditMembersModal />
-      <NetworkModal />
     </>
   );
 };

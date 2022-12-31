@@ -11,7 +11,6 @@ interface ChannelProps {
 
 export const ChannelRow = ({ streamUrl, user }: ChannelProps) => {
   const dispatch = useAppDispatch();
-  const { owner } = useAppSelector((state) => state.network);
   const handleStreamClick = () => {
     dispatch(setActiveStream(streamUrl));
     dispatch(setShowGuide(false));
