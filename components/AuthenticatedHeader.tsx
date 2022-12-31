@@ -26,7 +26,7 @@ export const AuthenticatedHeader = ({
   user,
 }: AuthenticatedHeaderProps) => {
   const dispatch = useAppDispatch();
-  const { showGuide, showAccountModal } = useAppSelector((state) => state.main);
+  const { showGuide } = useAppSelector((state) => state.main);
   const { username, fullName } = useAppSelector((state) => state.account);
 
   return (
