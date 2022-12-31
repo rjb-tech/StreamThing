@@ -17,7 +17,7 @@ export const ChannelRow = ({ streamUrl, user }: ChannelProps) => {
   return (
     <div className="flex overscroll-y-contain h-32 lg:h-24 overflow-y-scroll border-t-4">
       <section className="bg-black h-full w-1/5 flex justify-center">
-        <div className="bg-emerald-200 h-full w-full flex flex-col lg:flex-row items-center justify-center space-x-8 py-2">
+        <div className="bg-emerald-200 h-full w-full flex flex-col lg:flex-row items-center justify-center space-x-4 space-y-4">
           <Image
             className="rounded-full h-12 w-12"
             src={user.avatarUrl}
