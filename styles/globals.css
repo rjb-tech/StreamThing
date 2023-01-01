@@ -15,4 +15,11 @@ label.avatar-label input[type="file"] {
   }
   .avatar-label:hover {
     background: rgba(0,0,0, 0.3);
+    scale: 105%;
+    transition-property: all;
+    transition-duration: 150ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .avatar-label:active {
+    scale: 100%;
   }
