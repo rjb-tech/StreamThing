@@ -38,6 +38,7 @@ export const mainSlice = createSlice({
     setActiveStream: (state, action: PayloadAction<string>) => {
       state.activeStream = action.payload;
     },
+    resetMain: () => initialState,
   },
 });
 
@@ -47,6 +48,7 @@ export const {
   setShowAccountModal,
   setShowAddFriendModal,
   setActiveStream,
+  resetMain,
 } = mainSlice.actions;
 
 export default mainSlice.reducer;

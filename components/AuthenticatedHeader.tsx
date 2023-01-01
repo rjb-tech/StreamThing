@@ -9,6 +9,7 @@ import {
   BellAlertIcon,
 } from "@heroicons/react/20/solid";
 import {
+  resetMain,
   setShowAccountModal,
   setShowAddFriendModal,
   setShowGuide,
@@ -16,6 +17,7 @@ import {
 
 import { StreamThingButton } from "./StreamThingButton";
 import type { User } from "@supabase/supabase-js";
+import { resetAccount } from "../redux/slices/accountSlice";
 
 interface AuthenticatedHeaderProps {
   supabaseClient: any;
@@ -119,7 +121,11 @@ export const AuthenticatedHeader = ({
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                      onClick={async () => await supabaseClient.auth.signOut()}
+                      onClick={async () => {
+                        await supabaseClient.auth.signOut();
+                        dispatch(resetAccount());
+                        dispatch(resetMain());
+                      }}
                       className={`${
                         active ? "opacity-80 text-white" : "text-white"
                       } group flex w-full items-center justify-between rounded-md px-2 py-2 text-sm`}
