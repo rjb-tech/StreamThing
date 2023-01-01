@@ -7,6 +7,7 @@ import {
   setAvatarUrl,
   setAccountImageLoading,
   setFriends,
+  setFriendRequests,
 } from "../redux/slices/accountSlice";
 
 import type { FriendRecord } from "./types";
@@ -22,7 +23,7 @@ export async function getProfile(
 
     const { data, error, status } = await supabaseClient
       .from("profiles")
-      .select("username, avatar_url, id, friends")
+      .select("username, avatar_url, id, friends, friend_requests")
       .eq("id", user.id)
       .single();
 
@@ -38,6 +39,7 @@ export async function getProfile(
       dispatch(setUsername(data.username));
       dispatch(setAvatarUrl(data.avatar_url));
       dispatch(setFriends(formattedFriends));
+      dispatch(setFriendRequests(data.friend_requests));
     }
   } catch (error) {
     toast.error("Error loading user data", {
