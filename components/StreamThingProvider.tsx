@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { ChannelGuide } from "./ChannelGuide";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useUser } from "@supabase/auth-helpers-react";
-import { setShowAccountModal, setShowGuide } from "../redux/slices/mainSlice";
+import { setShowAccountModal, setShowGuide } from "../redux/slices/uiSlice";
 import { getProfile } from "./SupabaseHelpers";
 import { ModalProvider } from "./ModalProvider";
 import {
@@ -21,7 +21,7 @@ interface ProviderProps {
 export const StreamThingProvider = ({ children }: ProviderProps) => {
   const dispatch = useAppDispatch();
   const { friendRequests } = useAppSelector((state) => state.account);
-  const { showGuide, showAccountModal } = useAppSelector((state) => state.main);
+  const { showGuide, showAccountModal } = useAppSelector((state) => state.ui);
   const session = useSession();
   const user = useUser();
   const supabaseClient = useSupabaseClient();

@@ -1,7 +1,7 @@
 import { useFormik } from "formik";
 import classNames from "classnames";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { setShowAddFriendModal } from "../redux/slices/mainSlice";
+import { setShowAddFriendModal } from "../redux/slices/uiSlice";
 import { BaseModal } from "./BaseModal";
 import { StreamThingButton } from "./StreamThingButton";
 import { sendFriendRequest } from "./SupabaseHelpers";
@@ -11,7 +11,7 @@ export const AddFriendModal = () => {
   const dispatch = useAppDispatch();
   const supabaseClient = useSupabaseClient();
   const user = useUser();
-  const { showAddFriendModal } = useAppSelector((state) => state.main);
+  const { showAddFriendModal } = useAppSelector((state) => state.ui);
   const { username } = useAppSelector((state) => state.account);
 
   const formik = useFormik({

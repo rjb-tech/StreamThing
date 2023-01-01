@@ -1,6 +1,6 @@
 import { Dialog, Transition } from "@headlessui/react";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import { setShowAuthModal } from "../redux/slices/mainSlice";
+import { setShowAuthModal } from "../redux/slices/uiSlice";
 import { Session, useSupabaseClient } from "@supabase/auth-helpers-react";
 import twitchLogo from "../images/TwitchGlitchPurple.png";
 import Image from "next/image";
@@ -8,7 +8,7 @@ import Image from "next/image";
 export const AuthModal = () => {
   const dispatch = useAppDispatch();
   const supabase = useSupabaseClient();
-  const { showAuthModal } = useAppSelector((state) => state.main);
+  const { showAuthModal } = useAppSelector((state) => state.ui);
 
   const closeModal = () => {
     dispatch(setShowAuthModal(false));

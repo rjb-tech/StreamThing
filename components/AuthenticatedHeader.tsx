@@ -9,11 +9,11 @@ import {
   BellAlertIcon,
 } from "@heroicons/react/20/solid";
 import {
-  resetMain,
+  resetUI,
   setShowAccountModal,
   setShowAddFriendModal,
   setShowGuide,
-} from "../redux/slices/mainSlice";
+} from "../redux/slices/uiSlice";
 
 import { StreamThingButton } from "./StreamThingButton";
 import type { User } from "@supabase/supabase-js";
@@ -29,7 +29,7 @@ export const AuthenticatedHeader = ({
   user,
 }: AuthenticatedHeaderProps) => {
   const dispatch = useAppDispatch();
-  const { showGuide } = useAppSelector((state) => state.main);
+  const { showGuide } = useAppSelector((state) => state.ui);
   const { username, friendRequests } = useAppSelector((state) => state.account);
 
   return (
@@ -124,7 +124,7 @@ export const AuthenticatedHeader = ({
                       onClick={async () => {
                         await supabaseClient.auth.signOut();
                         dispatch(resetAccount());
-                        dispatch(resetMain());
+                        dispatch(resetUI());
                       }}
                       className={`${
                         active ? "opacity-80 text-white" : "text-white"

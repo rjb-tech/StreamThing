@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { useAppDispatch } from "../redux/hooks";
-import { setActiveStream, setShowGuide } from "../redux/slices/mainSlice";
+import { setActiveStream, setShowGuide } from "../redux/slices/uiSlice";
 import type { FriendRecord } from "./types";
 
 interface ChannelProps {

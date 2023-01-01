@@ -1,6 +1,6 @@
 import { ArrowLeftOnRectangleIcon } from "@heroicons/react/20/solid";
 import { useAppDispatch } from "../redux/hooks";
-import { setShowAuthModal } from "../redux/slices/mainSlice";
+import { setShowAuthModal } from "../redux/slices/uiSlice";
 import { StreamThingButton } from "./StreamThingButton";
 
 interface UnauthenticatedHeaderProps {

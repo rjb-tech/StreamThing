@@ -1,6 +1,6 @@
 import classNames from "classnames";
 import { useAppSelector, useAppDispatch } from "../redux/hooks";
-import { setShowAccountModal } from "../redux/slices/mainSlice";
+import { setShowAccountModal } from "../redux/slices/uiSlice";
 import Image from "next/image";
 import { useFormik } from "formik";
 import { ChangeEvent } from "react";
@@ -13,7 +13,7 @@ export const AccountModal = () => {
   const user = useUser();
   const supabaseClient = useSupabaseClient();
   const dispatch = useAppDispatch();
-  const { showAccountModal } = useAppSelector((state) => state.main);
+  const { showAccountModal } = useAppSelector((state) => state.ui);
   const { username, avatarUrl } = useAppSelector((state) => state.account);
   const formik = useFormik({
     initialValues: {

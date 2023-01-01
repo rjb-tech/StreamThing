@@ -19,7 +19,7 @@ const initialState: StreamThingMainState = {
   activeStream: "",
 };
 
-export const mainSlice = createSlice({
+export const uiSlice = createSlice({
   name: "main",
   initialState,
   reducers: {
@@ -38,7 +38,7 @@ export const mainSlice = createSlice({
     setActiveStream: (state, action: PayloadAction<string>) => {
       state.activeStream = action.payload;
     },
-    resetMain: () => initialState,
+    resetUI: () => initialState,
   },
 });
 
@@ -48,7 +48,7 @@ export const {
   setShowAccountModal,
   setShowAddFriendModal,
   setActiveStream,
-  resetMain,
-} = mainSlice.actions;
+  resetUI,
+} = uiSlice.actions;
 
-export default mainSlice.reducer;
+export default uiSlice.reducer;

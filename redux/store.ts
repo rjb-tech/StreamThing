@@ -1,10 +1,10 @@
 import { configureStore } from "@reduxjs/toolkit";
 import accountSlice from "./slices/accountSlice";
-import mainSlice from "./slices/mainSlice";
+import uiSlice from "./slices/uiSlice";
 
 export const store = configureStore({
   reducer: {
-    main: mainSlice,
+    ui: uiSlice,
     account: accountSlice,
   },
 });
