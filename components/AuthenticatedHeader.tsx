@@ -6,6 +6,7 @@ import {
   UserCircleIcon,
   TvIcon,
   UserPlusIcon,
+  BellAlertIcon,
 } from "@heroicons/react/20/solid";
 import {
   setShowAccountModal,
@@ -27,7 +28,7 @@ export const AuthenticatedHeader = ({
 }: AuthenticatedHeaderProps) => {
   const dispatch = useAppDispatch();
   const { showGuide } = useAppSelector((state) => state.main);
-  const { username } = useAppSelector((state) => state.account);
+  const { username, friendRequests } = useAppSelector((state) => state.account);
 
   return (
     <header className="fixed top-0 h-24 w-full py-4 px-8 bg-gradient-to-r from-[#006687] to-[#3C1E46] flex items-center justify-between z-50">
@@ -46,7 +47,7 @@ export const AuthenticatedHeader = ({
         <Menu as="span" className="relative inline-block text-left">
           <div>
             <Menu.Button as="div">
-              <StreamThingButton innerText={username}>
+              <StreamThingButton innerText={username} ping>
                 <ChevronDownIcon
                   className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
                   aria-hidden="true"
@@ -65,6 +66,24 @@ export const AuthenticatedHeader = ({
           >
             <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-100 rounded-md bg-slate-500 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="px-1 py-1 ">
+                {friendRequests.length > 0 && (
+                  <Menu.Item>
+                    {({ active }) => (
+                      <button
+                        onClick={() => dispatch(setShowAddFriendModal(true))}
+                        className={`${
+                          active ? "opacity-80 text-white" : "text-white"
+                        } group flex w-full items-center justify-between rounded-md px-2 py-2 text-sm`}
+                      >
+                        <BellAlertIcon
+                          className="mr-2 h-5 w-5"
+                          aria-hidden="true"
+                        />
+                        {`Requests (${friendRequests.length})`}
+                      </button>
+                    )}
+                  </Menu.Item>
+                )}
                 <Menu.Item>
                   {({ active }) => (
                     <button
