@@ -12,7 +12,7 @@ import {
   createClient,
   RealtimePostgresUpdatePayload,
 } from "@supabase/supabase-js";
-import { setFriendRequests } from "../redux/slices/accountSlice";
+import { addFriendRequest } from "../redux/slices/accountSlice";
 
 interface ProviderProps {
   children: ReactNode;
@@ -50,21 +50,19 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
           {
             event: "UPDATE",
             schema: "public",
-            table: "profiles",
-            filter: `id=eq.${user?.id}`,
+            table: "friend_requests",
+            filter: `receiever=eq.${user?.id}`,
           },
           (
             payload: RealtimePostgresUpdatePayload<{
-              ["avatar_url"]: string;
-              ["content_sources"]: string[];
-              ["friends"]: string[];
-              ["friend_requests"]: string[];
               ["id"]: string;
-              ["username"]: string;
+              ["created_at"]: string;
+              ["sender"]: string;
+              ["receiver"]: string;
             }>
           ) => {
-            if (friendRequests !== payload.new.friend_requests)
-              dispatch(setFriendRequests(payload.new.friend_requests));
+            if (friendRequests.includes(payload.new.id))
+              dispatch(addFriendRequest(payload.new.id));
           }
         )
         .subscribe();

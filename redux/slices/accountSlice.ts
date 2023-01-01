@@ -43,6 +43,9 @@ export const accountSlice = createSlice({
     setFriendRequests: (state, action: PayloadAction<string[]>) => {
       state.friendRequests = action.payload;
     },
+    addFriendRequest: (state, action: PayloadAction<string>) => {
+      state.friendRequests = [...state.friendRequests, action.payload];
+    },
   },
 });
 
@@ -53,6 +56,7 @@ export const {
   setAvatarUrl,
   setFriends,
   setFriendRequests,
+  addFriendRequest,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;
