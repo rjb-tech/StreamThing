@@ -177,6 +177,38 @@ export async function uploadUserImage(
   }
 }
 
+export async function sendFriendRequest(
+  senderId: string,
+  receiverUsername: string,
+  supabaseClient: SupabaseClient
+) {
+  try {
+    const receiverId = await getUserIdFromUsername(
+      receiverUsername,
+      supabaseClient
+    );
+
+    const newFriendRequest = {
+      sender: senderId,
+      receiver: receiverId,
+    };
+
+    const { data, error } = await supabaseClient
+      .from("friend_requests")
+      .insert(newFriendRequest);
+
+    if (error) throw error;
+
+    toast.success("Friend request sent", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+  } catch {
+    toast.error("Username not found", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+  }
+}
+
 async function getFriendRecordFromId(
   friendId: string,
   supabaseClient: SupabaseClient
@@ -193,4 +225,19 @@ async function getFriendRecordFromId(
       username: data?.username,
       avatarUrl: data?.avatar_url,
     };
+}
+
+async function getUserIdFromUsername(
+  username: string,
+  supabaseClient: SupabaseClient
+) {
+  const { data, error } = await supabaseClient
+    .from("profiles")
+    .select("id")
+    .eq("username", username)
+    .single();
+
+  if (error) throw error;
+
+  return data.id;
 }

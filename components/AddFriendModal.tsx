@@ -4,22 +4,35 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { setShowAddFriendModal } from "../redux/slices/mainSlice";
 import { BaseModal } from "./BaseModal";
 import { StreamThingButton } from "./StreamThingButton";
+import { sendFriendRequest } from "./SupabaseHelpers";
+import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 
 export const AddFriendModal = () => {
   const dispatch = useAppDispatch();
+  const supabaseClient = useSupabaseClient();
+  const user = useUser();
   const { showAddFriendModal } = useAppSelector((state) => state.main);
+  const { username } = useAppSelector((state) => state.account);
 
   const formik = useFormik({
     initialValues: {
       username: "",
     },
-    onSubmit: (values) => {},
+    onSubmit: (values) => {
+      if (user && !formik.errors.username) {
+        sendFriendRequest(user.id, values.username, supabaseClient);
+        formik.resetForm();
+      }
+    },
     validate: (values) => {
       const errors: { username?: string } = {};
 
       if (values.username === "") errors.username = "Username Required";
+
       if (values.username.length > 50)
         errors.username = "Must be less than 50 characters";
+
+      if (values.username === username) errors.username = "Can't add yourself";
 
       return errors;
     },

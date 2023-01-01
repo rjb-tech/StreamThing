@@ -22,7 +22,7 @@ export const AccountModal = () => {
     onSubmit: (values) => {
       if (user) {
         updateUsername(user, values.username, supabaseClient, dispatch);
-        formik.setFieldValue("username", "");
+        formik.resetForm();
       }
     },
     validate: (values) => {
