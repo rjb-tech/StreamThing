@@ -38,7 +38,8 @@ export const AuthenticatedHeader = ({
       <span className="w-full flex justify-end space-x-4">
         <StreamThingButton innerText="">
           <BellAlertIcon className="h-5 w-5" />
-          <div className="absolute ml-12 mb-8 bg-pink-400 opacity-40 rounded-full w-2 h-2 animate-ping-slow" />
+          <div className="absolute ml-12 mb-8 bg-pink-400 rounded-full w-2 h-2" />
+          <div className="absolute ml-12 mb-8 bg-pink-400 rounded-full w-2 h-2 animate-ping-slow" />
         </StreamThingButton>
         <StreamThingButton
           clickFn={() => dispatch(setShowGuide(!showGuide))}
