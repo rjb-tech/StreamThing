@@ -12,7 +12,6 @@ import {
   createClient,
   RealtimePostgresUpdatePayload,
 } from "@supabase/supabase-js";
-import { addFriendRequest } from "../redux/slices/accountSlice";
 
 interface ProviderProps {
   children: ReactNode;
@@ -20,7 +19,6 @@ interface ProviderProps {
 
 export const StreamThingProvider = ({ children }: ProviderProps) => {
   const dispatch = useAppDispatch();
-  const { friendRequests } = useAppSelector((state) => state.account);
   const { showGuide, showAccountModal } = useAppSelector((state) => state.ui);
   const session = useSession();
   const user = useUser();
@@ -60,10 +58,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
               ["sender"]: string;
               ["receiver"]: string;
             }>
-          ) => {
-            if (friendRequests.includes(payload.new.id))
-              dispatch(addFriendRequest(payload.new.id));
-          }
+          ) => {}
         )
         .subscribe();
     }
