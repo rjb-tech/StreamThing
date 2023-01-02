@@ -59,7 +59,7 @@ export const AddFriendModal = () => {
             >
               {formik.errors.username
                 ? formik.errors.username
-                : "Add a friend to your network"}
+                : "Connect friends to your network"}
             </label>
             <input
               type="text"
@@ -71,7 +71,7 @@ export const AddFriendModal = () => {
             />
             <span className="w-full flex justify-end pt-4">
               <StreamThingButton
-                innerText="Add Friend"
+                innerText="Connect"
                 fullWidth
                 disabled={
                   formik.errors.username !== undefined ||
