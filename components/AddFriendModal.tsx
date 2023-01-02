@@ -32,6 +32,9 @@ export const AddFriendModal = () => {
       if (values.username.length > 50)
         errors.username = "Must be less than 50 characters";
 
+      if (values.username.includes(" "))
+        errors.username = "Usernames can't include spaces";
+
       if (values.username === username) errors.username = "Can't add yourself";
 
       return errors;

@@ -29,8 +29,12 @@ export const AccountModal = () => {
       const errors: { username?: string } = {};
 
       if (values.username === "") errors.username = "Username Required";
+
       if (values.username.length > 50)
         errors.username = "Must be less than 50 characters";
+
+      if (values.username.includes(" "))
+        errors.username = "Usernames can't include spaces";
 
       return errors;
     },
