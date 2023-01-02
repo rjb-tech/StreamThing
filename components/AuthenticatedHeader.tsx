@@ -43,7 +43,7 @@ export const AuthenticatedHeader = ({
         </StreamThingButton>
         <StreamThingButton
           clickFn={() => dispatch(setShowGuide(!showGuide))}
-          innerText="Network"
+          innerText="My Network"
         >
           <TvIcon
             className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
