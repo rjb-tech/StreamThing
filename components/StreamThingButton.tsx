@@ -8,7 +8,6 @@ interface StreamThingButtonProps {
   buttonType?: "button" | "submit" | "reset" | undefined;
   disabled?: boolean;
   fullWidth?: boolean;
-  ping?: boolean;
 }
 
 export const StreamThingButton = ({
@@ -18,7 +17,6 @@ export const StreamThingButton = ({
   buttonType = undefined,
   disabled = false,
   fullWidth = false,
-  ping = false,
 }: StreamThingButtonProps) => {
   return (
     <button
@@ -35,9 +33,6 @@ export const StreamThingButton = ({
     >
       {innerText}
       {children}
-      {ping && (
-        <div className="absolute ml-12 mb-8 bg-pink-400 opacity-40 rounded-full w-2 h-2 animate-ping-slow" />
-      )}
     </button>
   );
 };

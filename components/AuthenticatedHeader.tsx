@@ -36,8 +36,9 @@ export const AuthenticatedHeader = ({
     <header className="fixed top-0 h-24 w-full py-4 px-8 bg-gradient-to-r from-[#006687] to-[#3C1E46] flex items-center justify-between z-50">
       <span className="text-4xl text-white">StreamThing</span>
       <span className="w-full flex justify-end space-x-4">
-        <StreamThingButton innerText="" ping>
+        <StreamThingButton innerText="">
           <BellAlertIcon className="h-5 w-5" />
+          <div className="absolute ml-12 mb-8 bg-pink-400 opacity-40 rounded-full w-2 h-2 animate-ping-slow" />
         </StreamThingButton>
         <StreamThingButton
           clickFn={() => dispatch(setShowGuide(!showGuide))}
