@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import type { FriendRecord } from "../../components/types";
+import type { UserRecord } from "../../components/types";
 
 // Define a type for the slice state
 interface StreamThingAccountState {
@@ -9,7 +9,7 @@ interface StreamThingAccountState {
   username: string | undefined;
   avatarUrl: string | undefined;
   followers: string[];
-  following: string[];
+  following: UserRecord[];
 }
 
 const initialState: StreamThingAccountState = {
@@ -40,7 +40,7 @@ export const accountSlice = createSlice({
     setFollowers: (state, action: PayloadAction<string[]>) => {
       state.followers = action.payload;
     },
-    setFollowing: (state, action: PayloadAction<string[]>) => {
+    setFollowing: (state, action: PayloadAction<UserRecord[]>) => {
       state.following = action.payload;
     },
     resetAccount: () => initialState,

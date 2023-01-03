@@ -1,15 +1,15 @@
 import { ChannelRow } from "./ChannelRow";
 import { useAppSelector } from "../redux/hooks";
-import type { FriendRecord } from "./types";
+import type { UserRecord } from "./types";
 import { useUser } from "@supabase/auth-helpers-react";
 
 export const ChannelGuide = () => {
   const user = useUser();
-  const { friends, username, avatarUrl } = useAppSelector(
+  const { following, username, avatarUrl } = useAppSelector(
     (state) => state.account
   );
 
-  const userRecord: FriendRecord = {
+  const userRecord: UserRecord = {
     id: user?.id || "",
     username: username || "",
     avatarUrl: avatarUrl || "",
@@ -21,7 +21,7 @@ export const ChannelGuide = () => {
         streamUrl="https://www.twitch.tv/pobelter"
         user={userRecord}
       />
-      {friends?.map((member: FriendRecord) => {
+      {following?.map((member: UserRecord) => {
         return (
           <ChannelRow
             key={member.id}

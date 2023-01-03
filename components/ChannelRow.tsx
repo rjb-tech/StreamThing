@@ -1,11 +1,11 @@
 import Image from "next/image";
 import { useAppDispatch } from "../redux/hooks";
 import { setActiveStream, setShowGuide } from "../redux/slices/uiSlice";
-import type { FriendRecord } from "./types";
+import type { UserRecord } from "./types";
 
 interface ChannelProps {
   streamUrl: string;
-  user: FriendRecord;
+  user: UserRecord;
 }
 
 export const ChannelRow = ({ streamUrl, user }: ChannelProps) => {
@@ -17,7 +17,7 @@ export const ChannelRow = ({ streamUrl, user }: ChannelProps) => {
   return (
     <div className="flex overscroll-y-contain h-32 lg:h-24 overflow-y-scroll border-t-4">
       <section className="bg-black h-full w-1/5 flex justify-center">
-        <div className="bg-emerald-200 h-full w-full flex flex-col lg:flex-row items-center justify-center space-y-4 lg:space-x-4 lg:space-y-0">
+        <div className="bg-emerald-200 h-full w-full flex flex-col lg:flex-row items-center justify-around space-y-4 lg:space-y-0">
           <Image
             className="rounded-full h-12 w-12"
             src={user.avatarUrl}

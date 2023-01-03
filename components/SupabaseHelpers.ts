@@ -10,7 +10,7 @@ import {
   setFollowing,
 } from "../redux/slices/accountSlice";
 
-import type { FriendRecord } from "./types";
+import type { UserRecord } from "./types";
 
 export async function getProfile(
   user: User,
@@ -28,10 +28,17 @@ export async function getProfile(
     if (error) throw error;
 
     if (data) {
+      const explodedFollowingRecords = await Promise.all(
+        data.following.map(async (id: string) => {
+          return await getUserRecordFromId(id, supabaseClient);
+        })
+      );
       dispatch(setUsername(data.username));
       dispatch(setAvatarUrl(data.avatar_url));
       dispatch(setFollowers(data.followers));
-      dispatch(setFollowing(data.following));
+      dispatch(setFollowing(explodedFollowingRecords));
+
+      console.log(explodedFollowingRecords);
     }
   } catch (error) {
     toast.error("Error loading user data", {
@@ -45,7 +52,7 @@ export async function getProfile(
 export async function getNetworkUserInfo(
   userId: string,
   supabaseClient: SupabaseClient
-): Promise<FriendRecord> {
+): Promise<UserRecord> {
   const { data, error } = await supabaseClient
     .from("profiles")
     .select("id, username, avatar_url")
@@ -54,7 +61,7 @@ export async function getNetworkUserInfo(
 
   if (error) throw error;
 
-  const returnData: FriendRecord = {
+  const returnData: UserRecord = {
     id: data.id,
     username: data.username,
     avatarUrl: data.avatar_url,
@@ -209,10 +216,10 @@ export async function sendFollow(
   }
 }
 
-async function getFriendRecordFromId(
+async function getUserRecordFromId(
   friendId: string,
   supabaseClient: SupabaseClient
-): Promise<FriendRecord | void> {
+): Promise<UserRecord | void> {
   const { data, error } = await supabaseClient
     .from("profiles")
     .select("id, username,  avatar_url")
