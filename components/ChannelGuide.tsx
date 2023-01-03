@@ -27,6 +27,7 @@ export const ChannelGuide = () => {
             key={member.id}
             streamUrl="https://www.twitch.tv/pobelter"
             user={member}
+            showUnfollow
           />
         );
       })}

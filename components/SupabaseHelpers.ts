@@ -212,6 +212,29 @@ export async function sendFollow(
   }
 }
 
+export async function sendUnfollow(
+  followerId: string,
+  followeeId: string,
+  supabaseClient: SupabaseClient
+) {
+  try {
+    const { data, error } = await supabaseClient.rpc("send_unfollow", {
+      follower_id: followerId,
+      followee_id: followeeId,
+    });
+
+    if (error) throw error;
+
+    toast.success("User removed from your network", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+  } catch (error: any) {
+    toast.error("Error unfollowing user", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+  }
+}
+
 async function getUserRecordFromId(
   friendId: string,
   supabaseClient: SupabaseClient

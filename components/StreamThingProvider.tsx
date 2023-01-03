@@ -19,6 +19,7 @@ interface ProviderProps {
 
 export const StreamThingProvider = ({ children }: ProviderProps) => {
   const dispatch = useAppDispatch();
+  const { following } = useAppSelector((state) => state.account);
   const { showGuide, showAccountModal } = useAppSelector((state) => state.ui);
   const session = useSession();
   const user = useUser();
@@ -63,6 +64,10 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
         .subscribe();
     }
   }, [session]);
+
+  useEffect(() => {
+    if (user) getProfile(user, supabaseClient, dispatch);
+  }, [following]);
 
   // Event listeners
   useEffect(() => {
