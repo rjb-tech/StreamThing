@@ -20,9 +20,7 @@ export async function getProfile(
     if (!user) throw new Error("No user");
 
     const { data, error, status } = await supabaseClient
-      .from("profiles")
-      .select("username, avatar_url, id")
-      .eq("id", user.id)
+      .rpc("get_user_record_from_id", { userid: user.id })
       .single();
 
     if (error) throw error;
@@ -198,6 +196,12 @@ export async function sendFriendRequest(
     });
   }
 }
+
+export async function send_follow(
+  newFollowerId: string,
+  newFolloweeUsername: string,
+  supabaseClient: SupabaseClient
+) {}
 
 async function getFriendRecordFromId(
   friendId: string,
