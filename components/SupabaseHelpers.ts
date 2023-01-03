@@ -37,8 +37,6 @@ export async function getProfile(
       dispatch(setAvatarUrl(data.avatar_url));
       dispatch(setFollowers(data.followers));
       dispatch(setFollowing(explodedFollowingRecords));
-
-      console.log(explodedFollowingRecords);
     }
   } catch (error) {
     toast.error("Error loading user data", {
@@ -190,8 +188,6 @@ export async function sendFollow(
       .single();
 
     if (error) throw error;
-
-    console.log(data);
 
     toast.success("User followed! They will now appear in your network", {
       position: toast.POSITION.BOTTOM_CENTER,
