@@ -165,43 +165,45 @@ export async function uploadUserImage(
   }
 }
 
-export async function sendFriendRequest(
-  senderId: string,
-  receiverUsername: string,
-  supabaseClient: SupabaseClient
-) {
-  try {
-    const receiverId = await getUserIdFromUsername(
-      receiverUsername,
-      supabaseClient
-    );
-
-    const newFriendRequest = {
-      sender: senderId,
-      receiver: receiverId,
-    };
-
-    const { data, error } = await supabaseClient
-      .from("friend_requests")
-      .insert(newFriendRequest);
-
-    if (error) throw error;
-
-    toast.success("Friend request sent", {
-      position: toast.POSITION.BOTTOM_CENTER,
-    });
-  } catch {
-    toast.error("Username not found", {
-      position: toast.POSITION.BOTTOM_CENTER,
-    });
-  }
-}
-
-export async function send_follow(
+export async function sendFollow(
   newFollowerId: string,
   newFolloweeUsername: string,
   supabaseClient: SupabaseClient
-) {}
+) {
+  try {
+    const { data, error, status } = await supabaseClient
+      .rpc("send_follow", {
+        follower_id: newFollowerId,
+        followee_username: newFolloweeUsername,
+      })
+      .single();
+
+    if (error) throw error;
+
+    console.log(data);
+
+    toast.success("User followed! They will now appear in your network", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+  } catch (error: any) {
+    switch (error.message) {
+      case "already_following":
+        toast.error("Already following this user", {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+        break;
+      case "not_found":
+        toast.error("User not found", {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+        break;
+      default:
+        toast.error("Couldn't follow user, try again later", {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+    }
+  }
+}
 
 async function getFriendRecordFromId(
   friendId: string,

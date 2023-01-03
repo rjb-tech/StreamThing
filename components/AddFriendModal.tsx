@@ -4,7 +4,7 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { setShowAddFriendModal } from "../redux/slices/uiSlice";
 import { BaseModal } from "./BaseModal";
 import { StreamThingButton } from "./StreamThingButton";
-import { sendFriendRequest } from "./SupabaseHelpers";
+import { sendFollow } from "./SupabaseHelpers";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 
 export const AddFriendModal = () => {
@@ -20,7 +20,7 @@ export const AddFriendModal = () => {
     },
     onSubmit: (values) => {
       if (user && !formik.errors.username) {
-        sendFriendRequest(user.id, values.username, supabaseClient);
+        sendFollow(user.id, values.username, supabaseClient);
         formik.resetForm();
       }
     },
