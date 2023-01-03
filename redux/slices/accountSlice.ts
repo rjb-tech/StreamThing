@@ -8,6 +8,8 @@ interface StreamThingAccountState {
   accountImageUploading: boolean;
   username: string | undefined;
   avatarUrl: string | undefined;
+  followers: string[];
+  following: string[];
 }
 
 const initialState: StreamThingAccountState = {
@@ -15,6 +17,8 @@ const initialState: StreamThingAccountState = {
   accountImageUploading: false,
   username: undefined,
   avatarUrl: undefined,
+  followers: [],
+  following: [],
 };
 
 export const accountSlice = createSlice({
@@ -33,6 +37,12 @@ export const accountSlice = createSlice({
     setAvatarUrl: (state, action: PayloadAction<string>) => {
       state.avatarUrl = action.payload;
     },
+    setFollowers: (state, action: PayloadAction<string[]>) => {
+      state.followers = action.payload;
+    },
+    setFollowing: (state, action: PayloadAction<string[]>) => {
+      state.following = action.payload;
+    },
     resetAccount: () => initialState,
   },
 });
@@ -43,6 +53,8 @@ export const {
   setUsername,
   setAvatarUrl,
   resetAccount,
+  setFollowers,
+  setFollowing,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;
