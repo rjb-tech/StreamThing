@@ -7,6 +7,7 @@ interface StreamThingMainState {
   showAuthModal: boolean;
   showAccountModal: boolean;
   showAddFriendModal: boolean;
+  showAddContentSourceModal: boolean;
   activeStream: string;
 }
 
@@ -16,6 +17,7 @@ const initialState: StreamThingMainState = {
   showAuthModal: false,
   showAccountModal: false,
   showAddFriendModal: false,
+  showAddContentSourceModal: false,
   activeStream: "",
 };
 
@@ -35,6 +37,9 @@ export const uiSlice = createSlice({
     setShowAddFriendModal: (state, action: PayloadAction<boolean>) => {
       state.showAddFriendModal = action.payload;
     },
+    setShowAddContentSourceModal: (state, action: PayloadAction<boolean>) => {
+      state.showAddContentSourceModal = action.payload;
+    },
     setActiveStream: (state, action: PayloadAction<string>) => {
       state.activeStream = action.payload;
     },
@@ -47,6 +52,7 @@ export const {
   setShowAuthModal,
   setShowAccountModal,
   setShowAddFriendModal,
+  setShowAddContentSourceModal,
   setActiveStream,
   resetUI,
 } = uiSlice.actions;

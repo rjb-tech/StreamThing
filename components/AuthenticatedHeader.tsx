@@ -7,10 +7,12 @@ import {
   TvIcon,
   UserPlusIcon,
   BellAlertIcon,
+  PlusIcon,
 } from "@heroicons/react/20/solid";
 import {
   resetUI,
   setShowAccountModal,
+  setShowAddContentSourceModal,
   setShowAddFriendModal,
   setShowGuide,
 } from "../redux/slices/uiSlice";
@@ -73,6 +75,21 @@ export const AuthenticatedHeader = ({
           >
             <Menu.Items className="absolute right-0 mt-2 w-48 origin-top-right divide-y divide-gray-100 rounded-md bg-slate-500 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
               <div className="px-1 py-1 ">
+                <Menu.Item>
+                  {({ active }) => (
+                    <button
+                      onClick={() =>
+                        dispatch(setShowAddContentSourceModal(true))
+                      }
+                      className={`${
+                        active ? "opacity-80 text-white" : "text-white"
+                      } group flex w-full items-center justify-between rounded-md px-2 py-2 text-sm`}
+                    >
+                      <PlusIcon className="mr-2 h-5 w-5" aria-hidden="true" />
+                      Add Content Source
+                    </button>
+                  )}
+                </Menu.Item>
                 <Menu.Item>
                   {({ active }) => (
                     <button
