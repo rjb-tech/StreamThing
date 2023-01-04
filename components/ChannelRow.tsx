@@ -26,7 +26,7 @@ export const ChannelRow = ({
     dispatch(setShowGuide(false));
   };
   return (
-    <div className="flex overscroll-y-contain h-32 lg:h-24 overflow-y-scroll border-t-4">
+    <div className="flex overscroll-y-contain h-32 lg:h-28 overflow-y-scroll border-t-4">
       <section className="bg-black h-full w-1/5 flex justify-center">
         <div className="bg-emerald-200 h-full w-full">
           {showUnfollow && (
@@ -41,9 +41,9 @@ export const ChannelRow = ({
               />
             </div>
           )}
-          <div className="flex flex-col h-full w-full lg:flex-row items-center justify-around space-y-4 lg:space-y-0">
+          <div className="flex flex-col h-full w-full lg:flex-row items-center justify-around py-4 space-y-2 lg:space-y-0">
             <Image
-              className="rounded-full h-12 w-12"
+              className="rounded-full h-16 w-16"
               src={user.avatarUrl}
               height={100}
               width={100}
