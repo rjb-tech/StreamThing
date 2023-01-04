@@ -24,7 +24,7 @@ export const StreamThingButton = ({
       onClick={clickFn}
       type={buttonType}
       className={classNames(
-        "inline-flex h-1/2 justify-center items-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-opacity-30 hover:scale-105 active:scale-100 duration-250 disabled:bg-opacity-10 disabled:text-gray-800",
+        "inline-flex h-1/2 justify-center items-center rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white transition-all hover:bg-opacity-30 hover:scale-105 active:scale-100 duration-250 disabled:bg-opacity-10 disabled:text-gray-800 disabled:hover:scale-100",
         {
           "w-fit": !fullWidth,
           "w-full": fullWidth,

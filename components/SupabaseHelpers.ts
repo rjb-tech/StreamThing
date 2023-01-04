@@ -235,6 +235,37 @@ export async function sendUnfollow(
   }
 }
 
+export async function addContentSource(
+  userId: string,
+  contentLink: string,
+  supabaseClient: SupabaseClient
+) {
+  try {
+    const { data, error } = await supabaseClient.rpc("add_content_source", {
+      user_id: userId,
+      content_link: contentLink,
+    });
+
+    if (error) throw error;
+
+    toast.success("Content source added to your account!", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+  } catch (error: any) {
+    switch (error.message) {
+      case "invalid_source":
+        toast.error("Invalid source, please try again.", {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+        break;
+      case "already_content_source":
+        toast.error("Content source already in your channel.", {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+    }
+  }
+}
+
 async function getUserRecordFromId(
   friendId: string,
   supabaseClient: SupabaseClient
