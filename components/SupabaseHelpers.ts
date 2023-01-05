@@ -147,7 +147,7 @@ export async function uploadUserImage(
     dispatch(setAccountImageLoading(true));
     const { data, error } = await supabaseClient.storage
       .from("avatars")
-      .upload(uploadPath, file, { upsert: true });
+      .upload(uploadPath, file, { upsert: true, cacheControl: "300" });
 
     if (error) throw error;
 
