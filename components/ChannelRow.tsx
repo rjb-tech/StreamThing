@@ -2,7 +2,11 @@ import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import Image from "next/image";
 import { useAppDispatch } from "../redux/hooks";
-import { setActiveStream, setShowGuide } from "../redux/slices/uiSlice";
+import {
+  setActiveStream,
+  setShowAddContentSourceModal,
+  setShowGuide,
+} from "../redux/slices/uiSlice";
 import { StreamThingButton } from "./StreamThingButton";
 import { sendUnfollow } from "./SupabaseHelpers";
 import type { UserRecord } from "./types";
@@ -27,7 +31,7 @@ export const ChannelRow = ({
   };
   return (
     <div className="flex overscroll-y-contain h-32 lg:h-28 overflow-y-scroll border-t-4">
-      <section className="bg-black h-full w-1/5 flex justify-center">
+      <section className="bg-black h-full w-1/4 flex justify-center">
         <div className="bg-emerald-200 h-full w-full">
           {!adminChannel && (
             <div className="relative w-full h-fit">
@@ -49,10 +53,14 @@ export const ChannelRow = ({
               width={100}
               alt={`${user.username} avatar`}
             />
-            <div className="flex flex-col justify-end space-y-2">
-              <p>{user.username}</p>
+            <div className="flex flex-col items-end space-y-2">
+              <p className="text-center">{user.username}</p>
               {adminChannel && (
-                <StreamThingButton innerText="My Channel" roundedFull />
+                <StreamThingButton
+                  innerText="My Channel"
+                  roundedFull
+                  clickFn={() => dispatch(setShowAddContentSourceModal(true))}
+                />
               )}
             </div>
           </div>
