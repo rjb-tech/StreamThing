@@ -38,7 +38,7 @@ export const AuthenticatedHeader = ({
     <header className="fixed top-0 h-24 w-full py-4 px-8 bg-gradient-to-r from-[#006687] to-[#3C1E46] flex items-center justify-between z-50">
       <span className="text-4xl text-white">StreamThing</span>
       <span className="w-full flex justify-end space-x-4">
-        <StreamThingButton innerText="" fullHeight animateOnHover>
+        <StreamThingButton innerText="" fullHeight>
           <BellAlertIcon className="h-5 w-5" />
           <div className="absolute ml-12 mb-8 bg-pink-400 rounded-full w-2 h-2" />
           <div className="absolute ml-12 mb-8 bg-pink-400 rounded-full w-2 h-2 animate-ping-slow" />
@@ -47,7 +47,6 @@ export const AuthenticatedHeader = ({
           clickFn={() => dispatch(setShowGuide(!showGuide))}
           innerText="My Network"
           fullHeight
-          animateOnHover
         >
           <TvIcon
             className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
@@ -58,7 +57,7 @@ export const AuthenticatedHeader = ({
         <Menu as="span" className="relative inline-block text-left">
           <div>
             <Menu.Button as="div">
-              <StreamThingButton innerText={username} fullHeight animateOnHover>
+              <StreamThingButton innerText={username} fullHeight>
                 <ChevronDownIcon
                   className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
                   aria-hidden="true"

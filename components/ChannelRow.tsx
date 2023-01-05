@@ -51,7 +51,9 @@ export const ChannelRow = ({
             />
             <div className="flex flex-col justify-end space-y-2">
               <p>{user.username}</p>
-              {adminChannel && <StreamThingButton innerText="My Channel" />}
+              {adminChannel && (
+                <StreamThingButton innerText="My Channel" roundedFull />
+              )}
             </div>
           </div>
         </div>
