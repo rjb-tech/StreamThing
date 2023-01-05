@@ -73,6 +73,7 @@ export const AddFriendModal = () => {
               <StreamThingButton
                 innerText="Connect"
                 fullWidth
+                fullHeight
                 disabled={
                   formik.errors.username !== undefined ||
                   formik.values.username.length > 50
