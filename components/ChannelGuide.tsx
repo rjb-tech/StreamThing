@@ -2,6 +2,7 @@ import { ChannelRow } from "./ChannelRow";
 import { useAppSelector } from "../redux/hooks";
 import type { UserRecord } from "./types";
 import { useUser } from "@supabase/auth-helpers-react";
+import { StreamThingButton } from "./StreamThingButton";
 
 export const ChannelGuide = () => {
   const user = useUser();
@@ -17,6 +18,11 @@ export const ChannelGuide = () => {
 
   return (
     <div className="absolute pt-24 h-fit w-full bg-gray-500">
+      <div className="h-fit w-full flex justify-center space-x-6">
+        <StreamThingButton innerText="Add Channel" />
+        <StreamThingButton innerText="Add Source" />
+        <StreamThingButton innerText="Add Source" />
+      </div>
       <ChannelRow
         streamUrl="https://www.twitch.tv/pobelter"
         user={userRecord}
