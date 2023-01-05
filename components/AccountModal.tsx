@@ -111,7 +111,7 @@ export const AccountModal = () => {
                 fullHeight
                 disabled={
                   formik.errors.username !== undefined ||
-                  formik.values.username.length > 50
+                  formik.values.username.length > 30
                 }
               />
             </span>
