@@ -151,9 +151,12 @@ export async function uploadUserImage(
 
     if (error) throw error;
 
-    toast.success("Avatar updated", {
-      position: toast.POSITION.BOTTOM_CENTER,
-    });
+    toast.success(
+      "Avatar updated. It may take up to 5 minutes to see your changes.",
+      {
+        position: toast.POSITION.BOTTOM_CENTER,
+      }
+    );
 
     const { data: urlData } = await supabaseClient.storage
       .from("avatars")
