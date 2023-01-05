@@ -17,6 +17,7 @@ export const UnauthenticatedHeader = ({
         <span className="text-4xl text-white">StreamThing</span>
         <span className="w-28 flex justify-between">
           <StreamThingButton
+            fullHeight
             innerText="Login"
             clickFn={() => dispatch(setShowAuthModal(true))}
           >
