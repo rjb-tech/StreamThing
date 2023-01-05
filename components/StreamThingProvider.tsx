@@ -19,15 +19,19 @@ interface ProviderProps {
 
 export const StreamThingProvider = ({ children }: ProviderProps) => {
   const dispatch = useAppDispatch();
-  const { following } = useAppSelector((state) => state.account);
   const { showGuide, showAccountModal } = useAppSelector((state) => state.ui);
   const session = useSession();
   const user = useUser();
   const supabaseClient = useSupabaseClient();
 
   useEffect(() => {
-    if (user) getProfile(user, supabaseClient, dispatch);
+    if (user) {
+      getProfile(user, supabaseClient, dispatch);
+      console.log("zippy doo wop");
+    }
+  }, [session?.expires_at]); // get_profile everytime the session access token expires
 
+  useEffect(() => {
     // Realtime connection to keep track of incoming friend requests
     if (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
       const client = createClient(
@@ -63,11 +67,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
         )
         .subscribe();
     }
-  }, [session]);
-
-  useEffect(() => {
-    if (user) getProfile(user, supabaseClient, dispatch);
-  }, [following]);
+  }, []);
 
   // Event listeners
   useEffect(() => {
