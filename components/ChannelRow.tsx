@@ -10,13 +10,13 @@ import type { UserRecord } from "./types";
 interface ChannelProps {
   streamUrl: string;
   user: UserRecord;
-  showUnfollow?: boolean;
+  adminChannel?: boolean;
 }
 
 export const ChannelRow = ({
   streamUrl,
   user,
-  showUnfollow = false,
+  adminChannel = false,
 }: ChannelProps) => {
   const authenticatedUser = useUser();
   const supabaseClient = useSupabaseClient();
@@ -29,7 +29,7 @@ export const ChannelRow = ({
     <div className="flex overscroll-y-contain h-32 lg:h-28 overflow-y-scroll border-t-4">
       <section className="bg-black h-full w-1/5 flex justify-center">
         <div className="bg-emerald-200 h-full w-full">
-          {showUnfollow && (
+          {!adminChannel && (
             <div className="relative w-full h-fit">
               <XMarkIcon
                 onClick={() => {
@@ -49,8 +49,9 @@ export const ChannelRow = ({
               width={100}
               alt={`${user.username} avatar`}
             />
-            <div className="flex flex-col justify-end">
+            <div className="flex flex-col justify-end space-y-2">
               <p>{user.username}</p>
+              {adminChannel && <StreamThingButton innerText="My Channel" />}
             </div>
           </div>
         </div>
