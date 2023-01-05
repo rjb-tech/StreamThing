@@ -9,7 +9,7 @@ interface StreamThingButtonProps {
   disabled?: boolean;
   fullWidth?: boolean;
   fullHeight?: boolean;
-  hoverStates?: boolean;
+  animateOnHover?: boolean;
 }
 
 export const StreamThingButton = ({
@@ -20,7 +20,7 @@ export const StreamThingButton = ({
   disabled = false,
   fullWidth = false,
   fullHeight = false,
-  hoverStates = false,
+  animateOnHover = false,
 }: StreamThingButtonProps) => {
   return (
     <button
@@ -35,7 +35,7 @@ export const StreamThingButton = ({
           "py-2": fullHeight,
           "py-1": !fullHeight,
           "disabled:bg-opacity-10 disabled:text-gray-800 disabled:hover:scale-100 hover:scale-105 active:scale-100":
-            hoverStates,
+            animateOnHover,
         }
       )}
     >

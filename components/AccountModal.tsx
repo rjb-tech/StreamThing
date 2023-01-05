@@ -108,6 +108,7 @@ export const AccountModal = () => {
               <StreamThingButton
                 innerText="Save Changes"
                 fullWidth
+                fullHeight
                 disabled={
                   formik.errors.username !== undefined ||
                   formik.values.username.length > 50
