@@ -269,6 +269,18 @@ export async function addContentSource(
   }
 }
 
+export async function getContentSources(
+  id: string,
+  supabaseClient: SupabaseClient,
+  dispatch: AppDispatch
+) {
+  const { data, error } = await supabaseClient
+    .rpc("get_content_sources_from_id", { user_id: id })
+    .single();
+
+  console.log(data.content_sources);
+}
+
 async function getUserRecordFromId(
   friendId: string,
   supabaseClient: SupabaseClient

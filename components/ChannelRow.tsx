@@ -6,6 +6,7 @@ import {
   setActiveStream,
   setShowAddContentSourceModal,
   setShowGuide,
+  setShowMyChannelModal,
 } from "../redux/slices/uiSlice";
 import { StreamThingButton } from "./StreamThingButton";
 import { sendUnfollow } from "./SupabaseHelpers";
@@ -59,7 +60,7 @@ export const ChannelRow = ({
                 <StreamThingButton
                   innerText="My Channel"
                   roundedFull
-                  clickFn={() => dispatch(setShowAddContentSourceModal(true))}
+                  clickFn={() => dispatch(setShowMyChannelModal(true))}
                 />
               )}
             </div>

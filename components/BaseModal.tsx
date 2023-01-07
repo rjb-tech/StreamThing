@@ -1,12 +1,14 @@
 import { ReactNode } from "react";
 import { Transition, Dialog } from "@headlessui/react";
 import { XMarkIcon } from "@heroicons/react/20/solid";
+import classNames from "classnames";
 
 interface BaseModalProps {
   showCondition: boolean;
   closeModal(): void;
   children: ReactNode;
   hideX?: boolean;
+  wide?: boolean;
 }
 
 export const BaseModal = ({
@@ -14,6 +16,7 @@ export const BaseModal = ({
   closeModal,
   children,
   hideX,
+  wide = false,
 }: BaseModalProps) => {
   return (
     <>
@@ -41,7 +44,12 @@ export const BaseModal = ({
                 leaveFrom="opacity-100 scale-100"
                 leaveTo="opacity-0 scale-95"
               >
-                <Dialog.Panel className="flex flex-col justify-between items-center w-80 max-w-md h-fit transform overflow-hidden rounded-2xl bg-gray-700 p-6 text-left align-middle shadow-xl transition-all text-white">
+                <Dialog.Panel
+                  className={classNames(
+                    "flex flex-col justify-between items-center max-w-md h-fit transform overflow-hidden rounded-2xl bg-gray-700 p-6 text-left align-middle shadow-xl transition-all text-white",
+                    wide ? "w-[28rem]" : "w-80"
+                  )}
+                >
                   {!hideX && (
                     <div className="w-full h-fit flex justify-end focus:border-none focus:ring-none focus:outline-none">
                       <button
