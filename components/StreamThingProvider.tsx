@@ -25,10 +25,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
   const supabaseClient = useSupabaseClient();
 
   useEffect(() => {
-    if (user) {
-      getProfile(user, supabaseClient, dispatch);
-      console.log("zippy doo wop");
-    }
+    if (user) getProfile(user, supabaseClient, dispatch);
   }, [session?.expires_at]); // get_profile everytime the session access token expires
 
   useEffect(() => {
