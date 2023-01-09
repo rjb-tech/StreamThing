@@ -5,6 +5,7 @@ import { useFormik } from "formik";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { setShowMyChannelModal } from "../redux/slices/uiSlice";
 import { BaseModal } from "./BaseModal";
+import { ContentSourcesTab } from "./ContentSourcesTab";
 import { getContentSources } from "./SupabaseHelpers";
 
 export const MyChannelModal = () => {
@@ -55,9 +56,9 @@ export const MyChannelModal = () => {
               Following
             </Tab>
           </Tab.List>
-          <Tab.Panels>
-            <Tab.Panel>
-              <div>hey</div>
+          <Tab.Panels className="h-fit min-h-[24rem] w-full">
+            <Tab.Panel className="content-source-tab flex items-center justify-center h-full w-full">
+              <ContentSourcesTab />
             </Tab.Panel>
             <Tab.Panel>There</Tab.Panel>
           </Tab.Panels>

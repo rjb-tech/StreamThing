@@ -251,7 +251,7 @@ export async function addContentSource(
 
     if (error) throw error;
 
-    toast.success("Content source added to your account!", {
+    toast.success("Content source added to your channel!", {
       position: toast.POSITION.BOTTOM_CENTER,
     });
   } catch (error: any) {
