@@ -49,7 +49,7 @@ export const ContentSourcesTab = () => {
 
   return (
     <div className="h-full w-full">
-      <div className="content-sources w-full h-60 mx-auto border border-gray-600 my-4 py-2 px-4 rounded overflow-y-scroll space-y-4 bg-gray-600">
+      <div className="content-sources w-full h-60 mx-auto border border-gray-600 my-4 py-2 px-4 rounded overflow-y-scroll space-y-4 bg-gray-700">
         {contentSources.map((sourceLink, index) => {
           const source = new URL(sourceLink);
           const isFromYoutube = source.host.includes("youtube.com");
@@ -58,13 +58,14 @@ export const ContentSourcesTab = () => {
 
           return (
             <div
-              className="w-full h-6 flex justify-between my-2 space-x-6"
+              className="w-full h-fit flex py-2 justify-between space-x-6 bg-gray-600 rounded-lg shadow-xl"
               key={index}
             >
               {isFromTwitch && (
                 <Link href={source} target="_blank">
                   <div className="h-6 w-6 flex items-center overflow-visible flex-none">
                     <Image
+                      className="pl-2"
                       alt="Twitch logo"
                       width={734}
                       height={518}
@@ -80,6 +81,7 @@ export const ContentSourcesTab = () => {
                 <Link href={source} target="_blank">
                   <div className="h-6 w-6 flex items-center overflow-visible flex-none">
                     <Image
+                      className="pl-2"
                       alt="Youtube logo"
                       width={734}
                       height={518}
@@ -92,7 +94,7 @@ export const ContentSourcesTab = () => {
                 </Link>
               )}
               <XMarkIcon
-                className="h-6 w-6 cursor-pointer"
+                className="h-6 w-6 cursor-pointer pr-2"
                 onClick={() => {
                   if (user)
                     removeContentSource(

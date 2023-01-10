@@ -25,7 +25,7 @@ export const MyChannelModal = () => {
   }
 
   return (
-    <BaseModal showCondition={showMyChannelModal} closeModal={closeModal}>
+    <BaseModal showCondition={showMyChannelModal} closeModal={closeModal} wide>
       <div className="w-full">
         <Tab.Group>
           <Tab.List className="flex space-x-8 rounded-xl bg-blue-900/20 p-1">

@@ -34,23 +34,6 @@ export const ChannelRow = ({
     <div className="flex overscroll-y-contain h-32 lg:h-28 overflow-y-scroll border-t-4">
       <section className="bg-black h-full w-1/4 flex justify-center">
         <div className="bg-emerald-200 h-full w-full">
-          {!adminChannel && (
-            <div className="relative w-full h-fit">
-              <XMarkIcon
-                onClick={() => {
-                  if (authenticatedUser) {
-                    sendUnfollow(
-                      authenticatedUser.id,
-                      user.id,
-                      supabaseClient,
-                      dispatch
-                    );
-                  }
-                }}
-                className="absolute right-0 pr-1 pt-1 h-5 w-5 cursor-pointer transition-all duration-200 ease-out hover:scale-105 active:scale-100"
-              />
-            </div>
-          )}
           <div className="flex flex-col h-full w-full lg:flex-row items-center justify-around py-4 space-y-2 lg:space-y-0">
             <Image
               className="rounded-full h-16 w-16"
