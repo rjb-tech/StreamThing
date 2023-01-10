@@ -29,7 +29,6 @@ export async function getProfile(
     if (error) throw error;
 
     if (data) {
-      console.log(data);
       const explodedFollowingRecords = await Promise.all(
         data.following.map(async (id: string) => {
           return await getUserRecordFromId(id, supabaseClient);
