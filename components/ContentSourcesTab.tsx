@@ -49,14 +49,14 @@ export const ContentSourcesTab = () => {
 
   return (
     <div className="h-full w-full">
-      <div className="content-sources w-full h-60 mx-auto border-2 my-4 py-2 px-4 rounded-xl overflow-y-scroll space-y-4">
+      <div className="content-sources w-full h-60 mx-auto border border-gray-600 my-4 py-2 px-4 rounded overflow-y-scroll space-y-4 bg-gray-600">
         {contentSources.map((source, index) => {
           const isFromYoutube = source.host.includes("youtube.com");
 
           const isFromTwitch = source.host.includes("twitch.tv");
 
           return (
-            <div className="w-full h-6 flex my-2 space-x-4" key={index}>
+            <div className="w-full h-6 flex my-2 space-x-6" key={index}>
               <XMarkIcon
                 className="h-6 w-6 cursor-pointer"
                 onClick={() => {
@@ -121,7 +121,7 @@ export const ContentSourcesTab = () => {
               value={formik.values.contentLink}
               onChange={formik.handleChange}
               placeholder="Paste Link to Youtube or Twitch Channel"
-              className="w-full text-black border border-white rounded-md px-4 focus:ring focus:ring-white focus:ring-opacity-20 focus:outline-none"
+              className="w-full text-black border border-white rounded-full px-4 focus:ring focus:ring-white focus:ring-opacity-20 focus:outline-none"
             />
             <span className="w-full flex justify-end pt-4">
               <StreamThingButton
