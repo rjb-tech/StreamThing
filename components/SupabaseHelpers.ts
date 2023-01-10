@@ -232,7 +232,7 @@ export async function sendUnfollow(
 
     if (error) throw error;
 
-    getProfile(followeeId, supabaseClient, dispatch);
+    getProfile(followerId, supabaseClient, dispatch);
 
     toast.success("User removed from your network", {
       position: toast.POSITION.BOTTOM_CENTER,

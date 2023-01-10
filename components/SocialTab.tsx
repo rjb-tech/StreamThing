@@ -87,6 +87,7 @@ export const SocialTab = () => {
                 innerText="Connect"
                 fullWidth
                 fullHeight
+                buttonType="submit"
                 disabled={
                   formik.errors.username !== undefined ||
                   formik.values.username.length > 50

@@ -130,6 +130,7 @@ export const ContentSourcesTab = () => {
             <span className="w-full flex justify-end pt-4">
               <StreamThingButton
                 innerText="Submit"
+                buttonType="submit"
                 fullWidth
                 fullHeight
                 disabled={formik.errors.contentLink !== undefined}
