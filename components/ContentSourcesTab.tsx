@@ -56,19 +56,10 @@ export const ContentSourcesTab = () => {
           const isFromTwitch = source.host.includes("twitch.tv");
 
           return (
-            <div className="w-full h-6 flex my-2 space-x-6" key={index}>
-              <XMarkIcon
-                className="h-6 w-6 cursor-pointer"
-                onClick={() => {
-                  if (user)
-                    removeContentSource(
-                      user?.id,
-                      source.href,
-                      supabaseClient,
-                      dispatch
-                    );
-                }}
-              />
+            <div
+              className="w-full h-6 flex justify-between my-2 space-x-6"
+              key={index}
+            >
               {isFromTwitch && (
                 <Link href={source} target="_blank">
                   <div className="h-6 w-6 flex items-center overflow-visible flex-none">
@@ -99,6 +90,18 @@ export const ContentSourcesTab = () => {
                   </div>
                 </Link>
               )}
+              <XMarkIcon
+                className="h-6 w-6 cursor-pointer"
+                onClick={() => {
+                  if (user)
+                    removeContentSource(
+                      user?.id,
+                      source.href,
+                      supabaseClient,
+                      dispatch
+                    );
+                }}
+              />
             </div>
           );
         })}
