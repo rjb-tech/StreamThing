@@ -8,6 +8,7 @@ import {
   setAccountImageLoading,
   setFollowers,
   setFollowing,
+  setContentSources,
 } from "../redux/slices/accountSlice";
 
 import type { UserRecord } from "./types";
@@ -28,14 +29,20 @@ export async function getProfile(
     if (error) throw error;
 
     if (data) {
+      console.log(data);
       const explodedFollowingRecords = await Promise.all(
         data.following.map(async (id: string) => {
           return await getUserRecordFromId(id, supabaseClient);
         })
       );
+
+      const explodedContentSources = data.content_sources.map(
+        (source: string) => new URL(source)
+      );
       dispatch(setUsername(data.username));
       dispatch(setAvatarUrl(data.avatar_url));
       dispatch(setFollowers(data.followers));
+      dispatch(setContentSources(explodedContentSources));
       dispatch(setFollowing(explodedFollowingRecords));
     }
   } catch (error) {
@@ -241,7 +248,8 @@ export async function sendUnfollow(
 export async function addContentSource(
   userId: string,
   contentLink: string,
-  supabaseClient: SupabaseClient
+  supabaseClient: SupabaseClient,
+  dispatch: AppDispatch
 ) {
   try {
     const { data, error } = await supabaseClient.rpc("add_content_source", {
@@ -254,6 +262,8 @@ export async function addContentSource(
     toast.success("Content source added to your channel!", {
       position: toast.POSITION.BOTTOM_CENTER,
     });
+
+    getContentSources(userId, supabaseClient, dispatch);
   } catch (error: any) {
     switch (error.message) {
       case "invalid_source":
@@ -269,6 +279,32 @@ export async function addContentSource(
   }
 }
 
+export async function removeContentSource(
+  userId: string,
+  contentSource: string,
+  supabaseClient: SupabaseClient,
+  dispatch: AppDispatch
+) {
+  try {
+    const { data, error } = await supabaseClient.rpc("remove_content_source", {
+      user_id: userId,
+      source_to_remove: contentSource,
+    });
+
+    if (error) throw error;
+
+    toast.success("Content source removed!", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+
+    getContentSources(userId, supabaseClient, dispatch);
+  } catch {
+    toast.error("Error removing content source", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+  }
+}
+
 export async function getContentSources(
   id: string,
   supabaseClient: SupabaseClient,
@@ -278,7 +314,11 @@ export async function getContentSources(
     .rpc("get_content_sources_from_id", { user_id: id })
     .single();
 
-  console.log(data.content_sources);
+  const explodedContentSources = data.content_sources.map(
+    (source: string) => new URL(source)
+  );
+
+  dispatch(setContentSources(explodedContentSources));
 }
 
 async function getUserRecordFromId(
