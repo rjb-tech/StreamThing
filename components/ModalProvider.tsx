@@ -9,8 +9,6 @@ export const ModalProvider = () => {
     <>
       <AuthModal />
       <AccountModal />
-      <AddFriendModal />
-      <AddContentSourceModal />
       <MyChannelModal />
     </>
   );

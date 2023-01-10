@@ -79,37 +79,6 @@ export const AuthenticatedHeader = ({
                 <Menu.Item>
                   {({ active }) => (
                     <button
-                      onClick={() =>
-                        dispatch(setShowAddContentSourceModal(true))
-                      }
-                      className={`${
-                        active ? "opacity-80 text-white" : "text-white"
-                      } group flex w-full items-center justify-between rounded-md px-2 py-2 text-sm`}
-                    >
-                      <PlusIcon className="mr-2 h-5 w-5" aria-hidden="true" />
-                      Add Content Source
-                    </button>
-                  )}
-                </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
-                    <button
-                      onClick={() => dispatch(setShowAddFriendModal(true))}
-                      className={`${
-                        active ? "opacity-80 text-white" : "text-white"
-                      } group flex w-full items-center justify-between rounded-md px-2 py-2 text-sm`}
-                    >
-                      <UserPlusIcon
-                        className="mr-2 h-5 w-5"
-                        aria-hidden="true"
-                      />
-                      Add Channels
-                    </button>
-                  )}
-                </Menu.Item>
-                <Menu.Item>
-                  {({ active }) => (
-                    <button
                       onClick={() => dispatch(setShowAccountModal(true))}
                       className={`${
                         active ? "opacity-80 text-white" : "text-white"

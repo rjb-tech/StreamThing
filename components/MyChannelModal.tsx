@@ -7,7 +7,6 @@ import { setShowMyChannelModal } from "../redux/slices/uiSlice";
 import { BaseModal } from "./BaseModal";
 import { ContentSourcesTab } from "./ContentSourcesTab";
 import { SocialTab } from "./SocialTab";
-import { getContentSources } from "./SupabaseHelpers";
 
 export const MyChannelModal = () => {
   const user = useUser();

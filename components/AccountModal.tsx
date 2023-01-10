@@ -21,7 +21,7 @@ export const AccountModal = () => {
     },
     onSubmit: (values) => {
       if (user) {
-        updateUsername(user, values.username, supabaseClient, dispatch);
+        updateUsername(user.id, values.username, supabaseClient, dispatch);
         formik.resetForm();
       }
     },
@@ -58,7 +58,13 @@ export const AccountModal = () => {
       const fileType: string = filename.substring(filename.length - 3);
       const uploadPath = `users/${user?.id}/avatar.${fileType}`;
 
-      await uploadUserImage(file, uploadPath, user, supabaseClient, dispatch);
+      await uploadUserImage(
+        file,
+        uploadPath,
+        user.id,
+        supabaseClient,
+        dispatch
+      );
     }
   }
 

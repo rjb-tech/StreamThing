@@ -20,7 +20,7 @@ export const SocialTab = () => {
     },
     onSubmit: (values) => {
       if (user && !formik.errors.username) {
-        sendFollow(user.id, values.username, supabaseClient);
+        sendFollow(user.id, values.username, supabaseClient, dispatch);
         formik.resetForm();
       }
     },
@@ -54,7 +54,8 @@ export const SocialTab = () => {
               <XMarkIcon
                 className="h-6 w-6 cursor-pointer"
                 onClick={() => {
-                  if (user) sendUnfollow(user.id, channel.id, supabaseClient);
+                  if (user)
+                    sendUnfollow(user.id, channel.id, supabaseClient, dispatch);
                 }}
               />
             </div>

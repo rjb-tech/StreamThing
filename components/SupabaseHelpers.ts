@@ -14,16 +14,15 @@ import {
 import type { UserRecord } from "./types";
 
 export async function getProfile(
-  user: User,
+  userId: string,
   supabaseClient: SupabaseClient,
   dispatch: AppDispatch
 ): Promise<void> {
   try {
     dispatch(setAccountInfoLoading(true));
-    if (!user) throw new Error("No user");
 
     const { data, error } = await supabaseClient
-      .rpc("get_profile_from_id", { userid: user.id })
+      .rpc("get_profile_from_id", { userid: userId })
       .single();
 
     if (error) throw error;
@@ -75,24 +74,23 @@ export async function getNetworkUserInfo(
 }
 
 export async function updateUserAvatarUrl(
-  user: User,
+  userId: string,
   avatarUrl: string,
   supabaseClient: SupabaseClient,
   dispatch: AppDispatch
 ): Promise<void> {
   try {
     dispatch(setAccountInfoLoading(true));
-    if (!user) throw new Error("No user");
 
     const updates = {
-      id: user.id,
+      id: userId,
       avatar_url: avatarUrl,
       updated_at: new Date().toISOString(),
     };
 
     const { error } = await supabaseClient.from("profiles").upsert(updates);
     if (error) throw error;
-    await getProfile(user, supabaseClient, dispatch);
+    await getProfile(userId, supabaseClient, dispatch);
   } catch (error) {
     toast.error("Error updating the data", {
       position: toast.POSITION.BOTTOM_CENTER,
@@ -103,17 +101,16 @@ export async function updateUserAvatarUrl(
 }
 
 export async function updateUsername(
-  user: User,
+  userId: string,
   username: string,
   supabaseClient: SupabaseClient,
   dispatch: AppDispatch
 ): Promise<void> {
   try {
     dispatch(setAccountInfoLoading(true));
-    if (!user) throw new Error("No user");
 
     const updates = {
-      id: user.id,
+      id: userId,
       username,
       updated_at: new Date().toISOString(),
     };
@@ -123,7 +120,7 @@ export async function updateUsername(
     toast.success("Username updated", {
       position: toast.POSITION.BOTTOM_CENTER,
     });
-    await getProfile(user, supabaseClient, dispatch);
+    await getProfile(userId, supabaseClient, dispatch);
   } catch (error: any) {
     switch (error?.code) {
       case "23505":
@@ -145,7 +142,7 @@ export async function updateUsername(
 export async function uploadUserImage(
   file: File,
   uploadPath: string,
-  user: User,
+  userId: string,
   supabaseClient: SupabaseClient,
   dispatch: AppDispatch
 ): Promise<void> {
@@ -169,7 +166,7 @@ export async function uploadUserImage(
       .getPublicUrl(uploadPath);
 
     await updateUserAvatarUrl(
-      user,
+      userId,
       urlData.publicUrl,
       supabaseClient,
       dispatch
@@ -186,7 +183,8 @@ export async function uploadUserImage(
 export async function sendFollow(
   newFollowerId: string,
   newFolloweeUsername: string,
-  supabaseClient: SupabaseClient
+  supabaseClient: SupabaseClient,
+  dispatch: AppDispatch
 ) {
   try {
     const { data, error, status } = await supabaseClient
@@ -197,6 +195,8 @@ export async function sendFollow(
       .single();
 
     if (error) throw error;
+
+    getProfile(newFollowerId, supabaseClient, dispatch);
 
     toast.success("User followed! They will now appear in your network", {
       position: toast.POSITION.BOTTOM_CENTER,
@@ -224,7 +224,8 @@ export async function sendFollow(
 export async function sendUnfollow(
   followerId: string,
   followeeId: string,
-  supabaseClient: SupabaseClient
+  supabaseClient: SupabaseClient,
+  dispatch: AppDispatch
 ) {
   try {
     const { data, error } = await supabaseClient.rpc("send_unfollow", {
@@ -233,6 +234,8 @@ export async function sendUnfollow(
     });
 
     if (error) throw error;
+
+    getProfile(followeeId, supabaseClient, dispatch);
 
     toast.success("User removed from your network", {
       position: toast.POSITION.BOTTOM_CENTER,
@@ -304,7 +307,7 @@ export async function removeContentSource(
   }
 }
 
-export async function getContentSources(
+async function getContentSources(
   id: string,
   supabaseClient: SupabaseClient,
   dispatch: AppDispatch
