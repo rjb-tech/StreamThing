@@ -19,7 +19,7 @@ export const AddContentSourceModal = () => {
     },
     onSubmit: (values) => {
       if (user) {
-        addContentSource(user.id, values.contentLink, supabaseClient);
+        addContentSource(user.id, values.contentLink, supabaseClient, dispatch);
         formik.resetForm();
       }
     },

@@ -20,7 +20,7 @@ export const AddFriendModal = () => {
     },
     onSubmit: (values) => {
       if (user && !formik.errors.username) {
-        sendFollow(user.id, values.username, supabaseClient);
+        sendFollow(user.id, values.username, supabaseClient, dispatch);
         formik.resetForm();
       }
     },

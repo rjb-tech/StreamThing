@@ -10,7 +10,7 @@ interface StreamThingAccountState {
   avatarUrl: string | undefined;
   followers: string[];
   following: UserRecord[];
-  contentSources: URL[];
+  contentSources: string[];
 }
 
 const initialState: StreamThingAccountState = {
@@ -45,7 +45,7 @@ export const accountSlice = createSlice({
     setFollowing: (state, action: PayloadAction<UserRecord[]>) => {
       state.following = action.payload;
     },
-    setContentSources: (state, action: PayloadAction<URL[]>) => {
+    setContentSources: (state, action: PayloadAction<string[]>) => {
       state.contentSources = action.payload;
     },
     resetAccount: () => initialState,

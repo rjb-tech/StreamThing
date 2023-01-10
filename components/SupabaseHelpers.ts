@@ -34,13 +34,10 @@ export async function getProfile(
         })
       );
 
-      const explodedContentSources = data.content_sources.map(
-        (source: string) => new URL(source)
-      );
       dispatch(setUsername(data.username));
       dispatch(setAvatarUrl(data.avatar_url));
       dispatch(setFollowers(data.followers));
-      dispatch(setContentSources(explodedContentSources));
+      dispatch(setContentSources(data.content_sources));
       dispatch(setFollowing(explodedFollowingRecords));
     }
   } catch (error) {
@@ -316,11 +313,7 @@ async function getContentSources(
     .rpc("get_content_sources_from_id", { user_id: id })
     .single();
 
-  const explodedContentSources = data.content_sources.map(
-    (source: string) => new URL(source)
-  );
-
-  dispatch(setContentSources(explodedContentSources));
+  dispatch(setContentSources(data.content_sources));
 }
 
 async function getUserRecordFromId(

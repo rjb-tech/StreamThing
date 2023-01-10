@@ -39,7 +39,12 @@ export const ChannelRow = ({
               <XMarkIcon
                 onClick={() => {
                   if (authenticatedUser) {
-                    sendUnfollow(authenticatedUser.id, user.id, supabaseClient);
+                    sendUnfollow(
+                      authenticatedUser.id,
+                      user.id,
+                      supabaseClient,
+                      dispatch
+                    );
                   }
                 }}
                 className="absolute right-0 pr-1 pt-1 h-5 w-5 cursor-pointer transition-all duration-200 ease-out hover:scale-105 active:scale-100"
