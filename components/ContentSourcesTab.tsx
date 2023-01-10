@@ -123,7 +123,7 @@ export const ContentSourcesTab = () => {
               name="contentLink"
               value={formik.values.contentLink}
               onChange={formik.handleChange}
-              placeholder="Paste Link to Youtube or Twitch Channel"
+              placeholder="Youtube or Twitch channel link"
               className="w-full text-black border border-white rounded-full px-4 focus:ring focus:ring-white focus:ring-opacity-20 focus:outline-none"
             />
             <span className="w-full flex justify-end pt-4">
