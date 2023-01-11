@@ -43,6 +43,17 @@ export const ContentSourcesTab = () => {
       if (values.contentLink === "")
         errors.contentLink = "Content source cannot be empty";
 
+      if (values.contentLink.includes(" "))
+        errors.contentLink = "Link can't include spaces";
+
+      // Flesh this out a little bit
+      // Cast into URL object at the top and use that to variable for checking protocol, etc.
+      if (!values.contentLink.includes("https://"))
+        errors.contentLink = "Link must contain https:// protocol";
+
+      if (values.contentLink.includes('"'))
+        errors.contentLink = 'Invalid character: "';
+
       return errors;
     },
   });
