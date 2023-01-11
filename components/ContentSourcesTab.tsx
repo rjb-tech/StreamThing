@@ -113,7 +113,7 @@ export const ContentSourcesTab = () => {
                 </Link>
               )}
               <XMarkIcon
-                className="h-6 w-6 cursor-pointer pr-2"
+                className="h-7 w-7 pr-2 cursor-pointer"
                 onClick={() => {
                   if (user)
                     removeContentSource(
