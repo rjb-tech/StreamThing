@@ -86,9 +86,6 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
             }
             break;
           case "n":
-            dispatch(setShowGuide(!showGuide));
-            break;
-          case "c":
             dispatch(setShowMyNetworkModal(!showMyNetworkModal));
             break;
         }
