@@ -73,8 +73,12 @@ export const ContentSourcesTab = () => {
               key={index}
             >
               {isFromTwitch && (
-                <Link href={source} target="_blank">
-                  <div className="h-6 w-6 flex items-center overflow-visible flex-none">
+                <Link
+                  className="flex items-center"
+                  href={source}
+                  target="_blank"
+                >
+                  <div className="h-8 w-8 flex items-center overflow-visible flex-none">
                     <Image
                       className="pl-2"
                       alt="Twitch logo"
@@ -82,15 +86,19 @@ export const ContentSourcesTab = () => {
                       height={518}
                       src={twitchLogo}
                     />
-                    <span className="pl-4">
-                      {source.pathname.replace("/", "")}
-                    </span>
                   </div>
+                  <span className="pl-4">
+                    {source.pathname.replace("/", "")}
+                  </span>
                 </Link>
               )}
               {isFromYoutube && (
-                <Link href={source} target="_blank">
-                  <div className="h-6 w-6 flex items-center overflow-visible flex-none">
+                <Link
+                  className="flex items-center"
+                  href={source}
+                  target="_blank"
+                >
+                  <div className="h-8 w-8 flex items-center overflow-visible flex-none">
                     <Image
                       className="pl-2"
                       alt="Youtube logo"
@@ -98,10 +106,10 @@ export const ContentSourcesTab = () => {
                       height={518}
                       src={youtubeLogo}
                     />
-                    <span className="pl-4">
-                      {source.pathname.replace("/", "").replace("@", "")}
-                    </span>
                   </div>
+                  <span className="pl-4">
+                    {source.pathname.replace("/", "").replace("@", "")}
+                  </span>
                 </Link>
               )}
               <XMarkIcon
