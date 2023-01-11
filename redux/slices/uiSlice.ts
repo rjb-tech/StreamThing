@@ -8,7 +8,7 @@ interface StreamThingMainState {
   showAccountModal: boolean;
   showAddFriendModal: boolean;
   showAddContentSourceModal: boolean;
-  showMyChannelModal: boolean;
+  showMyNetworkModal: boolean;
   activeStream: string;
 }
 
@@ -19,7 +19,7 @@ const initialState: StreamThingMainState = {
   showAccountModal: false,
   showAddFriendModal: false,
   showAddContentSourceModal: false,
-  showMyChannelModal: false,
+  showMyNetworkModal: false,
   activeStream: "",
 };
 
@@ -42,8 +42,8 @@ export const uiSlice = createSlice({
     setShowAddContentSourceModal: (state, action: PayloadAction<boolean>) => {
       state.showAddContentSourceModal = action.payload;
     },
-    setShowMyChannelModal: (state, action: PayloadAction<boolean>) => {
-      state.showMyChannelModal = action.payload;
+    setShowMyNetworkModal: (state, action: PayloadAction<boolean>) => {
+      state.showMyNetworkModal = action.payload;
     },
     setActiveStream: (state, action: PayloadAction<string>) => {
       state.activeStream = action.payload;
@@ -58,7 +58,7 @@ export const {
   setShowAccountModal,
   setShowAddFriendModal,
   setShowAddContentSourceModal,
-  setShowMyChannelModal,
+  setShowMyNetworkModal,
   setActiveStream,
   resetUI,
 } = uiSlice.actions;
