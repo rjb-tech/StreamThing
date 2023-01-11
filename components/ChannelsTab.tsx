@@ -50,7 +50,7 @@ export const ChannelsTab = () => {
         {following.map((channel, index) => {
           return (
             <div
-              className="w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-xl"
+              className="w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-lg hover:scale-105 transition-all"
               key={index}
             >
               <div

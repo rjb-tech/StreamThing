@@ -69,12 +69,12 @@ export const ContentSourcesTab = () => {
 
           return (
             <div
-              className="w-full h-fit flex items-center py-2 justify-between space-x-6 bg-gray-500 rounded-lg shadow-xl"
+              className="w-full h-fit flex items-center py-2 justify-between space-x-6 bg-gray-500 rounded-lg shadow-lg hover:scale-105 transition-all"
               key={index}
             >
               {isFromTwitch && (
                 <Link
-                  className="flex items-center"
+                  className="flex items-center w-full"
                   href={source}
                   target="_blank"
                 >
@@ -94,7 +94,7 @@ export const ContentSourcesTab = () => {
               )}
               {isFromYoutube && (
                 <Link
-                  className="flex items-center"
+                  className="flex items-center w-full"
                   href={source}
                   target="_blank"
                 >
