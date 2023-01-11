@@ -69,7 +69,7 @@ export const ContentSourcesTab = () => {
 
           return (
             <div
-              className="w-full h-fit flex items-center py-2 justify-between space-x-6 bg-gray-500 rounded-lg shadow-lg hover:scale-105 transition-all"
+              className="w-full h-fit flex items-center py-2 justify-between space-x-6 bg-gray-500 rounded-lg shadow-lg hover:scale-[101%] transition-all"
               key={index}
             >
               {isFromTwitch && (
