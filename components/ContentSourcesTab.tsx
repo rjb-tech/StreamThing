@@ -138,7 +138,7 @@ export const ContentSourcesTab = () => {
             >
               {formik.errors.contentLink
                 ? formik.errors.contentLink
-                : "Add new content source"}
+                : "Add new content source to your channel"}
             </label>
             <input
               type="text"
