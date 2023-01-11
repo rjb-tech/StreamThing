@@ -2,7 +2,9 @@ import { XMarkIcon } from "@heroicons/react/20/solid";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import classNames from "classnames";
 import { useFormik } from "formik";
+import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { setActiveStream } from "../redux/slices/uiSlice";
 import { StreamThingButton } from "./StreamThingButton";
 import { sendFollow, sendUnfollow } from "./SupabaseHelpers";
 
@@ -47,10 +49,24 @@ export const SocialTab = () => {
         {following.map((channel, index) => {
           return (
             <div
-              className="w-full h-fit flex py-2 justify-between space-x-6 bg-gray-500 rounded-lg shadow-xl"
+              className="w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-xl"
               key={index}
             >
-              <span className="pl-4">{channel.username}</span>
+              <div
+                onClick={() => {
+                  dispatch(setActiveStream("https://twitch.tv/pobelter"));
+                }}
+                className="w-full flex items-center mx-2 cursor-pointer"
+              >
+                <Image
+                  className="rounded-full h-8 w-8"
+                  alt={`${channel.username}`}
+                  width={100}
+                  height={100}
+                  src={channel.avatarUrl}
+                />
+                <span className="pl-4">{channel.username}</span>
+              </div>
               <XMarkIcon
                 className="h-6 w-6 pr-2 cursor-pointer"
                 onClick={() => {
