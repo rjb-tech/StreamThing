@@ -4,7 +4,7 @@ import classNames from "classnames";
 interface StreamThingButtonProps {
   innerText: string | undefined;
   children?: ReactNode; // This is intended for icons from hero icons
-  clickFn?(): void;
+  clickFn?(e?: any): void;
   buttonType?: "button" | "submit" | "reset" | undefined;
   disabled?: boolean;
   fullWidth?: boolean;
