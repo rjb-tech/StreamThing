@@ -11,7 +11,7 @@ import {
 import { StreamThingButton } from "./StreamThingButton";
 import { sendFollow, sendUnfollow } from "./SupabaseHelpers";
 
-export const SocialTab = () => {
+export const ChannelsTab = () => {
   const user = useUser();
   const dispatch = useAppDispatch();
   const supabaseClient = useSupabaseClient();

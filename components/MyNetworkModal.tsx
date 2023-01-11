@@ -6,7 +6,7 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { setShowMyNetworkModal } from "../redux/slices/uiSlice";
 import { BaseModal } from "./BaseModal";
 import { ContentSourcesTab } from "./ContentSourcesTab";
-import { SocialTab } from "./SocialTab";
+import { ChannelsTab } from "./ChannelsTab";
 
 export const MyNetworkModal = () => {
   const user = useUser();
@@ -40,7 +40,7 @@ export const MyNetworkModal = () => {
                 )
               }
             >
-              Content
+              Channels
             </Tab>
             <Tab
               className={({ selected }) =>
@@ -53,15 +53,15 @@ export const MyNetworkModal = () => {
                 )
               }
             >
-              Social
+              Content
             </Tab>
           </Tab.List>
           <Tab.Panels className="h-fit min-h-[24rem] w-full">
             <Tab.Panel className="content-source-tab flex items-center justify-center h-full w-full">
-              <ContentSourcesTab />
+              <ChannelsTab />
             </Tab.Panel>
             <Tab.Panel className="content-source-tab flex items-center justify-center h-full w-full">
-              <SocialTab />
+              <ContentSourcesTab />
             </Tab.Panel>
           </Tab.Panels>
         </Tab.Group>
