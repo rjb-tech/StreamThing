@@ -3,16 +3,16 @@ import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import classNames from "classnames";
 import { useFormik } from "formik";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { setShowMyChannelModal } from "../redux/slices/uiSlice";
+import { setShowMyNetworkModal } from "../redux/slices/uiSlice";
 import { BaseModal } from "./BaseModal";
 import { ContentSourcesTab } from "./ContentSourcesTab";
 import { SocialTab } from "./SocialTab";
 
-export const MyChannelModal = () => {
+export const MyNetworkModal = () => {
   const user = useUser();
   const dispatch = useAppDispatch();
   const supabaseClient = useSupabaseClient();
-  const { showMyChannelModal } = useAppSelector((state) => state.ui);
+  const { showMyNetworkModal } = useAppSelector((state) => state.ui);
 
   const formik = useFormik({
     initialValues: {},
@@ -21,11 +21,11 @@ export const MyChannelModal = () => {
   });
 
   function closeModal() {
-    dispatch(setShowMyChannelModal(false));
+    dispatch(setShowMyNetworkModal(false));
   }
 
   return (
-    <BaseModal showCondition={showMyChannelModal} closeModal={closeModal} wide>
+    <BaseModal showCondition={showMyNetworkModal} closeModal={closeModal} wide>
       <div className="w-full">
         <Tab.Group>
           <Tab.List className="flex space-x-8 rounded-xl bg-blue-900/20 p-1">

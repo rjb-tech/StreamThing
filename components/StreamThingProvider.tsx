@@ -8,7 +8,7 @@ import { useUser } from "@supabase/auth-helpers-react";
 import {
   setShowAccountModal,
   setShowGuide,
-  setShowMyChannelModal,
+  setShowMyNetworkModal,
 } from "../redux/slices/uiSlice";
 import { getProfile } from "./SupabaseHelpers";
 import { ModalProvider } from "./ModalProvider";
@@ -23,7 +23,7 @@ interface ProviderProps {
 
 export const StreamThingProvider = ({ children }: ProviderProps) => {
   const dispatch = useAppDispatch();
-  const { showGuide, showAccountModal, showMyChannelModal } = useAppSelector(
+  const { showGuide, showAccountModal, showMyNetworkModal } = useAppSelector(
     (state) => state.ui
   );
   const session = useSession();
@@ -89,7 +89,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
             dispatch(setShowGuide(!showGuide));
             break;
           case "c":
-            dispatch(setShowMyChannelModal(!showMyChannelModal));
+            dispatch(setShowMyNetworkModal(!showMyNetworkModal));
             break;
         }
       }

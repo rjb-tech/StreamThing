@@ -12,9 +12,7 @@ import {
 import {
   resetUI,
   setShowAccountModal,
-  setShowAddContentSourceModal,
-  setShowAddFriendModal,
-  setShowGuide,
+  setShowMyNetworkModal,
 } from "../redux/slices/uiSlice";
 
 import { StreamThingButton } from "./StreamThingButton";
@@ -31,7 +29,7 @@ export const AuthenticatedHeader = ({
   user,
 }: AuthenticatedHeaderProps) => {
   const dispatch = useAppDispatch();
-  const { showGuide } = useAppSelector((state) => state.ui);
+  const { showMyNetworkModal } = useAppSelector((state) => state.ui);
   const { username } = useAppSelector((state) => state.account);
 
   return (
@@ -44,7 +42,11 @@ export const AuthenticatedHeader = ({
           <div className="absolute ml-12 mb-8 bg-pink-400 rounded-full w-2 h-2 animate-ping-slow" />
         </StreamThingButton>
         <StreamThingButton
-          clickFn={() => dispatch(setShowGuide(!showGuide))}
+          // This is a little buggy rn if you click the button when the modal is already open
+          // it just keeps reopening the modal right after closing it
+          // The click out closes before the button click event triggers
+          // so it's just a ui loop
+          clickFn={() => dispatch(setShowMyNetworkModal(!showMyNetworkModal))}
           innerText="My Network"
           fullHeight
         >

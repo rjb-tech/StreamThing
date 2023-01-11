@@ -1,15 +1,13 @@
 import { AccountModal } from "./AccountModal";
-import { AddContentSourceModal } from "./AddContentSourceModal";
-import { AddFriendModal } from "./AddFriendModal";
 import { AuthModal } from "./AuthModal";
-import { MyChannelModal } from "./MyChannelModal";
+import { MyNetworkModal } from "./MyNetworkModal";
 
 export const ModalProvider = () => {
   return (
     <>
       <AuthModal />
       <AccountModal />
-      <MyChannelModal />
+      <MyNetworkModal />
     </>
   );
 };

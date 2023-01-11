@@ -4,7 +4,10 @@ import classNames from "classnames";
 import { useFormik } from "formik";
 import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { setActiveStream } from "../redux/slices/uiSlice";
+import {
+  setActiveStream,
+  setShowMyNetworkModal,
+} from "../redux/slices/uiSlice";
 import { StreamThingButton } from "./StreamThingButton";
 import { sendFollow, sendUnfollow } from "./SupabaseHelpers";
 
@@ -55,6 +58,7 @@ export const SocialTab = () => {
               <div
                 onClick={() => {
                   dispatch(setActiveStream("https://twitch.tv/pobelter"));
+                  dispatch(setShowMyNetworkModal(false));
                 }}
                 className="w-full flex items-center mx-2 cursor-pointer"
               >
