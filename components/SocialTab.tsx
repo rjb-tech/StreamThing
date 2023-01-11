@@ -47,12 +47,12 @@ export const SocialTab = () => {
         {following.map((channel, index) => {
           return (
             <div
-              className="w-full h-6 flex justify-between my-2 space-x-6"
+              className="w-full h-fit flex py-2 justify-between space-x-6 bg-gray-500 rounded-lg shadow-xl"
               key={index}
             >
               <span className="pl-4">{channel.username}</span>
               <XMarkIcon
-                className="h-6 w-6 cursor-pointer"
+                className="h-6 w-6 pr-2 cursor-pointer"
                 onClick={() => {
                   if (user)
                     sendUnfollow(user.id, channel.id, supabaseClient, dispatch);

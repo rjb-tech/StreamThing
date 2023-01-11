@@ -49,7 +49,7 @@ export const ContentSourcesTab = () => {
 
   return (
     <div className="h-full w-full">
-      <div className="content-sources w-full h-60 mx-auto border border-gray-600 my-4 py-2 px-4 rounded overflow-y-scroll space-y-4 bg-gray-700">
+      <div className="content-sources w-full h-60 mx-auto border border-gray-600 my-4 py-2 px-4 rounded overflow-y-scroll space-y-4 bg-gray-600">
         {contentSources.map((sourceLink, index) => {
           const source = new URL(sourceLink);
           const isFromYoutube = source.host.includes("youtube.com");
@@ -58,7 +58,7 @@ export const ContentSourcesTab = () => {
 
           return (
             <div
-              className="w-full h-fit flex py-2 justify-between space-x-6 bg-gray-600 rounded-lg shadow-xl"
+              className="w-full h-fit flex py-2 justify-between space-x-6 bg-gray-500 rounded-lg shadow-xl"
               key={index}
             >
               {isFromTwitch && (
