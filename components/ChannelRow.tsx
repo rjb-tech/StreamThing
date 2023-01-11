@@ -1,15 +1,11 @@
-import { XMarkIcon } from "@heroicons/react/20/solid";
-import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import Image from "next/image";
 import { useAppDispatch } from "../redux/hooks";
 import {
   setActiveStream,
-  setShowAddContentSourceModal,
   setShowGuide,
-  setShowMyChannelModal,
+  setShowMyNetworkModal,
 } from "../redux/slices/uiSlice";
 import { StreamThingButton } from "./StreamThingButton";
-import { sendUnfollow } from "./SupabaseHelpers";
 import type { UserRecord } from "./types";
 
 interface ChannelProps {
@@ -23,8 +19,6 @@ export const ChannelRow = ({
   user,
   adminChannel = false,
 }: ChannelProps) => {
-  const authenticatedUser = useUser();
-  const supabaseClient = useSupabaseClient();
   const dispatch = useAppDispatch();
   const handleStreamClick = () => {
     dispatch(setActiveStream(streamUrl));
@@ -48,7 +42,7 @@ export const ChannelRow = ({
                 <StreamThingButton
                   innerText="My Channel"
                   roundedFull
-                  clickFn={() => dispatch(setShowMyChannelModal(true))}
+                  clickFn={() => dispatch(setShowMyNetworkModal(true))}
                 />
               )}
             </div>

@@ -5,9 +5,7 @@ import {
   ArrowRightOnRectangleIcon,
   UserIcon,
   TvIcon,
-  UserPlusIcon,
   BellAlertIcon,
-  PlusIcon,
 } from "@heroicons/react/20/solid";
 import {
   resetUI,

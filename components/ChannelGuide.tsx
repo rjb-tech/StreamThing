@@ -2,7 +2,6 @@ import { ChannelRow } from "./ChannelRow";
 import { useAppSelector } from "../redux/hooks";
 import type { UserRecord } from "./types";
 import { useUser } from "@supabase/auth-helpers-react";
-import { StreamThingButton } from "./StreamThingButton";
 
 export const ChannelGuide = () => {
   const user = useUser();

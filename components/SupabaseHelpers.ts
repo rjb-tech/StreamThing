@@ -1,4 +1,4 @@
-import { SupabaseClient, User } from "@supabase/supabase-js";
+import { SupabaseClient } from "@supabase/supabase-js";
 import { toast } from "react-toastify";
 import { AppDispatch } from "../redux/store";
 import {

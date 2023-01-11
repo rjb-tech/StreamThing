@@ -15,9 +15,7 @@ export const ChannelsTab = () => {
   const user = useUser();
   const dispatch = useAppDispatch();
   const supabaseClient = useSupabaseClient();
-  const { following, followers, username } = useAppSelector(
-    (state) => state.account
-  );
+  const { following, username } = useAppSelector((state) => state.account);
 
   const formik = useFormik({
     initialValues: {
