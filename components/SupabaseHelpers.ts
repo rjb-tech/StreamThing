@@ -274,6 +274,12 @@ export async function addContentSource(
         toast.error("Content source already in your channel.", {
           position: toast.POSITION.BOTTOM_CENTER,
         });
+        break;
+      default:
+        toast.error("Error adding content source.", {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+        break;
     }
   }
 }
