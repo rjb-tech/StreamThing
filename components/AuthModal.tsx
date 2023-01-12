@@ -3,6 +3,7 @@ import { useAppSelector, useAppDispatch } from "../redux/hooks";
 import { setShowAuthModal } from "../redux/slices/uiSlice";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import twitchLogo from "../images/TwitchGlitchPurple.png";
+import discordLogo from "../images/icon_clyde_blurple_RGB.png";
 import Image from "next/image";
 
 export const AuthModal = () => {
@@ -23,6 +24,12 @@ export const AuthModal = () => {
   async function signInWithTwitch() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "twitch",
+    });
+  }
+
+  async function signInWithDiscord() {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "discord",
     });
   }
 
@@ -53,6 +60,18 @@ export const AuthModal = () => {
                 leaveTo="opacity-0 scale-95"
               >
                 <Dialog.Panel className="w-full max-w-md h-fit space-y-4 transform overflow-hidden rounded-2xl bg-gray-700 p-6 text-left align-middle shadow-xl transition-all">
+                  <button
+                    onClick={async () => await signInWithDiscord()}
+                    className="flex items-center justify-around w-60 rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"
+                  >
+                    <Image
+                      alt="Discord logo"
+                      width={25}
+                      height={25}
+                      src={discordLogo}
+                    />
+                    <span>Login with Discord</span>
+                  </button>
                   <button
                     onClick={async () => await signInWithGoogle()}
                     className="flex items-center justify-around w-60 rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75"

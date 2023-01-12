@@ -6,6 +6,7 @@ const nextConfig = {
       "lh3.googleusercontent.com",
       "static-cdn.jtvnw.net",
       "uieskineapnmdqwofpjx.supabase.co",
+      "cdn.discordapp.com",
     ],
   },
 };
