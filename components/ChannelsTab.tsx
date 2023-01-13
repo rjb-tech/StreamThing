@@ -50,7 +50,7 @@ export const ChannelsTab = () => {
         {following.map((channel, index) => {
           return (
             <div
-              className="w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-lg hover:scale-[101%] transition-all"
+              className="w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-lg hover:scale-[101%] transition-all"
               key={index}
             >
               <div
@@ -98,9 +98,9 @@ export const ChannelsTab = () => {
               value={formik.values.username}
               onChange={formik.handleChange}
               placeholder="Username you want to follow"
-              className="w-full text-black border border-white rounded-full px-4 focus:ring focus:ring-white focus:ring-opacity-20 focus:outline-none"
+              className="w-full text-black rounded px-4 focus:ring focus:ring-white focus:ring-opacity-30 focus:outline-none bg-gray-600 placeholder-white"
             />
-            <span className="w-full flex justify-end pt-4">
+            <span className="w-full flex justify-end pt-4 hidden">
               <StreamThingButton
                 innerText="Connect"
                 fullWidth

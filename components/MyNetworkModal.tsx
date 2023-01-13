@@ -56,7 +56,7 @@ export const MyNetworkModal = () => {
               Content
             </Tab>
           </Tab.List>
-          <Tab.Panels className="h-fit min-h-[24rem] w-full">
+          <Tab.Panels className="h-fit w-full">
             <Tab.Panel className="content-source-tab flex items-center justify-center h-full w-full">
               <ChannelsTab />
             </Tab.Panel>
