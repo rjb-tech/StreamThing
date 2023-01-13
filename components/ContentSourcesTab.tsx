@@ -146,7 +146,7 @@ export const ContentSourcesTab = () => {
               value={formik.values.contentLink}
               onChange={formik.handleChange}
               placeholder="Youtube or Twitch channel link"
-              className="w-full text-black rounded px-4 focus:ring focus:ring-white focus:ring-opacity-30 focus:outline-none bg-gray-600 placeholder-white"
+              className="w-full text-black rounded px-4 focus:ring focus:ring-white focus:ring-opacity-30 focus:outline-none"
             />
             <span className="w-full flex justify-end pt-4 hidden">
               <StreamThingButton

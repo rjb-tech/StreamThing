@@ -98,7 +98,7 @@ export const ChannelsTab = () => {
               value={formik.values.username}
               onChange={formik.handleChange}
               placeholder="Username you want to follow"
-              className="w-full text-black rounded px-4 focus:ring focus:ring-white focus:ring-opacity-30 focus:outline-none bg-gray-600 placeholder-white"
+              className="w-full text-black rounded px-4 focus:ring focus:ring-white focus:ring-opacity-30 focus:outline-none"
             />
             <span className="w-full flex justify-end pt-4 hidden">
               <StreamThingButton
