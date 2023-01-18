@@ -1,7 +1,5 @@
 import { Tab } from "@headlessui/react";
-import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import classNames from "classnames";
-import { useFormik } from "formik";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { setShowMyNetworkModal } from "../redux/slices/uiSlice";
 import { BaseModal } from "./BaseModal";
@@ -9,16 +7,8 @@ import { ContentSourcesTab } from "./ContentSourcesTab";
 import { ChannelsTab } from "./ChannelsTab";
 
 export const MyNetworkModal = () => {
-  const user = useUser();
   const dispatch = useAppDispatch();
-  const supabaseClient = useSupabaseClient();
   const { showMyNetworkModal } = useAppSelector((state) => state.ui);
-
-  const formik = useFormik({
-    initialValues: {},
-    onSubmit: (values) => {},
-    validate: (values) => {},
-  });
 
   function closeModal() {
     dispatch(setShowMyNetworkModal(false));
