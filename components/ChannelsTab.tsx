@@ -15,7 +15,9 @@ export const ChannelsTab = () => {
   const user = useUser();
   const dispatch = useAppDispatch();
   const supabaseClient = useSupabaseClient();
-  const { following, username } = useAppSelector((state) => state.account);
+  const { following, username, avatarUrl } = useAppSelector(
+    (state) => state.account
+  );
 
   const formik = useFormik({
     initialValues: {
@@ -47,11 +49,32 @@ export const ChannelsTab = () => {
   return (
     <div className="h-full w-full">
       <div className="following w-full h-60 mx-auto border border-gray-600 my-4 py-2 px-4 rounded overflow-y-scroll space-y-4 bg-gray-600">
+        <div
+          className="w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-lg hover:scale-[101%] transition-all"
+          key={0}
+        >
+          <div
+            onClick={() => {
+              dispatch(setActiveStream("https://twitch.tv/pobelter"));
+              dispatch(setShowMyNetworkModal(false));
+            }}
+            className="w-full flex items-center mx-2 cursor-pointer"
+          >
+            <Image
+              className="rounded-full h-8 w-8"
+              alt={`${username}`}
+              width={100}
+              height={100}
+              src={avatarUrl || ""}
+            />
+            <span className="pl-4">{username} (me)</span>
+          </div>
+        </div>
         {following.map((channel, index) => {
           return (
             <div
               className="w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-lg hover:scale-[101%] transition-all"
-              key={index}
+              key={index + 1}
             >
               <div
                 onClick={() => {
