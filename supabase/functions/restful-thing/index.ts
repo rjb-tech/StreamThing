@@ -304,7 +304,9 @@ serve(async (req: any) => {
     );
 
     // For more details on URLPattern, check https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API
-    const taskPattern = new URLPattern({ pathname: "/:operation" });
+    const taskPattern = new URLPattern({
+      pathname: "/restful-thing/:operation",
+    });
     const matchingPath = taskPattern.exec(url);
     const operation = matchingPath
       ? matchingPath.pathname.groups.operation
