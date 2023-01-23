@@ -2,4 +2,4 @@
 .branches
 .temp
 
-stream-thing*.json
+.env*
