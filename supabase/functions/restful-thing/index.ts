@@ -304,7 +304,7 @@ serve(async (req: any) => {
     );
 
     // For more details on URLPattern, check https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API
-    const taskPattern = new URLPattern({ pathname: "/rest-thing/:operation" });
+    const taskPattern = new URLPattern({ pathname: "/:operation" });
     const matchingPath = taskPattern.exec(url);
     const operation = matchingPath
       ? matchingPath.pathname.groups.operation
@@ -334,8 +334,6 @@ serve(async (req: any) => {
       status: 400,
     });
   }
-
-  return new Response(channelLink);
 });
 
 // To invoke:
