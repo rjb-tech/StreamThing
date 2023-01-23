@@ -287,7 +287,7 @@ serve(async (req: any) => {
       db: { schema: "public" },
       auth: {
         persistSession: false,
-        detechSessionInUrl: true,
+        detectSessionInUrl: false,
         autoRefreshToken: false,
       },
     };
