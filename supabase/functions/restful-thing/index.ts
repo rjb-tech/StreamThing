@@ -145,10 +145,13 @@ async function updateContentSourceInfo(
   const { channelLink, recentVideos, channelId, uploadsPlaylistId } =
     channelInfo;
 
-  const { data, error } = await supabaseClient.from("content_sources").update({
-    recent_videos: recentVideos,
-    uploads_playlist: uploadsPlaylistId,
-  });
+  const { data, error } = await supabaseClient
+    .from("content_sources")
+    .update({
+      recent_videos: recentVideos,
+      uploads_playlist: uploadsPlaylistId,
+    })
+    .eq("channel_id", channelId);
 
   if (error) throw error;
 }
