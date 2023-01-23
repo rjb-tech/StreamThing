@@ -271,7 +271,7 @@ async function refreshExistingContentSource(
 serve(async (req: any) => {
   const { url, method } = req;
   const body = await req.text();
-  const { channel_link: channelLink, user_id: userId } = JSON.parse(body);
+  const { channel_link: channelLink } = JSON.parse(body);
 
   // This is needed if you're planning to invoke your function from a browser.
   if (method === "OPTIONS") {
