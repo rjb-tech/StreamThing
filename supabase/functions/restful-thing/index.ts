@@ -257,7 +257,7 @@ async function refreshExistingContentSource(
         youtubeTokenResponse.access_token
       );
 
-      await insertContentSourceInfo(channelInfo, supabaseClient);
+      await updateContentSourceInfo(channelInfo, supabaseClient);
 
       return channelInfo;
     }
