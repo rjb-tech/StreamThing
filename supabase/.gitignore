@@ -1,0 +1,5 @@
+# Supabase
+.branches
+.temp
+
+stream-thing*.json
