@@ -135,11 +135,7 @@ async function insertContentSourceInfo(
     uploads_playlist: uploadsPlaylistId,
   });
 
-  if (error) throw error;
-
-  throw new Error(
-    "Unhandled error inserting content source info. Check Postgres logs"
-  );
+  if (error) throw new Error("Error inserting new data, check postgres logs");
 }
 
 async function updateContentSourceInfo(
@@ -154,11 +150,7 @@ async function updateContentSourceInfo(
     uploads_playlist: uploadsPlaylistId,
   });
 
-  if (error) throw error;
-
-  throw new Error(
-    "Unhandled error updating content source info. Check Postgres logs"
-  );
+  if (error) throw new Error("Error inserting new data, check postgres logs");
 }
 
 async function getYoutubeChannelInfo(
@@ -281,7 +273,7 @@ async function refreshExistingContentSource(
 serve(async (req: any) => {
   const { url, method } = req;
   const body = await req.text();
-  const { channel_link: channelLink } = JSON.parse(body);
+  const { channel_link: channelLink, user_id: userId } = JSON.parse(body);
 
   // This is needed if you're planning to invoke your function from a browser.
   if (method === "OPTIONS") {
@@ -307,7 +299,7 @@ serve(async (req: any) => {
       // Supabase API URL - env var exported by default.
       Deno.env.get("SUPABASE_URL") || "",
       // Supabase API ANON KEY - env var exported by default.
-      Deno.env.get("SUPABASE_ANON_KEY") || ""
+      Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || ""
     );
 
     // For more details on URLPattern, check https://developer.mozilla.org/en-US/docs/Web/API/URL_Pattern_API
@@ -334,7 +326,7 @@ serve(async (req: any) => {
         );
         break;
       default:
-        throw new Error("Unsupported method");
+        throw new Error("Unsupported operation");
     }
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {
