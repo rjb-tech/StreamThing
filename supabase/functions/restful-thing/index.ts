@@ -217,8 +217,6 @@ async function handleNewContentSource(
   supabaseClient: SupabaseClient
 ): Promise<YoutubeChannelInfo> {
   try {
-    // const channelId = await getYoutubeChannelId(channelLink);
-    // const youtubeAccessToken = await getYoutubeApiAccessToken();
     const [channelId, youtubeTokenResponse] = await Promise.all([
       getYoutubeChannelId(channelLink),
       getYoutubeApiAccessToken(),
