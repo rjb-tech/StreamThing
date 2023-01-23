@@ -135,7 +135,7 @@ async function insertContentSourceInfo(
     uploads_playlist: uploadsPlaylistId,
   });
 
-  if (error) throw new Error("Error inserting new data, check postgres logs");
+  if (error) throw error;
 }
 
 async function updateContentSourceInfo(
@@ -150,7 +150,7 @@ async function updateContentSourceInfo(
     uploads_playlist: uploadsPlaylistId,
   });
 
-  if (error) throw new Error("Error updating new data, check postgres logs");
+  if (error) throw error;
 }
 
 async function getYoutubeChannelInfo(
