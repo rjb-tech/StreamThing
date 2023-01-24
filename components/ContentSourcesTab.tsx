@@ -14,6 +14,7 @@ export const ContentSourcesTab = () => {
   const user = useUser();
   const dispatch = useAppDispatch();
   const supabaseClient = useSupabaseClient();
+  const { contentSourceBeingAdded } = useAppSelector((state) => state.ui);
   const { contentSources } = useAppSelector((state) => state.account);
   const formik = useFormik({
     initialValues: {
@@ -127,6 +128,16 @@ export const ContentSourcesTab = () => {
             </div>
           );
         })}
+        {contentSourceBeingAdded && (
+          <div className="w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md animate-pulse">
+            {
+              <div className="flex items-center w-full">
+                <div className="h-8 w-8 flex items-center overflow-visible flex-none"></div>
+                <span className="pl-4"></span>
+              </div>
+            }
+          </div>
+        )}
       </div>
       <div className="add-content-source h-2/6">
         <form onSubmit={formik.handleSubmit}>

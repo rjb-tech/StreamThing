@@ -10,6 +10,7 @@ interface StreamThingMainState {
   showAddContentSourceModal: boolean;
   showMyNetworkModal: boolean;
   activeStream: string;
+  contentSourceBeingAdded: boolean;
 }
 
 // Define the initial state using that type
@@ -21,6 +22,7 @@ const initialState: StreamThingMainState = {
   showAddContentSourceModal: false,
   showMyNetworkModal: false,
   activeStream: "",
+  contentSourceBeingAdded: false,
 };
 
 export const uiSlice = createSlice({
@@ -48,6 +50,9 @@ export const uiSlice = createSlice({
     setActiveStream: (state, action: PayloadAction<string>) => {
       state.activeStream = action.payload;
     },
+    setContentSOurceBeingAdded: (state, action: PayloadAction<boolean>) => {
+      state.contentSourceBeingAdded = action.payload;
+    },
     resetUI: () => initialState,
   },
 });
@@ -61,6 +66,7 @@ export const {
   setShowMyNetworkModal,
   setActiveStream,
   resetUI,
+  setContentSOurceBeingAdded,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;

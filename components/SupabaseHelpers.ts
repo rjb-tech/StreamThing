@@ -12,6 +12,7 @@ import {
 } from "../redux/slices/accountSlice";
 
 import type { UserRecord } from "./types";
+import { setContentSOurceBeingAdded } from "../redux/slices/uiSlice";
 
 export async function getProfile(
   userId: string,
@@ -251,6 +252,7 @@ export async function addContentSource(
   dispatch: AppDispatch
 ) {
   try {
+    dispatch(setContentSOurceBeingAdded(true));
     const { data, error } = await supabaseClient.rpc("add_content_source", {
       user_id: userId,
       content_link: contentLink,
@@ -281,6 +283,8 @@ export async function addContentSource(
         });
         break;
     }
+  } finally {
+    dispatch(setContentSOurceBeingAdded(false));
   }
 }
 
