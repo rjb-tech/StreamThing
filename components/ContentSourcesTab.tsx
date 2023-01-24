@@ -16,6 +16,7 @@ export const ContentSourcesTab = () => {
   const supabaseClient = useSupabaseClient();
   const { contentSourceBeingAdded } = useAppSelector((state) => state.ui);
   const { contentSources } = useAppSelector((state) => state.account);
+  const contentSourcesCopy = [...contentSources];
   const formik = useFormik({
     initialValues: {
       contentLink: "",
@@ -60,84 +61,75 @@ export const ContentSourcesTab = () => {
   });
 
   return (
-    <div className="h-full w-full">
-      <div className="content-sources w-full h-60 mx-auto border border-gray-600 my-4 py-2 px-4 rounded overflow-y-scroll space-y-4 bg-gray-600">
-        {contentSources.map((sourceLink, index) => {
+    <div className="h-fit w-full">
+      <div className="content-sources w-full h-60 mx-auto border border-gray-600 my-4 p-4 rounded overflow-y-scroll space-y-4 bg-gray-600 scroll-smooth">
+        {[...contentSources].reverse().map((sourceLink, index) => {
           const source = new URL(sourceLink);
           const isFromYoutube = source.host.includes("youtube.com");
-
           const isFromTwitch = source.host.includes("twitch.tv");
 
           return (
-            <div
-              className="w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-lg hover:scale-[101%] transition-all"
-              key={index}
-            >
-              {isFromTwitch && (
-                <Link
-                  className="flex items-center w-full"
-                  href={source}
-                  target="_blank"
-                >
-                  <div className="h-8 w-8 flex items-center overflow-visible flex-none">
-                    <Image
-                      className="pl-2"
-                      alt="Twitch logo"
-                      width={734}
-                      height={518}
-                      src={twitchLogo}
-                    />
-                  </div>
-                  <span className="pl-4">
-                    {source.pathname.replace("/", "")}
-                  </span>
-                </Link>
-              )}
-              {isFromYoutube && (
-                <Link
-                  className="flex items-center w-full"
-                  href={source}
-                  target="_blank"
-                >
-                  <div className="h-8 w-8 flex items-center overflow-visible flex-none">
-                    <Image
-                      className="pl-2"
-                      alt="Youtube logo"
-                      width={734}
-                      height={518}
-                      src={youtubeLogo}
-                    />
-                  </div>
-                  <span className="pl-4">
-                    {source.pathname.replace("/", "").replace("@", "")}
-                  </span>
-                </Link>
-              )}
-              <XMarkIcon
-                className="h-7 w-7 pr-2 cursor-pointer"
-                onClick={() => {
-                  if (user)
-                    removeContentSource(
-                      user?.id,
-                      source.href,
-                      supabaseClient,
-                      dispatch
-                    );
-                }}
-              />
-            </div>
+            <>
+              <div
+                className="w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-lg hover:scale-[101%] transition-all"
+                key={index}
+              >
+                {isFromTwitch && (
+                  <Link
+                    className="flex items-center w-full"
+                    href={source}
+                    target="_blank"
+                  >
+                    <div className="h-8 w-8 flex items-center overflow-visible flex-none">
+                      <Image
+                        className="pl-2"
+                        alt="Twitch logo"
+                        width={734}
+                        height={518}
+                        src={twitchLogo}
+                      />
+                    </div>
+                    <span className="pl-4">
+                      {source.pathname.replace("/", "")}
+                    </span>
+                  </Link>
+                )}
+                {isFromYoutube && (
+                  <Link
+                    className="flex items-center w-full"
+                    href={source}
+                    target="_blank"
+                  >
+                    <div className="h-8 w-8 flex items-center overflow-visible flex-none">
+                      <Image
+                        className="pl-2"
+                        alt="Youtube logo"
+                        width={734}
+                        height={518}
+                        src={youtubeLogo}
+                      />
+                    </div>
+                    <span className="pl-4">
+                      {source.pathname.replace("/", "").replace("@", "")}
+                    </span>
+                  </Link>
+                )}
+                <XMarkIcon
+                  className="h-7 w-7 pr-2 cursor-pointer"
+                  onClick={() => {
+                    if (user)
+                      removeContentSource(
+                        user?.id,
+                        source.href,
+                        supabaseClient,
+                        dispatch
+                      );
+                  }}
+                />
+              </div>
+            </>
           );
         })}
-        {contentSourceBeingAdded && (
-          <div className="w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md animate-pulse">
-            {
-              <div className="flex items-center w-full">
-                <div className="h-8 w-8 flex items-center overflow-visible flex-none"></div>
-                <span className="pl-4"></span>
-              </div>
-            }
-          </div>
-        )}
       </div>
       <div className="add-content-source h-2/6">
         <form onSubmit={formik.handleSubmit}>
