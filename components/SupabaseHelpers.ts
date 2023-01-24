@@ -12,7 +12,7 @@ import {
 } from "../redux/slices/accountSlice";
 
 import type { UserRecord } from "./types";
-import { setContentSOurceBeingAdded } from "../redux/slices/uiSlice";
+import { setContentSourceBeingAdded } from "../redux/slices/uiSlice";
 
 export async function getProfile(
   userId: string,
@@ -252,7 +252,7 @@ export async function addContentSource(
   dispatch: AppDispatch
 ) {
   try {
-    dispatch(setContentSOurceBeingAdded(true));
+    dispatch(setContentSourceBeingAdded(true));
     const { data, error } = await supabaseClient.rpc("add_content_source", {
       user_id: userId,
       content_link: contentLink,
@@ -284,7 +284,7 @@ export async function addContentSource(
         break;
     }
   } finally {
-    dispatch(setContentSOurceBeingAdded(false));
+    dispatch(setContentSourceBeingAdded(false));
   }
 }
 

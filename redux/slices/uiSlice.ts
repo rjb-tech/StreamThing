@@ -50,7 +50,7 @@ export const uiSlice = createSlice({
     setActiveStream: (state, action: PayloadAction<string>) => {
       state.activeStream = action.payload;
     },
-    setContentSOurceBeingAdded: (state, action: PayloadAction<boolean>) => {
+    setContentSourceBeingAdded: (state, action: PayloadAction<boolean>) => {
       state.contentSourceBeingAdded = action.payload;
     },
     resetUI: () => initialState,
@@ -66,7 +66,7 @@ export const {
   setShowMyNetworkModal,
   setActiveStream,
   resetUI,
-  setContentSOurceBeingAdded,
+  setContentSourceBeingAdded,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;
