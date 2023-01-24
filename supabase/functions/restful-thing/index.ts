@@ -56,7 +56,7 @@ async function getYoutubeChannelId(channelLink: string) {
   }
 }
 
-async function getYoutubeApiAccessToken(): Promise<GoogleOauthResponse> {
+async function getGoogleOauthToken(): Promise<GoogleOauthResponse> {
   const JWTHeader = { alg: "RS256", typ: "JWT" };
   const JWTClaimSet = {
     iss: Deno.env.get("SERVICE_ACCOUNT_EMAIL") || "",
@@ -222,7 +222,7 @@ async function handleNewContentSource(
   try {
     const [channelId, youtubeTokenResponse] = await Promise.all([
       getYoutubeChannelId(channelLink),
-      getYoutubeApiAccessToken(),
+      getGoogleOauthToken(),
     ]);
 
     if (channelId && youtubeTokenResponse.access_token) {
@@ -248,16 +248,16 @@ async function refreshExistingContentSource(
   supabaseClient: SupabaseClient
 ): Promise<YoutubeChannelInfo> {
   try {
-    const [channelId, youtubeTokenResponse] = await Promise.all([
+    const [channelId, googleTokenResponse] = await Promise.all([
       getYoutubeChannelId(channelLink),
-      getYoutubeApiAccessToken(),
+      getGoogleOauthToken(),
     ]);
 
-    if (channelId && youtubeTokenResponse.access_token) {
+    if (channelId && googleTokenResponse.access_token) {
       const channelInfo = await getYoutubeChannelInfo(
         channelId,
         channelLink,
-        youtubeTokenResponse.access_token
+        googleTokenResponse.access_token
       );
 
       await updateContentSourceInfo(channelInfo, supabaseClient);
@@ -330,6 +330,7 @@ serve(async (req: any) => {
         break;
       default:
         throw new Error("Unsupported operation");
+        break;
     }
   } catch (error) {
     return new Response(JSON.stringify({ error: error.message }), {
