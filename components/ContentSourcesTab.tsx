@@ -69,65 +69,63 @@ export const ContentSourcesTab = () => {
           const isFromTwitch = source.host.includes("twitch.tv");
 
           return (
-            <>
-              <div
-                className="w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-lg hover:scale-[101%] transition-all"
-                key={index}
-              >
-                {isFromTwitch && (
-                  <Link
-                    className="flex items-center w-full"
-                    href={source}
-                    target="_blank"
-                  >
-                    <div className="h-8 w-8 flex items-center overflow-visible flex-none">
-                      <Image
-                        className="pl-2"
-                        alt="Twitch logo"
-                        width={734}
-                        height={518}
-                        src={twitchLogo}
-                      />
-                    </div>
-                    <span className="pl-4">
-                      {source.pathname.replace("/", "")}
-                    </span>
-                  </Link>
-                )}
-                {isFromYoutube && (
-                  <Link
-                    className="flex items-center w-full"
-                    href={source}
-                    target="_blank"
-                  >
-                    <div className="h-8 w-8 flex items-center overflow-visible flex-none">
-                      <Image
-                        className="pl-2"
-                        alt="Youtube logo"
-                        width={734}
-                        height={518}
-                        src={youtubeLogo}
-                      />
-                    </div>
-                    <span className="pl-4">
-                      {source.pathname.replace("/", "").replace("@", "")}
-                    </span>
-                  </Link>
-                )}
-                <XMarkIcon
-                  className="h-7 w-7 pr-2 cursor-pointer"
-                  onClick={() => {
-                    if (user)
-                      removeContentSource(
-                        user?.id,
-                        source.href,
-                        supabaseClient,
-                        dispatch
-                      );
-                  }}
-                />
-              </div>
-            </>
+            <div
+              className="w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-lg hover:scale-[101%] transition-all"
+              key={index}
+            >
+              {isFromTwitch && (
+                <Link
+                  className="flex items-center w-full"
+                  href={source}
+                  target="_blank"
+                >
+                  <div className="h-8 w-8 flex items-center overflow-visible flex-none">
+                    <Image
+                      className="pl-2"
+                      alt="Twitch logo"
+                      width={734}
+                      height={518}
+                      src={twitchLogo}
+                    />
+                  </div>
+                  <span className="pl-4">
+                    {source.pathname.replace("/", "")}
+                  </span>
+                </Link>
+              )}
+              {isFromYoutube && (
+                <Link
+                  className="flex items-center w-full"
+                  href={source}
+                  target="_blank"
+                >
+                  <div className="h-8 w-8 flex items-center overflow-visible flex-none">
+                    <Image
+                      className="pl-2"
+                      alt="Youtube logo"
+                      width={734}
+                      height={518}
+                      src={youtubeLogo}
+                    />
+                  </div>
+                  <span className="pl-4">
+                    {source.pathname.replace("/", "").replace("@", "")}
+                  </span>
+                </Link>
+              )}
+              <XMarkIcon
+                className="h-7 w-7 pr-2 cursor-pointer"
+                onClick={() => {
+                  if (user)
+                    removeContentSource(
+                      user?.id,
+                      source.href,
+                      supabaseClient,
+                      dispatch
+                    );
+                }}
+              />
+            </div>
           );
         })}
       </div>
