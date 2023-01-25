@@ -52,7 +52,7 @@ async function getYoutubeChannelId(channelLink: string) {
       throw new Error("Error getting Youtube HTML");
     }
   } catch (error) {
-    return null;
+    throw new Error("channel_not_found");
   }
 }
 
@@ -225,7 +225,10 @@ async function handleNewContentSource(
       getGoogleOauthToken(),
     ]);
 
-    if (channelId && youtubeTokenResponse.access_token) {
+    const channelId = await getYoutubeChannelId(channelLink);
+
+    if (channelId) {
+      const youtubeTokenResponse = await getGoogleOauthToken();
       const channelInfo = await getYoutubeChannelInfo(
         channelId,
         channelLink,
