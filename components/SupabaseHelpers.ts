@@ -56,7 +56,7 @@ export async function getNetworkUserInfo(
 ): Promise<UserRecord> {
   const { data, error } = await supabaseClient
     .from("profiles")
-    .select("id, username, avatar_url")
+    .select("id, username, avatar_url, active_content_source")
     .eq("id", userId)
     .single();
 
@@ -66,6 +66,7 @@ export async function getNetworkUserInfo(
     id: data.id,
     username: data.username,
     avatarUrl: data.avatar_url,
+    activeContentSource: data.active_content_source,
   };
 
   return returnData;
@@ -332,7 +333,7 @@ async function getUserRecordFromId(
 ): Promise<UserRecord | void> {
   const { data, error } = await supabaseClient
     .from("profiles")
-    .select("id, username,  avatar_url")
+    .select("id, username,  avatar_url, active_content_source")
     .eq("id", friendId)
     .single();
 
@@ -341,6 +342,7 @@ async function getUserRecordFromId(
       id: data?.id,
       username: data?.username,
       avatarUrl: data?.avatar_url,
+      activeContentSource: data?.active_content_source,
     };
 }
 
