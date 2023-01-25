@@ -220,11 +220,6 @@ async function handleNewContentSource(
   supabaseClient: SupabaseClient
 ): Promise<YoutubeChannelInfo> {
   try {
-    const [channelId, youtubeTokenResponse] = await Promise.all([
-      getYoutubeChannelId(channelLink),
-      getGoogleOauthToken(),
-    ]);
-
     const channelId = await getYoutubeChannelId(channelLink);
 
     if (channelId) {
@@ -232,7 +227,7 @@ async function handleNewContentSource(
       const channelInfo = await getYoutubeChannelInfo(
         channelId,
         channelLink,
-        youtubeTokenResponse.access_token
+        youtubeTokenResponse?.access_token || ""
       );
 
       await insertContentSourceInfo(channelInfo, supabaseClient);
