@@ -11,6 +11,7 @@ interface StreamThingAccountState {
   followers: string[];
   following: UserRecord[];
   contentSources: string[];
+  activeContentSource: string;
 }
 
 const initialState: StreamThingAccountState = {
@@ -21,6 +22,7 @@ const initialState: StreamThingAccountState = {
   followers: [],
   following: [],
   contentSources: [],
+  activeContentSource: "",
 };
 
 export const accountSlice = createSlice({
@@ -48,6 +50,9 @@ export const accountSlice = createSlice({
     setContentSources: (state, action: PayloadAction<string[]>) => {
       state.contentSources = action.payload;
     },
+    setActiveContentSource: (state, action: PayloadAction<string>) => {
+      state.activeContentSource = action.payload;
+    },
     resetAccount: () => initialState,
   },
 });
@@ -61,6 +66,7 @@ export const {
   setFollowers,
   setFollowing,
   setContentSources,
+  setActiveContentSource,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;

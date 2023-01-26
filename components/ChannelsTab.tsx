@@ -1,4 +1,4 @@
-import { XMarkIcon } from "@heroicons/react/20/solid";
+import { XMarkIcon, TvIcon } from "@heroicons/react/20/solid";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import classNames from "classnames";
 import { useFormik } from "formik";
@@ -15,9 +15,8 @@ export const ChannelsTab = () => {
   const user = useUser();
   const dispatch = useAppDispatch();
   const supabaseClient = useSupabaseClient();
-  const { following, username, avatarUrl } = useAppSelector(
-    (state) => state.account
-  );
+  const { following, username, avatarUrl, activeContentSource } =
+    useAppSelector((state) => state.account);
 
   const formik = useFormik({
     initialValues: {
@@ -61,13 +60,19 @@ export const ChannelsTab = () => {
             className="w-full flex items-center mx-2 cursor-pointer"
           >
             <Image
-              className="rounded-full h-8 w-8"
+              className="rounded-full h-10 w-10"
               alt={`${username}`}
               width={100}
               height={100}
               src={avatarUrl || ""}
             />
-            <span className="pl-4">{username} (me)</span>
+            <span className="pl-4 flex flex-col">
+              <div>{username}</div>
+              <div className="flex space-x-3 items-center">
+                <TvIcon className="h-4 w-4" />
+                <span>{activeContentSource || "Hey"}</span>
+              </div>
+            </span>
           </div>
         </div>
         {following.map((channel, index) => {
@@ -84,13 +89,19 @@ export const ChannelsTab = () => {
                 className="w-full flex items-center mx-2 cursor-pointer"
               >
                 <Image
-                  className="rounded-full h-8 w-8"
+                  className="rounded-full h-10 w-10"
                   alt={`${channel.username}`}
                   width={100}
                   height={100}
                   src={channel.avatarUrl}
                 />
-                <span className="pl-4">{channel.username}</span>
+                <span className="pl-4 flex flex-col">
+                  <div>{channel.username}</div>
+                  <div className="flex space-x-3 items-center">
+                    <TvIcon className="h-4 w-4" />
+                    <span>{channel.activeContentSource || "Hey"}</span>
+                  </div>
+                </span>
               </div>
               <XMarkIcon
                 className="h-7 w-7 pr-2 cursor-pointer"

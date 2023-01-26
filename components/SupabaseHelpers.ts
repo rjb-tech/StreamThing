@@ -9,6 +9,7 @@ import {
   setFollowers,
   setFollowing,
   setContentSources,
+  setActiveContentSource,
 } from "../redux/slices/accountSlice";
 
 import type { UserRecord } from "./types";
@@ -40,6 +41,7 @@ export async function getProfile(
       dispatch(setFollowers(data.followers));
       dispatch(setContentSources(data.content_sources));
       dispatch(setFollowing(explodedFollowingRecords));
+      dispatch(setActiveContentSource(data.active_content_source));
     }
   } catch (error) {
     toast.error("Error loading user data", {
