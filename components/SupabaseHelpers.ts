@@ -339,7 +339,6 @@ export async function getAndSetVideoFromContentSource(
 
     dispatch(setContentSourceCurrentlyShowing(contentSourceLink));
     dispatch(setActiveStream(`https://www.youtube.com/watch?v=${videoId}`));
-    dispatch(setShowMyNetworkModal(false));
   } catch (err) {
     toast.error("Error setting active content source", {
       position: toast.POSITION.BOTTOM_CENTER,

@@ -19,6 +19,7 @@ export const ChannelsTab = () => {
   const user = useUser();
   const dispatch = useAppDispatch();
   const supabaseClient = useSupabaseClient();
+  const { contentSourceCurrentlyShowing } = useAppSelector((state) => state.ui);
   const { following, username, avatarUrl, activeContentSource } =
     useAppSelector((state) => state.account);
 
@@ -58,11 +59,14 @@ export const ChannelsTab = () => {
         >
           <div
             onClick={() => {
-              getAndSetVideoFromContentSource(
-                activeContentSource,
-                supabaseClient,
-                dispatch
-              );
+              if (contentSourceCurrentlyShowing !== activeContentSource)
+                getAndSetVideoFromContentSource(
+                  activeContentSource,
+                  supabaseClient,
+                  dispatch
+                );
+
+              dispatch(setShowMyNetworkModal(false));
             }}
             className="w-full flex items-center mx-2 cursor-pointer"
           >
@@ -96,11 +100,17 @@ export const ChannelsTab = () => {
             >
               <div
                 onClick={() => {
-                  getAndSetVideoFromContentSource(
-                    channel.activeContentSource,
-                    supabaseClient,
-                    dispatch
-                  );
+                  if (
+                    contentSourceCurrentlyShowing !==
+                    channel.activeContentSource
+                  )
+                    getAndSetVideoFromContentSource(
+                      channel.activeContentSource,
+                      supabaseClient,
+                      dispatch
+                    );
+
+                  dispatch(setShowMyNetworkModal(false));
                 }}
                 className="w-full flex items-center mx-2 cursor-pointer"
               >
