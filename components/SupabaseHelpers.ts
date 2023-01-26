@@ -17,7 +17,6 @@ import {
   setActiveStream,
   setContentSourceBeingAdded,
   setContentSourceCurrentlyShowing,
-  setShowMyNetworkModal,
 } from "../redux/slices/uiSlice";
 
 export async function getProfile(
@@ -91,7 +90,7 @@ export async function updateUserAvatarUrl(
     const updates = {
       id: userId,
       avatar_url: avatarUrl,
-      updated_at: new Date().toISOString(),
+      last_update: new Date().toISOString(),
     };
 
     const { error } = await supabaseClient.from("profiles").upsert(updates);
@@ -118,7 +117,7 @@ export async function updateUsername(
     const updates = {
       id: userId,
       username,
-      updated_at: new Date().toISOString(),
+      last_update: new Date().toISOString(),
     };
 
     let { error } = await supabaseClient.from("profiles").upsert(updates);
