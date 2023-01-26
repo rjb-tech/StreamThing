@@ -6,6 +6,7 @@ import { ChannelGuide } from "./ChannelGuide";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useUser } from "@supabase/auth-helpers-react";
 import {
+  setMyNetworkSelectedIndex,
   setShowAccountModal,
   setShowGuide,
   setShowMyNetworkModal,
@@ -26,6 +27,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
   const { showGuide, showAccountModal, showMyNetworkModal } = useAppSelector(
     (state) => state.ui
   );
+  const { contentSources } = useAppSelector((state) => state.account);
   const session = useSession();
   const user = useUser();
   const supabaseClient = useSupabaseClient();
@@ -98,6 +100,13 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
       window.removeEventListener("keydown", keyListener);
     };
   });
+
+  useEffect(() => {
+    if (contentSources.length === 0 && user) {
+      dispatch(setMyNetworkSelectedIndex(1));
+      dispatch(setShowMyNetworkModal(true));
+    }
+  }, [contentSources]);
 
   return (
     <>

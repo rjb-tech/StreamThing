@@ -9,7 +9,11 @@ import {
   setShowMyNetworkModal,
 } from "../redux/slices/uiSlice";
 import { StreamThingButton } from "./StreamThingButton";
-import { sendFollow, sendUnfollow } from "./SupabaseHelpers";
+import {
+  getAndSetVideoFromContentSource,
+  sendFollow,
+  sendUnfollow,
+} from "./SupabaseHelpers";
 
 export const ChannelsTab = () => {
   const user = useUser();
@@ -54,8 +58,11 @@ export const ChannelsTab = () => {
         >
           <div
             onClick={() => {
-              dispatch(setActiveStream("https://twitch.tv/pobelter"));
-              dispatch(setShowMyNetworkModal(false));
+              getAndSetVideoFromContentSource(
+                activeContentSource,
+                supabaseClient,
+                dispatch
+              );
             }}
             className="w-full flex items-center mx-2 cursor-pointer"
           >
@@ -71,9 +78,11 @@ export const ChannelsTab = () => {
               <div className="flex space-x-3 items-center">
                 <TvIcon className="h-4 w-4" />
                 <span>
-                  {new URL(activeContentSource).pathname
-                    .replace("/", "")
-                    .replace("@", "") || ""}
+                  {activeContentSource
+                    ? new URL(activeContentSource).pathname
+                        .replace("/", "")
+                        .replace("@", "")
+                    : ""}
                 </span>
               </div>
             </span>
@@ -87,8 +96,11 @@ export const ChannelsTab = () => {
             >
               <div
                 onClick={() => {
-                  dispatch(setActiveStream("https://twitch.tv/pobelter"));
-                  dispatch(setShowMyNetworkModal(false));
+                  getAndSetVideoFromContentSource(
+                    channel.activeContentSource,
+                    supabaseClient,
+                    dispatch
+                  );
                 }}
                 className="w-full flex items-center mx-2 cursor-pointer"
               >
@@ -104,9 +116,11 @@ export const ChannelsTab = () => {
                   <div className="flex space-x-3 items-center">
                     <TvIcon className="h-4 w-4" />
                     <span>
-                      {new URL(channel.activeContentSource).pathname
-                        .replace("/", "")
-                        .replace("@", "") || ""}
+                      {channel.activeContentSource
+                        ? new URL(channel.activeContentSource).pathname
+                            .replace("/", "")
+                            .replace("@", "")
+                        : "No active content"}
                     </span>
                   </div>
                 </span>

@@ -13,7 +13,12 @@ import {
 } from "../redux/slices/accountSlice";
 
 import type { UserRecord } from "./types";
-import { setContentSourceBeingAdded } from "../redux/slices/uiSlice";
+import {
+  setActiveStream,
+  setContentSourceBeingAdded,
+  setContentSourceCurrentlyShowing,
+  setShowMyNetworkModal,
+} from "../redux/slices/uiSlice";
 
 export async function getProfile(
   userId: string,
@@ -305,6 +310,8 @@ export async function removeContentSource(
 
     if (error) throw error;
 
+    await getProfile(userId, supabaseClient, dispatch);
+
     toast.success("Content source removed!", {
       position: toast.POSITION.BOTTOM_CENTER,
     });
@@ -312,6 +319,29 @@ export async function removeContentSource(
     getContentSources(userId, supabaseClient, dispatch);
   } catch {
     toast.error("Error removing content source", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+  }
+}
+
+export async function getAndSetVideoFromContentSource(
+  contentSourceLink: string,
+  supabaseClient: SupabaseClient,
+  dispatch: AppDispatch
+) {
+  try {
+    const { data: videoId, error } = await supabaseClient.rpc(
+      "get_random_video_id_from_content_source",
+      { content_source_link: contentSourceLink }
+    );
+
+    if (error) throw error;
+
+    dispatch(setContentSourceCurrentlyShowing(contentSourceLink));
+    dispatch(setActiveStream(`https://www.youtube.com/watch?v=${videoId}`));
+    dispatch(setShowMyNetworkModal(false));
+  } catch (err) {
+    toast.error("Error setting active content source", {
       position: toast.POSITION.BOTTOM_CENTER,
     });
   }

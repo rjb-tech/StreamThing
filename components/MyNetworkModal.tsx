@@ -1,14 +1,20 @@
 import { Tab } from "@headlessui/react";
 import classNames from "classnames";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { setShowMyNetworkModal } from "../redux/slices/uiSlice";
+import {
+  setMyNetworkSelectedIndex,
+  setShowMyNetworkModal,
+} from "../redux/slices/uiSlice";
 import { BaseModal } from "./BaseModal";
 import { ContentSourcesTab } from "./ContentSourcesTab";
 import { ChannelsTab } from "./ChannelsTab";
 
 export const MyNetworkModal = () => {
   const dispatch = useAppDispatch();
-  const { showMyNetworkModal } = useAppSelector((state) => state.ui);
+  const { showMyNetworkModal, myNetworkSelectedIndex } = useAppSelector(
+    (state) => state.ui
+  );
+  const { contentSources } = useAppSelector((state) => state.account);
 
   function closeModal() {
     dispatch(setShowMyNetworkModal(false));
@@ -17,7 +23,13 @@ export const MyNetworkModal = () => {
   return (
     <BaseModal showCondition={showMyNetworkModal} closeModal={closeModal} wide>
       <div className="w-full">
-        <Tab.Group>
+        <Tab.Group
+          selectedIndex={myNetworkSelectedIndex}
+          onChange={(index) => {
+            const hasSources = contentSources.length > 0;
+            if (hasSources) dispatch(setMyNetworkSelectedIndex(index));
+          }}
+        >
           <Tab.List className="flex space-x-8 rounded-xl bg-blue-900/20 p-1">
             <Tab
               className={({ selected }) =>

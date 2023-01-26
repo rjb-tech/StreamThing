@@ -11,6 +11,8 @@ interface StreamThingMainState {
   showMyNetworkModal: boolean;
   activeStream: string;
   contentSourceBeingAdded: boolean;
+  myNetworkSelectedIndex: number;
+  contentSourceCurrentlyShowing: string;
 }
 
 // Define the initial state using that type
@@ -23,6 +25,8 @@ const initialState: StreamThingMainState = {
   showMyNetworkModal: false,
   activeStream: "",
   contentSourceBeingAdded: false,
+  myNetworkSelectedIndex: 0,
+  contentSourceCurrentlyShowing: "",
 };
 
 export const uiSlice = createSlice({
@@ -53,6 +57,15 @@ export const uiSlice = createSlice({
     setContentSourceBeingAdded: (state, action: PayloadAction<boolean>) => {
       state.contentSourceBeingAdded = action.payload;
     },
+    setMyNetworkSelectedIndex: (state, action: PayloadAction<number>) => {
+      state.myNetworkSelectedIndex = action.payload;
+    },
+    setContentSourceCurrentlyShowing: (
+      state,
+      action: PayloadAction<string>
+    ) => {
+      state.contentSourceCurrentlyShowing = action.payload;
+    },
     resetUI: () => initialState,
   },
 });
@@ -67,6 +80,8 @@ export const {
   setActiveStream,
   resetUI,
   setContentSourceBeingAdded,
+  setMyNetworkSelectedIndex,
+  setContentSourceCurrentlyShowing,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;
