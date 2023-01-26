@@ -82,7 +82,7 @@ export const ChannelsTab = () => {
                     ? new URL(activeContentSource).pathname
                         .replace("/", "")
                         .replace("@", "")
-                    : ""}
+                    : "No active content"}
                 </span>
               </div>
             </span>
