@@ -102,7 +102,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
   });
 
   useEffect(() => {
-    if (contentSources.length === 0 && user) {
+    if (contentSources.length === 0 && session !== null) {
       dispatch(setMyNetworkSelectedIndex(1));
       dispatch(setShowMyNetworkModal(true));
     }
