@@ -70,7 +70,11 @@ export const ChannelsTab = () => {
               <div>{username}</div>
               <div className="flex space-x-3 items-center">
                 <TvIcon className="h-4 w-4" />
-                <span>{activeContentSource || "Hey"}</span>
+                <span>
+                  {new URL(activeContentSource).pathname
+                    .replace("/", "")
+                    .replace("@", "") || ""}
+                </span>
               </div>
             </span>
           </div>
@@ -99,7 +103,11 @@ export const ChannelsTab = () => {
                   <div>{channel.username}</div>
                   <div className="flex space-x-3 items-center">
                     <TvIcon className="h-4 w-4" />
-                    <span>{channel.activeContentSource || "Hey"}</span>
+                    <span>
+                      {new URL(channel.activeContentSource).pathname
+                        .replace("/", "")
+                        .replace("@", "") || ""}
+                    </span>
                   </div>
                 </span>
               </div>
