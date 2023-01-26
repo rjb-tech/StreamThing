@@ -1,4 +1,4 @@
-import { XMarkIcon, TvIcon } from "@heroicons/react/20/solid";
+import { XMarkIcon, TvIcon } from "@heroicons/react/24/outline";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import classNames from "classnames";
 import { useFormik } from "formik";
