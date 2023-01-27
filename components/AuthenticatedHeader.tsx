@@ -31,7 +31,7 @@ export const AuthenticatedHeader = ({
   const { username } = useAppSelector((state) => state.account);
 
   return (
-    <header className="fixed top-0 h-24 w-full py-4 px-8 bg-gradient-to-b from-[#F0386B]/20 via-[#585191]/40 via-[#182D63]/30 to-transparent flex items-center justify-between z-50">
+    <header className="fixed top-0 h-24 w-full py-4 px-8 bg-gradient-to-b from-[#EF436B]/[0.65] via-[#E05A00]/[0.15] via-[#182E63]/[0.8] via-[#EF436B]/[0.65] to-transparent flex items-center justify-between z-50">
       <span className="text-4xl text-white">StreamThing</span>
       <span className="w-full flex justify-end space-x-4">
         <StreamThingButton innerText="" fullHeight>

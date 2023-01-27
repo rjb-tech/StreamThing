@@ -30,7 +30,7 @@ export const MyNetworkModal = () => {
             if (hasSources) dispatch(setMyNetworkSelectedIndex(index));
           }}
         >
-          <Tab.List className="flex space-x-8 rounded-xl bg-blue-900/20 p-1">
+          <Tab.List className="flex space-x-8 rounded-xl bg-[#9A97D8]/[0.3] p-1">
             <Tab
               className={({ selected }) =>
                 classNames(
