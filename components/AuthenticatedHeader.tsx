@@ -16,22 +16,27 @@ import {
 import { StreamThingButton } from "./StreamThingButton";
 import type { User } from "@supabase/supabase-js";
 import { resetAccount } from "../redux/slices/accountSlice";
+import { useRouter } from "next/router";
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import classNames from "classnames";
 
 interface AuthenticatedHeaderProps {
-  supabaseClient: any;
-  user: User | null;
+  username: string;
 }
 
-export const AuthenticatedHeader = ({
-  supabaseClient,
-  user,
-}: AuthenticatedHeaderProps) => {
+export const AuthenticatedHeader = ({ username }: AuthenticatedHeaderProps) => {
+  const supabaseClient = useSupabaseClient();
   const dispatch = useAppDispatch();
+  const router = useRouter();
   const { showMyNetworkModal } = useAppSelector((state) => state.ui);
-  const { username } = useAppSelector((state) => state.account);
+  const { username: u } = useAppSelector((state) => state.account);
 
   return (
-    <header className="fixed top-0 h-24 w-full py-4 px-8 bg-gradient-to-b from-[#EF436B]/[0.65] via-[#E05A00]/[0.15] via-[#182E63]/[0.8] via-[#EF436B]/[0.65] to-transparent flex items-center justify-between z-50">
+    <header
+      className={classNames(
+        "fixed top-0 h-24 w-full py-4 px-8 bg-gradient-to-b from-[#EF436B]/[0.65] via-[#182E63]/[0.7] to-transparent flex items-center justify-between z-50"
+      )}
+    >
       <span className="text-4xl text-white">StreamThing</span>
       <span className="w-full flex justify-end space-x-4">
         <StreamThingButton innerText="" fullHeight>
@@ -57,7 +62,7 @@ export const AuthenticatedHeader = ({
         <Menu as="span" className="relative inline-block text-left">
           <div>
             <Menu.Button as="div">
-              <StreamThingButton innerText={username} fullHeight>
+              <StreamThingButton innerText={u || username} fullHeight>
                 <ChevronDownIcon
                   className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
                   aria-hidden="true"
@@ -96,6 +101,7 @@ export const AuthenticatedHeader = ({
                         await supabaseClient.auth.signOut();
                         dispatch(resetAccount());
                         dispatch(resetUI());
+                        router.push("/");
                       }}
                       className={`${
                         active ? "opacity-80 text-white" : "text-white"

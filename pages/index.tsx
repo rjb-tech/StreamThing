@@ -1,18 +1,22 @@
-import { Inter } from "@next/font/google";
-import {
-  useSession,
-  useSupabaseClient,
-  useUser,
-} from "@supabase/auth-helpers-react";
+import { createServerSupabaseClient } from "@supabase/auth-helpers-nextjs";
+import { GetServerSidePropsContext } from "next";
 import { LandingPage } from "../components/LandingPage";
-import { TheaterView } from "../components/TheaterView";
 
-const inter = Inter({ subsets: ["latin"] });
-
-export default function Home() {
-  const session = useSession();
-  const supabase = useSupabaseClient();
-  const user = useUser();
-
-  return user ? <TheaterView /> : <LandingPage />;
+export default function LoginPage() {
+  return <LandingPage />;
 }
+
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
+  // Create authenticated Supabase Client
+  const supabase = createServerSupabaseClient(ctx);
+  // Check if we have a session
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (!session) return { props: {} };
+  else
+    return {
+      redirect: { destination: "/theater", permanent: false },
+    };
+};

@@ -6,13 +6,13 @@ import {
   useUser,
 } from "@supabase/auth-helpers-react";
 
-export const StickyHeader = () => {
-  const user = useUser();
-  const session = useSession();
-  const supabase = useSupabaseClient();
-  return session ? (
-    <AuthenticatedHeader supabaseClient={supabase} user={user} />
-  ) : (
-    <UnauthenticatedHeader supabaseClient={supabase} />
-  );
-};
+// export const StickyHeader = () => {
+//   const user = useUser();
+//   const session = useSession();
+//   const supabase = useSupabaseClient();
+//   return session ? (
+//     <AuthenticatedHeader />
+//   ) : (
+//     <UnauthenticatedHeader supabaseClient={supabase} />
+//   );
+// };

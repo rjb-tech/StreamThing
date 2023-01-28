@@ -1,22 +1,15 @@
 import { ReactNode, useEffect } from "react";
-import { StickyHeader } from "./StickyHeader";
-import { Transition } from "@headlessui/react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { ChannelGuide } from "./ChannelGuide";
 import { useSession, useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useUser } from "@supabase/auth-helpers-react";
-import {
-  setMyNetworkSelectedIndex,
-  setShowAccountModal,
-  setShowGuide,
-  setShowMyNetworkModal,
-} from "../redux/slices/uiSlice";
+
 import { getProfile } from "./SupabaseHelpers";
 import { ModalProvider } from "./ModalProvider";
 import {
   createClient,
   RealtimePostgresUpdatePayload,
 } from "@supabase/supabase-js";
+import { useRouter } from "next/router";
 
 interface ProviderProps {
   children: ReactNode;
@@ -30,6 +23,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
   const { contentSources } = useAppSelector((state) => state.account);
   const session = useSession();
   const user = useUser();
+  const router = useRouter();
   const supabaseClient = useSupabaseClient();
 
   useEffect(() => {
@@ -82,64 +76,48 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
       getProfile(user.id, supabaseClient, dispatch);
   }, [showMyNetworkModal]);
 
+  // useEffect(() => {
+  //   if (!Boolean(session) && router.pathname === "/") router.replace("/login");
+
+  //   if (Boolean(session) && router.pathname === "/login") router.replace("/");
+  // }, [router.pathname, session]);
+
   // Event listeners
-  useEffect(() => {
-    // e is a KeyboardEvent, but typescript says tagname doesn't exist on e.target even though it does
-    // so I made e an any typed parameter
-    function keyListener(e: any): void {
-      const incomingTag = e.target.tagName;
-      if (incomingTag !== "INPUT" && !e.repeat) {
-        switch (e.key.toLowerCase()) {
-          case "a":
-            if (user) {
-              dispatch(setShowAccountModal(!showAccountModal));
-            }
-            break;
-          case "n":
-            dispatch(setShowMyNetworkModal(!showMyNetworkModal));
-            break;
-        }
-      }
-    }
+  // useEffect(() => {
+  //   // e is a KeyboardEvent, but typescript says tagname doesn't exist on e.target even though it does
+  //   // so I made e an any typed parameter
+  //   function keyListener(e: any): void {
+  //     const incomingTag = e.target.tagName;
+  //     if (incomingTag !== "INPUT" && !e.repeat) {
+  //       switch (e.key.toLowerCase()) {
+  //         case "a":
+  //           if (user) {
+  //             dispatch(setShowAccountModal(!showAccountModal));
+  //           }
+  //           break;
+  //         case "n":
+  //           dispatch(setShowMyNetworkModal(!showMyNetworkModal));
+  //           break;
+  //       }
+  //     }
+  //   }
 
-    window.addEventListener("keydown", keyListener);
+  //   window.addEventListener("keydown", keyListener);
 
-    return () => {
-      window.removeEventListener("keydown", keyListener);
-    };
-  });
-
-  useEffect(() => {
-    if (contentSources.length === 0 && session !== null) {
-      dispatch(setMyNetworkSelectedIndex(1));
-      dispatch(setShowMyNetworkModal(true));
-    }
-  }, [contentSources]);
+  //   return () => {
+  //     window.removeEventListener("keydown", keyListener);
+  //   };
+  // });
 
   return (
     <>
       {/* Do a session check here to render either login/logout modal */}
       <ModalProvider />
       <div className="h-screen w-screen">
-        <>
-          <Transition
-            as="div"
-            show={showGuide}
-            enter="transition-all duration-500"
-            enterFrom="absolute opacity-0"
-            enterTo="absolute top-0 h-fit w-full opacity-100"
-            leave="transition-all duration-500"
-            leaveFrom="h-fit w-full opacity-100"
-            leaveTo="opacity-0"
-          >
-            <ChannelGuide />
-          </Transition>
-          <StickyHeader />
-          {/* Make sure the top positioning of this matches the height of the header component */}
-          <main className="h-full w-full overscroll-y-contain overflow-y-hidden flex items-center justify-center pt-24 bg-black">
-            {children}
-          </main>
-        </>
+        {/* Make sure the top positioning of this matches the height of the header component */}
+        <main className="h-full w-full overscroll-y-contain overflow-y-hidden flex items-center justify-center pt-24 bg-black">
+          {children}
+        </main>
       </div>
     </>
   );

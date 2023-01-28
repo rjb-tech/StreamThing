@@ -1,17 +1,21 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import dynamic from "next/dynamic";
 import ReactPlayer from "react-player";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { AuthenticatedHeader } from "./AuthenticatedHeader";
 import { getAndSetVideoFromContentSource } from "./SupabaseHelpers";
 
-export const TheaterView = () => {
+export default function TheaterView({ username }: { username: string }) {
   const supabaseClient = useSupabaseClient();
   const dispatch = useAppDispatch();
   const { activeStream, contentSourceCurrentlyShowing } = useAppSelector(
     (state) => state.ui
   );
+
   return (
     <>
       <div className="video-player h-screen w-screen flex items-center justify-center">
+        <AuthenticatedHeader username={username} />
         <ReactPlayer
           onEnded={() => {
             getAndSetVideoFromContentSource(
@@ -30,4 +34,4 @@ export const TheaterView = () => {
       </div>
     </>
   );
-};
+}

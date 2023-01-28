@@ -1,29 +1,16 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import twitchLogo from "../images/TwitchGlitchPurple.png";
 import discordLogo from "../images/icon_clyde_blurple_RGB.png";
 import Image from "next/image";
+import { Provider } from "@supabase/supabase-js";
 
 export const LandingPage = () => {
-  const dispatch = useAppDispatch();
   const supabase = useSupabaseClient();
-  const { showAuthModal } = useAppSelector((state) => state.ui);
 
-  async function signInWithGoogle() {
+  async function signInWith(provider: Provider) {
     const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-    });
-  }
-
-  async function signInWithTwitch() {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "twitch",
-    });
-  }
-
-  async function signInWithDiscord() {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "discord",
+      provider,
+      options: { redirectTo: "http://localhost:3000/theater" },
     });
   }
 
@@ -35,7 +22,7 @@ export const LandingPage = () => {
         </span>
         <span className="h-full w-full flex flex-col justify-center items-center space-y-4 ">
           <button
-            onClick={async () => await signInWithDiscord()}
+            onClick={async () => await signInWith("discord")}
             className="h-12 flex items-center justify-around w-60 rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 transition-all hover:bg-opacity-30 duration-250"
           >
             <Image
@@ -47,7 +34,7 @@ export const LandingPage = () => {
             <span>Login with Discord</span>
           </button>
           <button
-            onClick={async () => await signInWithGoogle()}
+            onClick={async () => await signInWith("google")}
             className="h-12 flex items-center justify-around w-60 rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 transition-all hover:bg-opacity-30 duration-250"
           >
             <Image
@@ -59,7 +46,7 @@ export const LandingPage = () => {
             <span>Login with Google</span>
           </button>
           <button
-            onClick={async () => await signInWithTwitch()}
+            onClick={async () => await signInWith("twitch")}
             className="h-12 flex items-center justify-around w-60 rounded-md bg-black bg-opacity-20 px-4 py-2 text-sm font-medium text-white hover:bg-opacity-30 focus:outline-none focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-opacity-75 transition-all hover:bg-opacity-30 duration-250"
           >
             <Image alt="Twitch logo" width={25} height={25} src={twitchLogo} />

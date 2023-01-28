@@ -18,18 +18,21 @@ export const AuthModal = () => {
   async function signInWithGoogle() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
+      options: { redirectTo: "/" },
     });
   }
 
   async function signInWithTwitch() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "twitch",
+      options: { redirectTo: "/" },
     });
   }
 
   async function signInWithDiscord() {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "discord",
+      options: { redirectTo: "/" },
     });
   }
 
