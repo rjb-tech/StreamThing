@@ -156,7 +156,7 @@ export const ChannelsTab = () => {
             >
               {formik.errors.username
                 ? formik.errors.username
-                : "Connect friends to your network"}
+                : "Add friends to your network"}
             </label>
             <input
               type="text"
