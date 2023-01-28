@@ -38,7 +38,7 @@ export default function TheaterView({ username }: { username: string }) {
         <div
           ref={player}
           className={`relative h-full w-full transition-all duration-500 ${
-            videoLoaded ? "opacity-100" : "opacity-100"
+            videoLoaded ? "opacity-100" : "opacity-0"
           }`}
         >
           <ReactPlayer
