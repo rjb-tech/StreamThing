@@ -14,7 +14,9 @@ export const MyNetworkModal = () => {
   const { showMyNetworkModal, myNetworkSelectedIndex } = useAppSelector(
     (state) => state.ui
   );
-  const { contentSources } = useAppSelector((state) => state.account);
+  const { contentSources, following } = useAppSelector(
+    (state) => state.account
+  );
 
   function closeModal() {
     dispatch(setShowMyNetworkModal(false));
@@ -42,7 +44,8 @@ export const MyNetworkModal = () => {
                 )
               }
             >
-              Channels
+              {`Channels (${following.length + 1})`}
+              {/* 1 added here to count current user's channel too */}
             </Tab>
             <Tab
               className={({ selected }) =>
@@ -55,7 +58,7 @@ export const MyNetworkModal = () => {
                 )
               }
             >
-              Content
+              {`Content (${contentSources.length})`}
             </Tab>
           </Tab.List>
           <Tab.Panels className="h-fit w-full">
