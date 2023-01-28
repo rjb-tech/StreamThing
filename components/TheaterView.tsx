@@ -37,7 +37,7 @@ export default function TheaterView({ username }: { username: string }) {
         <AuthenticatedHeader username={username} videoLoaded={videoLoaded} />
         <div
           ref={player}
-          className={`relative h-full w-full transition-all duration-500 ${
+          className={`video-player relative h-full w-full transition-all duration-500 ${
             videoLoaded ? "opacity-100" : "opacity-0"
           }`}
         >
