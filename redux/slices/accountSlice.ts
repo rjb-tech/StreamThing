@@ -12,6 +12,7 @@ interface StreamThingAccountState {
   following: UserRecord[];
   contentSources: string[];
   activeContentSource: string;
+  channelCurrentlyViewing: string;
 }
 
 const initialState: StreamThingAccountState = {
@@ -23,6 +24,7 @@ const initialState: StreamThingAccountState = {
   following: [],
   contentSources: [],
   activeContentSource: "",
+  channelCurrentlyViewing: "",
 };
 
 export const accountSlice = createSlice({
@@ -53,6 +55,9 @@ export const accountSlice = createSlice({
     setActiveContentSource: (state, action: PayloadAction<string>) => {
       state.activeContentSource = action.payload;
     },
+    setChannelCurrentlyViewing: (state, action: PayloadAction<string>) => {
+      state.channelCurrentlyViewing = action.payload;
+    },
     resetAccount: () => initialState,
   },
 });
@@ -67,6 +72,7 @@ export const {
   setFollowing,
   setContentSources,
   setActiveContentSource,
+  setChannelCurrentlyViewing,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;

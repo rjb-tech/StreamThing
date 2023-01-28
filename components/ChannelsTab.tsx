@@ -4,15 +4,13 @@ import classNames from "classnames";
 import { useFormik } from "formik";
 import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import {
-  setActiveStream,
-  setShowMyNetworkModal,
-} from "../redux/slices/uiSlice";
+import { setShowMyNetworkModal } from "../redux/slices/uiSlice";
 import { StreamThingButton } from "./StreamThingButton";
 import {
   getAndSetVideoFromContentSource,
   sendFollow,
   sendUnfollow,
+  updateChannelCurrentlyViewing,
 } from "./SupabaseHelpers";
 
 export const ChannelsTab = () => {
@@ -20,8 +18,13 @@ export const ChannelsTab = () => {
   const dispatch = useAppDispatch();
   const supabaseClient = useSupabaseClient();
   const { contentSourceCurrentlyShowing } = useAppSelector((state) => state.ui);
-  const { following, username, avatarUrl, activeContentSource } =
-    useAppSelector((state) => state.account);
+  const {
+    following,
+    username,
+    avatarUrl,
+    activeContentSource,
+    channelCurrentlyViewing,
+  } = useAppSelector((state) => state.account);
 
   const formik = useFormik({
     initialValues: {
@@ -54,17 +57,29 @@ export const ChannelsTab = () => {
     <div className="h-full w-full">
       <div className="following w-full h-60 mx-auto border border-gray-600 my-4 p-4 rounded overflow-y-scroll space-y-4 bg-gray-600">
         <div
-          className="w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-lg hover:scale-[101%] transition-all"
+          className={`w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-lg hover:scale-[101%] transition-all ${
+            user?.id === channelCurrentlyViewing
+              ? "border-2 border-[#EDAE49]"
+              : ""
+          }`}
           key={0}
         >
           <div
             onClick={() => {
-              if (contentSourceCurrentlyShowing !== activeContentSource)
+              if (contentSourceCurrentlyShowing !== activeContentSource) {
+                updateChannelCurrentlyViewing(
+                  user?.id || "",
+                  user?.id || "",
+                  supabaseClient,
+                  dispatch
+                );
+
                 getAndSetVideoFromContentSource(
                   activeContentSource,
                   supabaseClient,
                   dispatch
                 );
+              }
 
               dispatch(setShowMyNetworkModal(false));
             }}
@@ -93,9 +108,12 @@ export const ChannelsTab = () => {
           </div>
         </div>
         {following.map((channel, index) => {
+          const isActiveChannel = channel.id === channelCurrentlyViewing;
           return (
             <div
-              className="w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-lg hover:scale-[101%] transition-all"
+              className={`w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-lg hover:scale-[101%] transition-all ${
+                isActiveChannel ? "border-2 border-[#EDAE49]" : ""
+              }`}
               key={index + 1}
             >
               <div
@@ -103,12 +121,20 @@ export const ChannelsTab = () => {
                   if (
                     contentSourceCurrentlyShowing !==
                     channel.activeContentSource
-                  )
+                  ) {
+                    updateChannelCurrentlyViewing(
+                      user?.id || "",
+                      channel.id,
+                      supabaseClient,
+                      dispatch
+                    );
+
                     getAndSetVideoFromContentSource(
                       channel.activeContentSource,
                       supabaseClient,
                       dispatch
                     );
+                  }
 
                   dispatch(setShowMyNetworkModal(false));
                 }}
