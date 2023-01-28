@@ -31,7 +31,7 @@ export default function TheaterView({ username }: { username: string }) {
   return (
     <>
       <div className="video-player h-screen w-screen flex flex-col items-center justify-center">
-        <AuthenticatedHeader username={username} />
+        <AuthenticatedHeader username={username} videoLoaded={videoLoaded} />
         <div
           ref={player}
           className={`relative h-full w-full transition-all duration-500 ${

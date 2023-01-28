@@ -6,6 +6,7 @@ import {
   UserIcon,
   TvIcon,
   BellAlertIcon,
+  ArrowsRightLeftIcon,
 } from "@heroicons/react/20/solid";
 import {
   resetUI,
@@ -21,17 +22,24 @@ import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import classNames from "classnames";
 import { Ref } from "react";
 import ReactPlayer from "react-player";
+import { getAndSetVideoFromContentSource } from "./SupabaseHelpers";
 
 interface AuthenticatedHeaderProps {
   username: string;
+  videoLoaded: boolean;
 }
 
-export const AuthenticatedHeader = ({ username }: AuthenticatedHeaderProps) => {
+export const AuthenticatedHeader = ({
+  username,
+  videoLoaded,
+}: AuthenticatedHeaderProps) => {
   const supabaseClient = useSupabaseClient();
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { showMyNetworkModal } = useAppSelector((state) => state.ui);
-  const { username: u } = useAppSelector((state) => state.account);
+  const { username: u, activeContentSource } = useAppSelector(
+    (state) => state.account
+  );
 
   return (
     <header
@@ -40,25 +48,40 @@ export const AuthenticatedHeader = ({ username }: AuthenticatedHeaderProps) => {
       )}
     >
       <span className="text-4xl text-white">StreamThing</span>
-      <span className="w-full flex justify-end space-x-4">
-        <StreamThingButton innerText="" fullHeight>
+
+      <span className="w-fit flex justify-end space-x-4">
+        {/* <StreamThingButton innerText="" fullHeight>
           <BellAlertIcon className="h-5 w-5" />
           <div className="absolute ml-12 mb-8 bg-pink-400 rounded-full w-2 h-2" />
           <div className="absolute ml-12 mb-8 bg-pink-400 rounded-full w-2 h-2 animate-ping-slow" />
-        </StreamThingButton>
+        </StreamThingButton> */}
+
+        {videoLoaded && (
+          <StreamThingButton
+            innerText="Next Video"
+            fullHeight
+            clickFn={() =>
+              getAndSetVideoFromContentSource(
+                activeContentSource,
+                supabaseClient,
+                dispatch
+              )
+            }
+          >
+            <ArrowsRightLeftIcon className="h-5 w-5 ml-2" />
+          </StreamThingButton>
+        )}
+
         <StreamThingButton
           // This is a little buggy rn if you click the button when the modal is already open
           // it just keeps reopening the modal right after closing it
           // The click out closes before the button click event triggers
           // so it's just a ui loop
           clickFn={() => dispatch(setShowMyNetworkModal(!showMyNetworkModal))}
-          innerText="My Network"
+          innerText="Network"
           fullHeight
         >
-          <TvIcon
-            className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
-            aria-hidden="true"
-          />
+          <TvIcon className="ml-2 -mr-1 h-5 w-5" aria-hidden="true" />
         </StreamThingButton>
 
         <Menu as="span" className="relative inline-block text-left">
