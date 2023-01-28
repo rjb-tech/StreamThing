@@ -47,7 +47,6 @@ export default function TheaterView({ username }: { username: string }) {
               );
             }}
             onReady={() => {
-              console.log("hey");
               setVideoLoaded(true);
             }}
             config={{ youtube: { playerVars: { controls: 1 } } }}
