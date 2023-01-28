@@ -56,7 +56,11 @@ export const AuthenticatedHeader = ({
           <div className="absolute ml-12 mb-8 bg-pink-400 rounded-full w-2 h-2 animate-ping-slow" />
         </StreamThingButton> */}
 
-        {videoLoaded && (
+        <div
+          className={`h-fit w-fit duration-1000 ${
+            videoLoaded ? "opacity-100" : "opacity-0"
+          }`}
+        >
           <StreamThingButton
             innerText="Next Video"
             fullHeight
@@ -70,7 +74,7 @@ export const AuthenticatedHeader = ({
           >
             <ArrowsRightLeftIcon className="h-5 w-5 ml-2" />
           </StreamThingButton>
-        )}
+        </div>
 
         <StreamThingButton
           // This is a little buggy rn if you click the button when the modal is already open
