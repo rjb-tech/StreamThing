@@ -14,9 +14,12 @@ export default function TheaterView({ username }: { username: string }) {
   );
 
   const [videoLoaded, setVideoLoaded] = useState<boolean>(false);
-  const [playerWidth, setPlayerWidth] = useState<number>(0);
+  const [playerWidth, setPlayerWidth] = useState<number>(1000);
 
   useEffect(() => {
+    // Set the player width on load
+    setPlayerWidth(document.body.clientWidth);
+
     const widthListener = (e: UIEvent) => {
       setPlayerWidth(document.body.clientWidth);
     };
