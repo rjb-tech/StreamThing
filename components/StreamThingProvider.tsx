@@ -115,7 +115,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
       <ModalProvider />
       <div className="h-screen w-screen">
         {/* Make sure the top positioning of this matches the height of the header component */}
-        <main className="h-full w-full overscroll-y-contain overflow-y-hidden flex items-center justify-center pt-24 bg-black">
+        <main className="h-full w-full overscroll-y-contain overflow-y-hidden flex items-center justify-center bg-black">
           {children}
         </main>
       </div>

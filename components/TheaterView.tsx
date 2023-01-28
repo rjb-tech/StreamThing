@@ -1,36 +1,64 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import dynamic from "next/dynamic";
+import { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { AuthenticatedHeader } from "./AuthenticatedHeader";
 import { getAndSetVideoFromContentSource } from "./SupabaseHelpers";
 
 export default function TheaterView({ username }: { username: string }) {
+  const player = useRef<HTMLDivElement>(null);
   const supabaseClient = useSupabaseClient();
   const dispatch = useAppDispatch();
   const { activeStream, contentSourceCurrentlyShowing } = useAppSelector(
     (state) => state.ui
   );
 
+  const [videoLoaded, setVideoLoaded] = useState<boolean>(false);
+  const [playerWidth, setPlayerWidth] = useState<number>(0);
+
+  useEffect(() => {
+    const widthListener = (e: UIEvent) => {
+      setPlayerWidth(document.body.clientWidth);
+    };
+
+    window.addEventListener("resize", widthListener);
+
+    return () => {
+      window.removeEventListener("resize", widthListener);
+    };
+  });
+
   return (
     <>
-      <div className="video-player h-screen w-screen flex items-center justify-center">
+      <div className="video-player h-screen w-screen flex flex-col items-center justify-center">
         <AuthenticatedHeader username={username} />
-        <ReactPlayer
-          onEnded={() => {
-            getAndSetVideoFromContentSource(
-              contentSourceCurrentlyShowing,
-              supabaseClient,
-              dispatch
-            );
-          }}
-          url={activeStream}
-          playing
-          volume={1}
-          muted={false}
-          height={window.screen.availHeight - 192} // This number is (header height in px * 2)
-          width={window.screen.availWidth}
-        />
+        <div
+          ref={player}
+          className={`relative h-full w-full transition-all duration-500 ${
+            videoLoaded ? "opacity-100" : "opacity-100"
+          }`}
+        >
+          <ReactPlayer
+            onEnded={() => {
+              getAndSetVideoFromContentSource(
+                contentSourceCurrentlyShowing,
+                supabaseClient,
+                dispatch
+              );
+            }}
+            onReady={() => {
+              console.log("hey");
+              setVideoLoaded(true);
+            }}
+            config={{ youtube: { playerVars: { controls: 1 } } }}
+            url={activeStream}
+            playing
+            volume={1}
+            muted={false}
+            height={player.current?.clientHeight || 100}
+            width={playerWidth}
+          />
+        </div>
       </div>
     </>
   );

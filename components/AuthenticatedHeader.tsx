@@ -19,6 +19,8 @@ import { resetAccount } from "../redux/slices/accountSlice";
 import { useRouter } from "next/router";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import classNames from "classnames";
+import { Ref } from "react";
+import ReactPlayer from "react-player";
 
 interface AuthenticatedHeaderProps {
   username: string;
@@ -34,7 +36,7 @@ export const AuthenticatedHeader = ({ username }: AuthenticatedHeaderProps) => {
   return (
     <header
       className={classNames(
-        "fixed top-0 h-24 w-full py-4 px-8 bg-gradient-to-b from-[#EF436B]/[0.65] via-[#182E63]/[0.7] to-transparent flex items-center justify-between z-50"
+        "relative h-24 w-full py-4 px-8 bg-gradient-to-b from-[#EF436B]/[0.65] via-[#182E63]/[0.7] to-transparent flex items-center justify-between z-50"
       )}
     >
       <span className="text-4xl text-white">StreamThing</span>
