@@ -5,7 +5,10 @@ import { useFormik } from "formik";
 import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { setChannelCurrentlyViewing } from "../redux/slices/accountSlice";
-import { setShowMyNetworkModal } from "../redux/slices/uiSlice";
+import {
+  setMinimizeHeader,
+  setShowMyNetworkModal,
+} from "../redux/slices/uiSlice";
 import { StreamThingButton } from "./StreamThingButton";
 import {
   getAndSetVideoFromContentSource,
@@ -67,6 +70,7 @@ export const ChannelsTab = () => {
           <div
             onClick={() => {
               if (contentSourceCurrentlyShowing !== activeContentSource) {
+                dispatch(setMinimizeHeader(true));
                 dispatch(setChannelCurrentlyViewing(user?.id || ""));
 
                 getAndSetVideoFromContentSource(
@@ -117,6 +121,7 @@ export const ChannelsTab = () => {
                     contentSourceCurrentlyShowing !==
                     channel.activeContentSource
                   ) {
+                    dispatch(setMinimizeHeader(true));
                     dispatch(setChannelCurrentlyViewing(channel.id));
 
                     getAndSetVideoFromContentSource(
