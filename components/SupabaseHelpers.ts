@@ -47,7 +47,6 @@ export async function getProfile(
       dispatch(setContentSources(data.content_sources));
       dispatch(setFollowing(explodedFollowingRecords));
       dispatch(setActiveContentSource(data.active_content_source));
-      dispatch(setChannelCurrentlyViewing(data.channel_currently_viewing));
     }
   } catch (error) {
     toast.error("Error loading user data", {
@@ -344,26 +343,6 @@ export async function getAndSetVideoFromContentSource(
     toast.error("Error setting active content source", {
       position: toast.POSITION.BOTTOM_CENTER,
     });
-  }
-}
-
-export async function updateChannelCurrentlyViewing(
-  watcherId: string,
-  channelId: string,
-  supabaseClient: SupabaseClient,
-  dispatch: AppDispatch
-) {
-  try {
-    dispatch(setChannelCurrentlyViewing(channelId));
-
-    const { data, error } = await supabaseClient
-      .from("profiles")
-      .update({ channel_currently_viewing: channelId })
-      .eq("id", watcherId);
-
-    if (error) throw error;
-  } catch (err) {
-    console.error(err);
   }
 }
 

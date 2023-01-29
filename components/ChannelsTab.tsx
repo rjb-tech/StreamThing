@@ -4,13 +4,13 @@ import classNames from "classnames";
 import { useFormik } from "formik";
 import Image from "next/image";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { setChannelCurrentlyViewing } from "../redux/slices/accountSlice";
 import { setShowMyNetworkModal } from "../redux/slices/uiSlice";
 import { StreamThingButton } from "./StreamThingButton";
 import {
   getAndSetVideoFromContentSource,
   sendFollow,
   sendUnfollow,
-  updateChannelCurrentlyViewing,
 } from "./SupabaseHelpers";
 
 export const ChannelsTab = () => {
@@ -67,12 +67,7 @@ export const ChannelsTab = () => {
           <div
             onClick={() => {
               if (contentSourceCurrentlyShowing !== activeContentSource) {
-                updateChannelCurrentlyViewing(
-                  user?.id || "",
-                  user?.id || "",
-                  supabaseClient,
-                  dispatch
-                );
+                dispatch(setChannelCurrentlyViewing(user?.id || ""));
 
                 getAndSetVideoFromContentSource(
                   activeContentSource,
@@ -122,12 +117,7 @@ export const ChannelsTab = () => {
                     contentSourceCurrentlyShowing !==
                     channel.activeContentSource
                   ) {
-                    updateChannelCurrentlyViewing(
-                      user?.id || "",
-                      channel.id,
-                      supabaseClient,
-                      dispatch
-                    );
+                    dispatch(setChannelCurrentlyViewing(channel.id));
 
                     getAndSetVideoFromContentSource(
                       channel.activeContentSource,
