@@ -20,7 +20,7 @@ export default function TheaterView({ username }: { username: string }) {
         <div
           className={`header-container ${
             Boolean(minimizeHeader) ? "h-28" : "h-screen"
-          } w-full bg-gradient-to-b from-[#EF436B]/[0.6] via-[#182E63]/[0.65] to-transparent z-10 relative transition-all duration-1000 overflow-clip`}
+          } w-full bg-gradient-to-b from-[#EF436B]/[0.6] via-[#182E63]/[0.65] to-transparent z-10 relative transition-all duration-1000 overflow-visible`}
         >
           <AuthenticatedHeader username={username} videoLoaded={videoLoaded} />
         </div>

@@ -39,7 +39,7 @@ export const AuthenticatedHeader = ({
 
   return (
     <header
-      className={`h-28 w-full py-4 px-8 flex items-center justify-between z-50 flex-none`}
+      className={`h-28 w-full py-4 px-8 flex items-center justify-between flex-none`}
     >
       <span className="text-4xl text-white">StreamThing</span>
 
