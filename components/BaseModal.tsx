@@ -51,7 +51,7 @@ export const BaseModal = ({
                   )}
                 >
                   {!hideX && (
-                    <div className="w-full h-fit flex justify-end focus:border-none focus:ring-none focus:outline-none">
+                    <div className="w-full h-fit flex justify-end focus:border-none focus:ring-none focus:outline-none pb-4">
                       <button
                         onClick={closeModal}
                         className="focus:border-none focus:ring-none focus:outline-none"
