@@ -5,7 +5,6 @@ import {
   ArrowRightOnRectangleIcon,
   UserIcon,
   TvIcon,
-  BellAlertIcon,
   ArrowsRightLeftIcon,
 } from "@heroicons/react/20/solid";
 import {
@@ -15,13 +14,10 @@ import {
 } from "../redux/slices/uiSlice";
 
 import { StreamThingButton } from "./StreamThingButton";
-import type { User } from "@supabase/supabase-js";
 import { resetAccount } from "../redux/slices/accountSlice";
 import { useRouter } from "next/router";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import classNames from "classnames";
-import { Ref } from "react";
-import ReactPlayer from "react-player";
 import { getAndSetVideoFromContentSource } from "./SupabaseHelpers";
 
 interface AuthenticatedHeaderProps {
@@ -42,11 +38,7 @@ export const AuthenticatedHeader = ({
   );
 
   return (
-    <header
-      className={classNames(
-        "relative h-24 w-full py-4 px-8 bg-gradient-to-b from-[#EF436B]/[0.65] via-[#182E63]/[0.7] to-transparent flex items-center justify-between z-50"
-      )}
-    >
+    <header className="h-full w-full py-4 px-8 flex items-center justify-between z-50 flex-none">
       <span className="text-4xl text-white">StreamThing</span>
 
       <span className="w-fit flex justify-end space-x-4">

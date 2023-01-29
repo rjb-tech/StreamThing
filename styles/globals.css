@@ -23,11 +23,12 @@ label.avatar-label input[type="file"] {
     scale: 100%;
   }
 
-  header {
-    animation: fadeInAnimation ease 3s;
+  .header-container {
+    animation: fadeInAnimation ease 2s;
     animation-iteration-count: 1;
     animation-fill-mode: forwards;
   }
+
   @keyframes fadeInAnimation {
     0% {
       opacity: 0;

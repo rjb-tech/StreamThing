@@ -113,7 +113,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
     <>
       {/* Do a session check here to render either login/logout modal */}
       <ModalProvider />
-      <div className="h-screen w-screen">
+      <div className="h-screen w-screen transform-gpu">
         {/* Make sure the top positioning of this matches the height of the header component */}
         <main className="h-full w-full overscroll-y-contain overflow-y-hidden flex items-center justify-center bg-black">
           {children}
