@@ -15,8 +15,11 @@ export const LandingPage = () => {
   }
 
   return (
-    <div className="h-full w-full flex justify-center items-center text-white">
-      <div className="w-1/2 h-fit py-6 rounded-md flex flex-col ring-4 ring-white space-y-6 ring-opacity-80 bg-gray-700 text-center">
+    <div className="h-full w-full text-white flex items-center transform-gpu">
+      <div id="stars" />
+      <div id="stars2" />
+      <div id="stars3" />
+      <div className="w-1/2 h-fit mx-auto relative py-6 rounded-md flex flex-col ring-4 ring-white space-y-6 ring-opacity-80 bg-gray-700 text-center z-50">
         <span className="text-3xl">
           Login to channel surf with your friends
         </span>

@@ -17,6 +17,9 @@ export default function TheaterView({ username }: { username: string }) {
   return (
     <>
       <div className="h-screen w-screen flex flex-col transform-gpu">
+        <div id="stars" />
+        <div id="stars2" />
+        <div id="stars3" />
         <div
           className={`header-container ${
             Boolean(minimizeHeader) ? "h-28" : "h-screen"
