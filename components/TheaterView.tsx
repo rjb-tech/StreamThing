@@ -17,18 +17,20 @@ export default function TheaterView({ username }: { username: string }) {
   return (
     <>
       <div className="h-screen w-screen flex flex-col transform-gpu">
-        <div
-          className={`header-container ${
-            Boolean(minimizeHeader) ? "h-28" : "h-screen"
-          } w-full bg-gradient-to-b from-[#EF436B]/[0.6] via-[#182E63]/[0.65] to-transparent z-10 relative transition-all duration-1000 overflow-visible`}
-        >
-          <AuthenticatedHeader username={username} videoLoaded={videoLoaded} />
-
+        <div className="absolute h-screen-w-screen transform-gpu">
           {/* These add the stars */}
           <div id="stars" />
           <div id="stars2" />
           <div id="stars3" />
         </div>
+        <div
+          className={`header-container ${
+            Boolean(minimizeHeader) ? "h-28" : "h-screen"
+          } w-full bg-gradient-to-b from-[#EF436B]/[0.4] via-[#182E63]/[0.5] to-transparent z-10 relative transition-all duration-1000 overflow-visible`}
+        >
+          <AuthenticatedHeader username={username} videoLoaded={videoLoaded} />
+        </div>
+
         <div
           ref={player}
           className={`video-player flex items-end relative
@@ -47,6 +49,7 @@ export default function TheaterView({ username }: { username: string }) {
             onReady={() => {
               setVideoLoaded(true);
             }}
+            playing
             config={{ youtube: { playerVars: { controls: 1 } } }}
             url={activeStream}
             volume={1}
