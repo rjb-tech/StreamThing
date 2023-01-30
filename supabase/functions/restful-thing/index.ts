@@ -56,13 +56,15 @@ async function getYoutubeChannelId(channelLink: string) {
   }
 }
 
-async function getGoogleOauthToken(): Promise<GoogleOauthResponse> {
+async function getGoogleOauthToken(
+  tokenLifespanInSeconds: number
+): Promise<GoogleOauthResponse> {
   const JWTHeader = { alg: "RS256", typ: "JWT" };
   const JWTClaimSet = {
     iss: Deno.env.get("SERVICE_ACCOUNT_EMAIL") || "",
     scope: "https://www.googleapis.com/auth/youtube.readonly",
     aud: "https://oauth2.googleapis.com/token",
-    exp: Math.floor(+new Date() / 1000) + 120,
+    exp: Math.floor(+new Date() / 1000) + tokenLifespanInSeconds,
     iat: Math.floor(+new Date() / 1000),
   };
 
@@ -150,6 +152,7 @@ async function updateContentSourceInfo(
     .update({
       recent_videos: recentVideos,
       uploads_playlist: uploadsPlaylistId,
+      last_update: new Date().toISOString(),
     })
     .eq("channel_id", channelId);
 
@@ -180,7 +183,7 @@ async function getYoutubeChannelInfo(
     const uploadsPlaylistId =
       channelResponseParsed.items[0].contentDetails.relatedPlaylists.uploads;
 
-    const uploadsResponse = await fetch(
+    const uploadsResponse1 = await fetch(
       `https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails&maxResults=50&playlistId=${uploadsPlaylistId}&key=${Deno.env.get(
         "YOUTUBE_API_KEY"
       )}`,
@@ -193,8 +196,30 @@ async function getYoutubeChannelInfo(
       }
     );
 
-    const playlistInfo = JSON.parse(await uploadsResponse.text()).items;
-    const uploads = playlistInfo.map(
+    const parsedResponse1 = JSON.parse(await uploadsResponse1.text());
+    const nextPageToken = parsedResponse1.nextPageToken;
+
+    const uploadsResponse2 = await fetch(
+      `https://youtube.googleapis.com/youtube/v3/playlistItems?part=contentDetails&maxResults=50&playlistId=${uploadsPlaylistId}&key=${Deno.env.get(
+        "YOUTUBE_API_KEY"
+      )}&pageToken=${nextPageToken}`,
+      {
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+      }
+    );
+
+    const parsedResponse2 = JSON.parse(await uploadsResponse2.text());
+
+    const first50Videos = parsedResponse1.items;
+    const second50Videos = parsedResponse2.items;
+
+    const last100Videos = first50Videos.concat(second50Videos);
+
+    const uploads = last100Videos.map(
       (upload: {
         kind: string;
         etag: string;
@@ -223,7 +248,7 @@ async function handleNewContentSource(
     const channelId = await getYoutubeChannelId(channelLink);
 
     if (channelId) {
-      const youtubeTokenResponse = await getGoogleOauthToken();
+      const youtubeTokenResponse = await getGoogleOauthToken(120);
       const channelInfo = await getYoutubeChannelInfo(
         channelId,
         channelLink,
@@ -241,26 +266,30 @@ async function handleNewContentSource(
   }
 }
 
-async function refreshExistingContentSource(
-  channelLink: string,
+async function refreshExistingContentSources(
   supabaseClient: SupabaseClient
-): Promise<YoutubeChannelInfo> {
+): Promise<number> {
   try {
-    const [channelId, googleTokenResponse] = await Promise.all([
-      getYoutubeChannelId(channelLink),
-      getGoogleOauthToken(),
-    ]);
+    const googleTokenResponse = await getGoogleOauthToken(1800);
 
-    if (channelId && googleTokenResponse.access_token) {
-      const channelInfo = await getYoutubeChannelInfo(
-        channelId,
-        channelLink,
-        googleTokenResponse.access_token
-      );
+    if (googleTokenResponse.access_token) {
+      const { data: contentSources, error } = await supabaseClient
+        .from("content_sources")
+        .select("link, channel_id");
 
-      await updateContentSourceInfo(channelInfo, supabaseClient);
+      if (error) throw error;
 
-      return channelInfo;
+      contentSources.forEach(async (source) => {
+        const channelInfo = await getYoutubeChannelInfo(
+          source.channel_id,
+          source.link,
+          googleTokenResponse.access_token || ""
+        );
+
+        await updateContentSourceInfo(channelInfo, supabaseClient);
+      });
+
+      return contentSources.length;
     }
 
     throw new Error("Error retrieving youtube channel information");
@@ -319,11 +348,12 @@ serve(async (req: any) => {
           )
         );
         break;
-      case operation === "refresh-source":
+      case operation === "refresh-sources":
+        const sourcesUpdated = await refreshExistingContentSources(
+          supabaseClient
+        );
         return new Response(
-          JSON.stringify(
-            await refreshExistingContentSource(channelLink, supabaseClient)
-          )
+          `Refresh completed for ${sourcesUpdated} content sources`
         );
         break;
       default:
