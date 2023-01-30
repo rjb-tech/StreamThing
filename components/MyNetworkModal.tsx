@@ -30,6 +30,7 @@ export const MyNetworkModal = () => {
           onChange={(index) => {
             const hasSources = contentSources.length > 0;
             if (hasSources) dispatch(setMyNetworkSelectedIndex(index));
+            else dispatch(setMyNetworkSelectedIndex(1));
           }}
         >
           <Tab.List className="flex space-x-8 rounded-xl bg-[#9A97D8]/[0.3] p-1">

@@ -268,6 +268,8 @@ export async function addContentSource(
 
     if (error) throw error;
 
+    await getProfile(userId, supabaseClient, dispatch);
+
     toast.success("Content source added to your channel!", {
       position: toast.POSITION.BOTTOM_CENTER,
     });
