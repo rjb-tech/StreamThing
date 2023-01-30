@@ -31,15 +31,14 @@ export const ContentSourcesTab = () => {
 
       const validSource =
         values.contentLink.includes("https://youtube.com") ||
-        values.contentLink.includes("https://www.youtube.com") ||
-        values.contentLink.includes("https://twitch.tv") ||
-        values.contentLink.includes("https://www.twitch.tv");
+        values.contentLink.includes("https://www.youtube.com");
+      // values.contentLink.includes("https://twitch.tv") ||
+      // values.contentLink.includes("https://www.twitch.tv");
 
       const linksToSingleVideo = values.contentLink.includes("/watch?v=");
 
       if (!validSource || linksToSingleVideo)
-        errors.contentLink =
-          "Please enter a valid channel link from Twitch or Youtube";
+        errors.contentLink = "Please enter a valid Youtube channel link";
 
       if (values.contentLink === "")
         errors.contentLink = "Content source cannot be empty";
