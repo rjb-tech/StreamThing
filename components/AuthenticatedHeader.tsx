@@ -9,6 +9,7 @@ import {
 } from "@heroicons/react/20/solid";
 import {
   resetUI,
+  setMyNetworkSelectedIndex,
   setShowAccountModal,
   setShowMyNetworkModal,
 } from "../redux/slices/uiSlice";
@@ -33,9 +34,11 @@ export const AuthenticatedHeader = ({
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { showMyNetworkModal } = useAppSelector((state) => state.ui);
-  const { username: u, activeContentSource } = useAppSelector(
-    (state) => state.account
-  );
+  const {
+    username: u,
+    activeContentSource,
+    contentSources,
+  } = useAppSelector((state) => state.account);
 
   return (
     <header
@@ -75,7 +78,12 @@ export const AuthenticatedHeader = ({
           // it just keeps reopening the modal right after closing it
           // The click out closes before the button click event triggers
           // so it's just a ui loop
-          clickFn={() => dispatch(setShowMyNetworkModal(!showMyNetworkModal))}
+          clickFn={() => {
+            if (contentSources.length === 0)
+              dispatch(setMyNetworkSelectedIndex(1));
+
+            dispatch(setShowMyNetworkModal(!showMyNetworkModal));
+          }}
           innerText="Network"
           fullHeight
         >
