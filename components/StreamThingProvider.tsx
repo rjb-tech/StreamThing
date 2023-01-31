@@ -31,7 +31,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
   }, [session?.expires_at]); // get_profile everytime the session access token expires
 
   useEffect(() => {
-    if (!session || user) router.replace("/");
+    if (!session || !user) router.replace("/");
   }, [session, user]);
 
   // useEffect(() => {
