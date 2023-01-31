@@ -10,6 +10,7 @@ import {
   RealtimePostgresUpdatePayload,
 } from "@supabase/supabase-js";
 import { useRouter } from "next/router";
+import Head from "next/head";
 
 interface ProviderProps {
   children: ReactNode;
@@ -117,7 +118,10 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
     <>
       {/* Do a session check here to render either login/logout modal */}
       <ModalProvider />
-      <title>StreamThing</title>
+      <Head>
+        <title>StreamThing</title>
+        <link rel="icon" href="/moon-favicon.png" />
+      </Head>
       <div className="h-screen w-screen transform-gpu">
         {/* Make sure the top positioning of this matches the height of the header component */}
         <main className="h-full w-full overscroll-y-contain overflow-y-hidden flex items-center justify-center bg-black">
