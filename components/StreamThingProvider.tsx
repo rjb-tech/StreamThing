@@ -30,45 +30,45 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
     if (user) getProfile(user.id, supabaseClient, dispatch);
   }, [session?.expires_at]); // get_profile everytime the session access token expires
 
-  useEffect(() => {
-    // Realtime connection to keep track of incoming friend requests
-    if (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
-      const client = createClient(
-        "https://uieskineapnmdqwofpjx.supabase.co/realtime/v1",
-        process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
-        {
-          realtime: {
-            params: {
-              eventsPerSecond: 10,
-            },
-          },
-        }
-      );
+  // useEffect(() => {
+  //   // Realtime connection to keep track of incoming friend requests
+  //   if (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
+  //     const client = createClient(
+  //       "https://uieskineapnmdqwofpjx.supabase.co/realtime/v1",
+  //       process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
+  //       {
+  //         realtime: {
+  //           params: {
+  //             eventsPerSecond: 10,
+  //           },
+  //         },
+  //       }
+  //     );
 
-      const channel = supabaseClient
-        .channel("value-db-changes")
-        .on(
-          "postgres_changes",
-          {
-            event: "UPDATE",
-            schema: "public",
-            table: "profiles",
-            filter: ``,
-          },
-          (
-            payload: RealtimePostgresUpdatePayload<{
-              ["id"]: string;
-              ["created_at"]: string;
-              ["sender"]: string;
-              ["receiver"]: string;
-            }>
-          ) => {
-            console.log(payload);
-          }
-        )
-        .subscribe();
-    }
-  }, []);
+  //     const channel = supabaseClient
+  //       .channel("value-db-changes")
+  //       .on(
+  //         "postgres_changes",
+  //         {
+  //           event: "UPDATE",
+  //           schema: "public",
+  //           table: "profiles",
+  //           filter: ``,
+  //         },
+  //         (
+  //           payload: RealtimePostgresUpdatePayload<{
+  //             ["id"]: string;
+  //             ["created_at"]: string;
+  //             ["sender"]: string;
+  //             ["receiver"]: string;
+  //           }>
+  //         ) => {
+  //           console.log(payload);
+  //         }
+  //       )
+  //       .subscribe();
+  //   }
+  // }, []);
 
   // Reload profile and following everytime the network modal is opened
   useEffect(() => {
