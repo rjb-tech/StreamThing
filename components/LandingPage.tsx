@@ -37,7 +37,7 @@ export const LandingPage = () => {
         <div id="stars3" />
       </div>
       <div className="login-view h-full w-full text-white flex items-center transform-gpu">
-        <div className="w-screen h-screen mx-auto relative rounded-md flex flex-col space-y-6 text-center z-50 bg-gradient-to-b from-[#EF436B]/[0.2] via-[#182E63]/[0.45] to-transparent">
+        <div className="w-screen h-screen mx-auto relative rounded-md flex flex-col space-y-6 text-center z-50 bg-gradient-to-b from-[#EF436B]/[0.2] via-[#182E63]/[0.3] to-transparent">
           <span className="h-full w-full flex flex-col justify-center items-center space-y-4 ">
             <span className="text-3xl">StreamThing</span>
             {linkSent === false ? (
