@@ -18,7 +18,6 @@ import { StreamThingButton } from "./StreamThingButton";
 import { resetAccount } from "../redux/slices/accountSlice";
 import { useRouter } from "next/router";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import classNames from "classnames";
 import { getAndSetVideoFromContentSource } from "./SupabaseHelpers";
 
 interface AuthenticatedHeaderProps {
@@ -81,6 +80,7 @@ export const AuthenticatedHeader = ({
           clickFn={() => {
             if (contentSources.length === 0)
               dispatch(setMyNetworkSelectedIndex(1));
+            else dispatch(setMyNetworkSelectedIndex(0));
 
             dispatch(setShowMyNetworkModal(!showMyNetworkModal));
           }}
