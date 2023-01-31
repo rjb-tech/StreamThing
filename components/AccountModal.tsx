@@ -69,28 +69,30 @@ export const AccountModal = () => {
   }
 
   return (
-    <BaseModal showCondition={showAccountModal} closeModal={closeModal}>
-      <div className="w-fit text-center justify-items-center space-y-6 p-2">
-        <h3 className="text-lg">{`Hey ${username}`}</h3>
-        <div className="w-full flex items-center justify-center">
-          <Image
-            className="relative rounded-full h-28 w-28"
-            src={avatarUrl || ""}
-            alt="user avatar"
-            height={100}
-            width={100}
-          />
+    <BaseModal wide showCondition={showAccountModal} closeModal={closeModal}>
+      <div className="w-full text-center justify-items-center space-y-6 p-2">
+        <div className="w-full h-full space-y-6 bg-gray-600 rounded p-4 mx-auto">
+          <h3 className="text-lg">{`Hey ${username}`}</h3>
+          <div className="w-full flex items-center justify-center">
+            <Image
+              className="relative rounded-full h-28 w-28"
+              src={avatarUrl || ""}
+              alt="user avatar"
+              height={100}
+              width={100}
+            />
+          </div>
+          <label className="avatar-label relative">
+            <input
+              type="file"
+              onChange={handleImageChange}
+              accept="image/png, image/jpeg, image/jpg, image/gif"
+            ></input>
+            <span className="avatar-file-text text-white font-medium text-sm">
+              Change Avatar
+            </span>
+          </label>
         </div>
-        <label className="avatar-label relative">
-          <input
-            type="file"
-            onChange={handleImageChange}
-            accept="image/png, image/jpeg, image/jpg, image/gif"
-          ></input>
-          <span className="avatar-file-text text-white font-medium text-sm">
-            Change Avatar
-          </span>
-        </label>
         <form className="" onSubmit={formik.handleSubmit}>
           <span className="space-y-2 w-11/12">
             <label
