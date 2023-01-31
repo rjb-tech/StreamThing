@@ -30,6 +30,10 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
     if (user) getProfile(user.id, supabaseClient, dispatch);
   }, [session?.expires_at]); // get_profile everytime the session access token expires
 
+  useEffect(() => {
+    if (!session || user) router.replace("/");
+  }, [session, user]);
+
   // useEffect(() => {
   //   // Realtime connection to keep track of incoming friend requests
   //   if (process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY) {
