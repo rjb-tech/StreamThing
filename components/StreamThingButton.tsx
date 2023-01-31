@@ -9,7 +9,7 @@ interface StreamThingButtonProps {
   disabled?: boolean;
   fullWidth?: boolean;
   fullHeight?: boolean;
-  animateOnHover?: boolean;
+  illuminate?: boolean;
   roundedFull?: boolean;
 }
 
@@ -21,7 +21,7 @@ export const StreamThingButton = ({
   disabled = false,
   fullWidth = false,
   fullHeight = false,
-  animateOnHover = false,
+  illuminate = false,
   roundedFull = false,
 }: StreamThingButtonProps) => {
   return (
@@ -38,6 +38,7 @@ export const StreamThingButton = ({
           "py-1": !fullHeight,
           "rounded-md": !roundedFull,
           "rounded-full": roundedFull,
+          "shadow-lg shadow-[#9A97D8]/[0.3]": illuminate,
         }
       )}
     >
