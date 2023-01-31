@@ -16,7 +16,7 @@ export default function TheaterView({ username }: { username: string }) {
 
   return (
     <>
-      <div className="h-screen w-screen flex flex-col transform-gpu">
+      <div className="theater h-screen w-screen flex flex-col transform-gpu">
         <div className="absolute h-screen-w-screen transform-gpu">
           {/* These add the stars */}
           <div id="stars" />
