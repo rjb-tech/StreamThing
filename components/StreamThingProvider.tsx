@@ -120,7 +120,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
       <ModalProvider />
       <Head>
         <title>StreamThing</title>
-        <link rel="icon" href="/moon-favicon.png" />
+        <link rel="icon" href="/favicon.png" />
       </Head>
       <div className="h-screen w-screen transform-gpu">
         {/* Make sure the top positioning of this matches the height of the header component */}
