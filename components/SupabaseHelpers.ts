@@ -121,7 +121,7 @@ export async function updateUsername(
       last_update: new Date().toISOString(),
     };
 
-    let { error } = await supabaseClient.from("profiles").upsert(updates);
+    const { error } = await supabaseClient.from("profiles").upsert(updates);
     if (error) throw error;
     toast.success("Username updated", {
       position: toast.POSITION.BOTTOM_CENTER,
@@ -131,6 +131,11 @@ export async function updateUsername(
     switch (error?.code) {
       case "23505":
         toast.error("That username is taken, try again", {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+        break;
+      case "80085":
+        toast.info(`Nice try, ${username}`, {
           position: toast.POSITION.BOTTOM_CENTER,
         });
         break;
