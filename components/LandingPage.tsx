@@ -43,12 +43,12 @@ export const LandingPage = () => {
             <span className="h-full w-full flex flex-col justify-center items-center space-y-4 ">
               <Image
                 src="/StreamThing Landing Page Logo.png"
-                alt="StreamThing Logo"
+                alt="StreamThing Landing Page Logo"
                 height={1450}
                 width={400}
               />
               {linkSent === false ? (
-                <form className="space-y-4" onSubmit={formik.handleSubmit}>
+                <form className="space-y-6" onSubmit={formik.handleSubmit}>
                   <input
                     name="email"
                     placeholder="Email"
