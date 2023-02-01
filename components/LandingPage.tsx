@@ -30,33 +30,35 @@ export const LandingPage = () => {
   });
 
   return (
-    <div className="zippy-dee-doo">
-      <div className="stars absolute h-screen w-screen transform-gpu">
-        <div id="stars" />
-        <div id="stars2" />
-        <div id="stars3" />
-      </div>
-      <div className="login-view h-full w-full text-white flex items-center transform-gpu">
-        <div className="w-screen h-screen mx-auto relative rounded-md flex flex-col space-y-6 text-center z-50 bg-gradient-to-b from-[#EF436B]/[0.2] via-[#182E63]/[0.3] to-transparent">
-          <span className="h-full w-full flex flex-col justify-center items-center space-y-4 ">
-            <span className="text-3xl">StreamThing</span>
-            {linkSent === false ? (
-              <form className="space-y-4" onSubmit={formik.handleSubmit}>
-                <input
-                  name="email"
-                  placeholder="Email"
-                  value={formik.values.email}
-                  onChange={formik.handleChange}
-                  className=" w-full text-black border border-white rounded-md px-4 focus:ring focus:ring-white focus:ring-opacity-20 focus:outline-none"
-                />
-                <StreamThingButton innerText="Login" fullWidth illuminate />
-              </form>
-            ) : (
-              <div className="h-16">Check your email!</div>
-            )}
-          </span>
+    <>
+      <div className="zippy-dee-doo h-screen w-screen flex flex-col transform-gpu">
+        <div className="stars absolute h-screen w-screen transform-gpu">
+          <div id="stars" />
+          <div id="stars2" />
+          <div id="stars3" />
+        </div>
+        <div className="login-view h-full w-full text-white flex items-center transform-gpu">
+          <div className="w-screen h-screen mx-auto relative rounded-md flex flex-col space-y-6 text-center z-50 bg-gradient-to-b from-[#EF436B]/[0.2] via-[#182E63]/[0.3] to-transparent">
+            <span className="h-full w-full flex flex-col justify-center items-center space-y-4 ">
+              <span className="text-3xl">StreamThing</span>
+              {linkSent === false ? (
+                <form className="space-y-4" onSubmit={formik.handleSubmit}>
+                  <input
+                    name="email"
+                    placeholder="Email"
+                    value={formik.values.email}
+                    onChange={formik.handleChange}
+                    className=" w-full text-black border border-white rounded-md px-4 focus:ring focus:ring-white focus:ring-opacity-20 focus:outline-none"
+                  />
+                  <StreamThingButton innerText="Login" fullWidth illuminate />
+                </form>
+              ) : (
+                <div className="h-16">Check your email!</div>
+              )}
+            </span>
+          </div>
         </div>
       </div>
-    </div>
+    </>
   );
 };
