@@ -44,7 +44,7 @@ export const LandingPage = () => {
               <Image
                 src="/StreamThing Landing Page Logo.png"
                 alt="StreamThing Landing Page Logo"
-                height={1450}
+                height={1100}
                 width={400}
               />
               {linkSent === false ? (
