@@ -19,6 +19,7 @@ import { resetAccount } from "../redux/slices/accountSlice";
 import { useRouter } from "next/router";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { getAndSetVideoFromContentSource } from "./SupabaseHelpers";
+import Image from "next/image";
 
 interface AuthenticatedHeaderProps {
   username: string;
@@ -43,7 +44,12 @@ export const AuthenticatedHeader = ({
     <header
       className={`h-28 w-full py-4 px-8 flex items-center justify-between flex-none`}
     >
-      <span className="text-4xl text-white">StreamThing</span>
+      <Image
+        src="/StreamThing Logo.png"
+        alt="StreamThing Logo"
+        height={1100}
+        width={250}
+      />
 
       <span className="w-fit flex justify-end space-x-4">
         {/* <StreamThingButton innerText="" fullHeight>

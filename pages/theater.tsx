@@ -50,4 +50,5 @@ export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
         username: data.username,
       },
     };
+  else return { props: {} };
 };
