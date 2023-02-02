@@ -43,7 +43,7 @@ export const AuthenticatedHeader = ({
       className={`h-28 w-full py-4 px-8 flex items-center justify-between flex-none`}
     >
       <Image
-        src="/StreamThing Logo.png"
+        src="/stream-thing-logo.png"
         alt="StreamThing Logo"
         height={1100}
         width={250}

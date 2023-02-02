@@ -43,7 +43,7 @@ export const LandingPage = () => {
           <div className="w-screen h-screen mx-auto relative rounded-md flex flex-col space-y-6 text-center z-50 bg-gradient-to-b from-[#EF436B]/[0.2] via-[#182E63]/[0.3] to-transparent">
             <span className="h-full w-full flex flex-col justify-center items-center space-y-4 ">
               <Image
-                src="/StreamThing Landing Page Logo.png"
+                src="/stream-thing-landing-page-logo.png"
                 alt="StreamThing Landing Page Logo"
                 height={1100}
                 width={400}
