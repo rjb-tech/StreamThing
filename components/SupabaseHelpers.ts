@@ -369,7 +369,7 @@ export async function updateActiveContentSource(
       .from("profiles")
       .update({
         active_content_source: contentLink,
-        last_update: new Date().toISOString(),
+        last_content_update: new Date().toISOString(),
       })
       .eq("id", userId);
 
