@@ -16,7 +16,7 @@ export const LandingPage = () => {
       const { data, error } = await supabase.auth.signInWithOtp({
         email: values.email,
         options: {
-          emailRedirectTo: `${window.location.origin}/theater`,
+          emailRedirectTo: window.location.origin,
           shouldCreateUser: false,
         },
       });
