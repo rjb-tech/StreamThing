@@ -142,7 +142,7 @@ export const AuthenticatedHeader = ({
                         className="mr-2 h-5 w-5"
                         aria-hidden="true"
                       />
-                      Support/Feedback
+                      Feedback
                     </Link>
                   )}
                 </Menu.Item>
