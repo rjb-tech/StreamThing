@@ -6,6 +6,7 @@ import {
   UserIcon,
   TvIcon,
   ArrowsRightLeftIcon,
+  SparklesIcon,
 } from "@heroicons/react/20/solid";
 import {
   resetUI,
@@ -20,6 +21,7 @@ import { useRouter } from "next/router";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { getAndSetVideoFromContentSource } from "./SupabaseHelpers";
 import Image from "next/image";
+import Link from "next/link";
 
 interface AuthenticatedHeaderProps {
   videoLoaded: boolean;
@@ -125,6 +127,23 @@ export const AuthenticatedHeader = ({
                       <UserIcon className="mr-2 h-5 w-5" aria-hidden="true" />
                       Account
                     </button>
+                  )}
+                </Menu.Item>
+                <Menu.Item>
+                  {({ active }) => (
+                    <Link
+                      href="https://twitter.com/rjb_tech"
+                      target="_blank"
+                      className={`${
+                        active ? "opacity-80 text-white" : "text-white"
+                      } group flex w-full items-center justify-between rounded-md px-2 py-2 text-sm`}
+                    >
+                      <SparklesIcon
+                        className="mr-2 h-5 w-5"
+                        aria-hidden="true"
+                      />
+                      Feedback
+                    </Link>
                   )}
                 </Menu.Item>
                 <Menu.Item>
