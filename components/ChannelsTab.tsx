@@ -184,7 +184,7 @@ export const ChannelsTab = () => {
               name="username"
               value={formik.values.username}
               onChange={formik.handleChange}
-              placeholder="Username you want to follow"
+              placeholder="Username"
               className="w-full text-black rounded px-4 focus:ring focus:ring-white focus:ring-opacity-30 focus:outline-none"
             />
             <span className="w-full flex justify-end pt-4 hidden">
