@@ -219,13 +219,18 @@ async function getYoutubeChannelInfo(
 
     const last100Videos = first50Videos.concat(second50Videos);
 
-    const uploads = last100Videos.map(
+    const uploads: string[] = [];
+    last100Videos.forEach(
       (upload: {
         kind: string;
         etag: string;
         id: string;
         contentDetails: { videoId: string; videoPublishedAt: string };
-      }) => upload.contentDetails.videoId
+      }) => {
+        if (upload !== undefined) {
+          uploads.push(upload.contentDetails.videoId);
+        }
+      }
     );
 
     return { uploadsPlaylistId, recentVideos: uploads, channelId, channelLink };
