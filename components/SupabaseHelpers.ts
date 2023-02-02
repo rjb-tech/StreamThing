@@ -292,6 +292,11 @@ export async function addContentSource(
           position: toast.POSITION.BOTTOM_CENTER,
         });
         break;
+      case "content_sources_full":
+        toast.error("You can only add 20 content sources", {
+          position: toast.POSITION.BOTTOM_CENTER,
+        });
+        break;
       default:
         toast.error("Error adding content source.", {
           position: toast.POSITION.BOTTOM_CENTER,
