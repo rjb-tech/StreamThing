@@ -6,8 +6,6 @@ import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { StreamThingButton } from "./StreamThingButton";
 import { addContentSource, removeContentSource } from "./SupabaseHelpers";
-import twitchLogo from "../images/TwitchGlitchPurple.png";
-import youtubeLogo from "../images/yt_icon_rgb.png";
 import Image from "next/image";
 
 export const ContentSourcesTab = () => {
@@ -83,7 +81,7 @@ export const ContentSourcesTab = () => {
                       alt="Twitch logo"
                       width={734}
                       height={518}
-                      src={twitchLogo}
+                      src="/TwitchGlitchPurple.png"
                     />
                   </div>
                   <span className="pl-4">
@@ -103,7 +101,7 @@ export const ContentSourcesTab = () => {
                       alt="Youtube logo"
                       width={734}
                       height={518}
-                      src={youtubeLogo}
+                      src="/yt_icon_rgb.png"
                     />
                   </div>
                   <span className="pl-4">
