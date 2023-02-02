@@ -1,18 +1,24 @@
-import { XMarkIcon } from "@heroicons/react/20/solid";
+import { ChevronDoubleUpIcon, XMarkIcon } from "@heroicons/react/20/solid";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import classNames from "classnames";
 import { useFormik } from "formik";
 import Link from "next/link";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { StreamThingButton } from "./StreamThingButton";
-import { addContentSource, removeContentSource } from "./SupabaseHelpers";
+import {
+  addContentSource,
+  removeContentSource,
+  updateActiveContentSource,
+} from "./SupabaseHelpers";
 import Image from "next/image";
 
 export const ContentSourcesTab = () => {
   const user = useUser();
   const dispatch = useAppDispatch();
   const supabaseClient = useSupabaseClient();
-  const { contentSources } = useAppSelector((state) => state.account);
+  const { contentSources, activeContentSource } = useAppSelector(
+    (state) => state.account
+  );
   const hasSources = contentSources.length > 0;
   const formik = useFormik({
     initialValues: {
@@ -109,18 +115,36 @@ export const ContentSourcesTab = () => {
                   </span>
                 </Link>
               )}
-              <XMarkIcon
-                className="h-7 w-7 pr-2 cursor-pointer"
-                onClick={() => {
-                  if (user)
-                    removeContentSource(
-                      user?.id,
-                      source.href,
-                      supabaseClient,
-                      dispatch
-                    );
-                }}
-              />
+              <span className="flex">
+                {activeContentSource !== sourceLink && (
+                  <ChevronDoubleUpIcon
+                    title="Elevate to active source"
+                    className="h-7 w-7 pr-2 cursor-pointer"
+                    onClick={() => {
+                      if (user)
+                        updateActiveContentSource(
+                          user.id,
+                          sourceLink,
+                          supabaseClient,
+                          dispatch
+                        );
+                    }}
+                  />
+                )}
+                <XMarkIcon
+                  title="Remove content source"
+                  className="h-7 w-7 pr-2 cursor-pointer"
+                  onClick={() => {
+                    if (user)
+                      removeContentSource(
+                        user?.id,
+                        source.href,
+                        supabaseClient,
+                        dispatch
+                      );
+                  }}
+                />
+              </span>
             </div>
           );
         })}

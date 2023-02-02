@@ -358,6 +358,27 @@ export async function getAndSetVideoFromContentSource(
   }
 }
 
+export async function updateActiveContentSource(
+  userId: string,
+  contentLink: string,
+  supabaseClient: SupabaseClient,
+  dispatch: AppDispatch
+) {
+  try {
+    const { data, error } = await supabaseClient
+      .from("profiles")
+      .update({ active_content_source: contentLink })
+      .eq("id", userId);
+
+    if (error) throw error;
+
+    dispatch(setActiveContentSource(contentLink));
+    getProfile(userId, supabaseClient, dispatch);
+  } catch (error) {
+    toast.error(`Error elevating ${contentLink}. Please try again`);
+  }
+}
+
 async function getContentSources(
   id: string,
   supabaseClient: SupabaseClient,
