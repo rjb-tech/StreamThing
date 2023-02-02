@@ -132,7 +132,7 @@ export const AuthenticatedHeader = ({
                 <Menu.Item>
                   {({ active }) => (
                     <Link
-                      href="https://twitter.com/rjb_tech"
+                      href="https://discord.gg/mwPNM9ve"
                       target="_blank"
                       className={`${
                         active ? "opacity-80 text-white" : "text-white"
@@ -142,7 +142,7 @@ export const AuthenticatedHeader = ({
                         className="mr-2 h-5 w-5"
                         aria-hidden="true"
                       />
-                      Feedback
+                      Support/Feedback
                     </Link>
                   )}
                 </Menu.Item>
