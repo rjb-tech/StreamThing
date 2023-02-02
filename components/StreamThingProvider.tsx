@@ -124,7 +124,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
       </Head>
       <div className="h-screen w-screen transform-gpu">
         {/* Make sure the top positioning of this matches the height of the header component */}
-        <main className="h-full w-full overscroll-y-contain overflow-y-hidden flex items-center justify-center bg-black">
+        <main className="h-full w-full overscroll-none overflow-y-hidden flex items-center justify-center bg-black">
           {children}
         </main>
       </div>
