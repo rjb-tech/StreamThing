@@ -59,7 +59,7 @@ export const LandingPage = () => {
                   <StreamThingButton innerText="Login" fullWidth illuminate />
                 </form>
               ) : (
-                <div className="h-16">Check your email!</div>
+                <div className="h-16 animate-bounce">Check your email!</div>
               )}
             </span>
           </div>
