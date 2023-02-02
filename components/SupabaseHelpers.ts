@@ -50,7 +50,7 @@ export async function getProfile(
     }
   } catch (error) {
     toast.error("Error loading user data", {
-      position: toast.POSITION.BOTTOM_CENTER,
+      position: toast.POSITION.TOP_CENTER,
     });
   } finally {
     dispatch(setAccountInfoLoading(false));
@@ -99,7 +99,7 @@ export async function updateUserAvatarUrl(
     await getProfile(userId, supabaseClient, dispatch);
   } catch (error) {
     toast.error("Error updating the data", {
-      position: toast.POSITION.BOTTOM_CENTER,
+      position: toast.POSITION.TOP_CENTER,
     });
   } finally {
     dispatch(setAccountInfoLoading(false));
@@ -124,24 +124,24 @@ export async function updateUsername(
     const { error } = await supabaseClient.from("profiles").upsert(updates);
     if (error) throw error;
     toast.success("Username updated", {
-      position: toast.POSITION.BOTTOM_CENTER,
+      position: toast.POSITION.TOP_CENTER,
     });
     await getProfile(userId, supabaseClient, dispatch);
   } catch (error: any) {
     switch (error?.code) {
       case "23505":
         toast.error("That username is taken, try again", {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
         break;
       case "80085":
         toast.info(`Nice try, ${username}`, {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
         break;
       default:
         toast.error("Error updating username", {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
         break;
     }
@@ -168,7 +168,7 @@ export async function uploadUserImage(
     toast.success(
       "Avatar updated. It may take up to 5 minutes to see your changes.",
       {
-        position: toast.POSITION.BOTTOM_CENTER,
+        position: toast.POSITION.TOP_CENTER,
       }
     );
 
@@ -184,7 +184,7 @@ export async function uploadUserImage(
     );
   } catch {
     toast.error("Error uploading logo", {
-      position: toast.POSITION.BOTTOM_CENTER,
+      position: toast.POSITION.TOP_CENTER,
     });
   } finally {
     dispatch(setAccountImageLoading(false));
@@ -210,23 +210,23 @@ export async function sendFollow(
     getProfile(newFollowerId, supabaseClient, dispatch);
 
     toast.success("User followed! They will now appear in your network", {
-      position: toast.POSITION.BOTTOM_CENTER,
+      position: toast.POSITION.TOP_CENTER,
     });
   } catch (error: any) {
     switch (error.message) {
       case "already_following":
         toast.error("Already following this user", {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
         break;
       case "not_found":
         toast.error("User not found", {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
         break;
       default:
         toast.error("Couldn't follow user, try again later", {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
     }
   }
@@ -249,11 +249,11 @@ export async function sendUnfollow(
     getProfile(followerId, supabaseClient, dispatch);
 
     toast.success("User removed from your network", {
-      position: toast.POSITION.BOTTOM_CENTER,
+      position: toast.POSITION.TOP_CENTER,
     });
   } catch (error: any) {
     toast.error("Error unfollowing user", {
-      position: toast.POSITION.BOTTOM_CENTER,
+      position: toast.POSITION.TOP_CENTER,
     });
   }
 }
@@ -276,7 +276,7 @@ export async function addContentSource(
     await getProfile(userId, supabaseClient, dispatch);
 
     toast.success("Content source added to your channel!", {
-      position: toast.POSITION.BOTTOM_CENTER,
+      position: toast.POSITION.TOP_CENTER,
     });
 
     getContentSources(userId, supabaseClient, dispatch);
@@ -284,22 +284,22 @@ export async function addContentSource(
     switch (error.message) {
       case "invalid_source":
         toast.error("Invalid source, please try again.", {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
         break;
       case "already_content_source":
         toast.error("Content source already in your channel.", {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
         break;
       case "content_sources_full":
         toast.error("You can only add 20 content sources", {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
         break;
       default:
         toast.error("Error adding content source.", {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
         break;
     }
@@ -325,13 +325,13 @@ export async function removeContentSource(
     await getProfile(userId, supabaseClient, dispatch);
 
     toast.success("Content source removed!", {
-      position: toast.POSITION.BOTTOM_CENTER,
+      position: toast.POSITION.TOP_CENTER,
     });
 
     getContentSources(userId, supabaseClient, dispatch);
   } catch {
     toast.error("Error removing content source", {
-      position: toast.POSITION.BOTTOM_CENTER,
+      position: toast.POSITION.TOP_CENTER,
     });
   }
 }
@@ -353,7 +353,7 @@ export async function getAndSetVideoFromContentSource(
     dispatch(setActiveStream(`https://www.youtube.com/watch?v=${videoId}`));
   } catch (err) {
     toast.error("Error setting active content source", {
-      position: toast.POSITION.BOTTOM_CENTER,
+      position: toast.POSITION.TOP_CENTER,
     });
   }
 }

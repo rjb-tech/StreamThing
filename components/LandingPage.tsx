@@ -24,7 +24,7 @@ export const LandingPage = () => {
 
       if (error)
         toast.error(`No account associated with ${values.email}`, {
-          position: toast.POSITION.BOTTOM_CENTER,
+          position: toast.POSITION.TOP_CENTER,
         });
       else setLinkSent(true);
     },
