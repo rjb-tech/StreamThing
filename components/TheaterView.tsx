@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { AuthenticatedHeader } from "./AuthenticatedHeader";
 import { getAndSetVideoFromContentSource } from "./SupabaseHelpers";
 
-export default function TheaterView({ username }: { username: string }) {
+export default function TheaterView() {
   const player = useRef<HTMLDivElement>(null);
   const supabaseClient = useSupabaseClient();
   const dispatch = useAppDispatch();
@@ -28,7 +28,7 @@ export default function TheaterView({ username }: { username: string }) {
             Boolean(minimizeHeader) ? "h-28" : "h-screen"
           } w-full bg-gradient-to-b from-[#EF436B]/[0.2] via-[#182E63]/[0.3] to-transparent z-10 relative transition-all duration-1000 overflow-visible`}
         >
-          <AuthenticatedHeader username={username} videoLoaded={videoLoaded} />
+          <AuthenticatedHeader videoLoaded={videoLoaded} />
         </div>
 
         <div

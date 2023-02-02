@@ -22,23 +22,19 @@ import { getAndSetVideoFromContentSource } from "./SupabaseHelpers";
 import Image from "next/image";
 
 interface AuthenticatedHeaderProps {
-  username: string;
   videoLoaded: boolean;
 }
 
 export const AuthenticatedHeader = ({
-  username,
   videoLoaded,
 }: AuthenticatedHeaderProps) => {
   const supabaseClient = useSupabaseClient();
   const dispatch = useAppDispatch();
   const router = useRouter();
   const { showMyNetworkModal } = useAppSelector((state) => state.ui);
-  const {
-    username: u,
-    activeContentSource,
-    contentSources,
-  } = useAppSelector((state) => state.account);
+  const { username, activeContentSource, contentSources } = useAppSelector(
+    (state) => state.account
+  );
 
   return (
     <header
@@ -99,7 +95,7 @@ export const AuthenticatedHeader = ({
         <Menu as="span" className="relative inline-block text-left">
           <div>
             <Menu.Button as="div">
-              <StreamThingButton innerText={u || username} fullHeight>
+              <StreamThingButton innerText={username} fullHeight>
                 <ChevronDownIcon
                   className="ml-2 -mr-1 h-5 w-5 text-violet-200 hover:text-violet-100"
                   aria-hidden="true"
