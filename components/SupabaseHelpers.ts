@@ -367,7 +367,10 @@ export async function updateActiveContentSource(
   try {
     const { data, error } = await supabaseClient
       .from("profiles")
-      .update({ active_content_source: contentLink })
+      .update({
+        active_content_source: contentLink,
+        last_update: new Date().toISOString(),
+      })
       .eq("id", userId);
 
     if (error) throw error;
