@@ -1,6 +1,7 @@
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useFormik } from "formik";
 import Image from "next/image";
+import Link from "next/link";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { StreamThingButton } from "./StreamThingButton";
@@ -65,6 +66,13 @@ export const LandingPage = () => {
           </div>
         </div>
       </div>
+      <Link
+        href="https://twitter.com/rjb_tech"
+        target="_blank"
+        className="zippy-dee-doo h-fit w-fit absolute bottom-0 text-white mx-auto pb-4"
+      >
+        Made by Ryne :)
+      </Link>
     </>
   );
 };
