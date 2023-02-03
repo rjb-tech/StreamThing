@@ -49,3 +49,12 @@ label.avatar-label input[type="file"] {
       opacity: 1;
     }
   }
+
+.scroll-area {
+  -ms-overflow-style: none; // IE and Edge
+  scrollbar-width: none; // Firefox
+}
+
+.scroll-area::-webkit-scrollbar {
+  display: none;
+}

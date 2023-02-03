@@ -58,7 +58,7 @@ export const ChannelsTab = () => {
 
   return (
     <div className="h-full w-full">
-      <div className="following w-full h-60 mx-auto border border-gray-600 my-4 p-4 rounded overflow-y-scroll space-y-4 bg-gray-600">
+      <div className="scroll-area following w-full h-60 mx-auto border border-gray-600 my-4 p-4 rounded overflow-y-scroll space-y-4 bg-gray-600">
         <div
           className={`w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-lg hover:scale-[101%] transition-all ${
             user?.id === channelCurrentlyViewing
