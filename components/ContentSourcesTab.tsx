@@ -26,7 +26,16 @@ export const ContentSourcesTab = () => {
     },
     onSubmit: (values) => {
       if (user) {
-        addContentSource(user.id, values.contentLink, supabaseClient, dispatch);
+        const channelName = new URL(values.contentLink).pathname.split("/")[1];
+        const sanitizedChannelLink = `https://www.youtube.com/${channelName}`;
+
+        addContentSource(
+          user.id,
+          sanitizedChannelLink,
+          supabaseClient,
+          dispatch
+        );
+
         formik.resetForm();
       }
     },
