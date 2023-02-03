@@ -125,10 +125,7 @@ export const ContentSourcesTab = () => {
                     />
                   </div>
                   <span className="pl-4">
-                    {source.pathname
-                      .replace("/", "")
-                      .replace("@", "")
-                      .replace("/videos", "")}
+                    {source.pathname.replace("/", "").replace("@", "")}
                   </span>
                 </Link>
               )}
