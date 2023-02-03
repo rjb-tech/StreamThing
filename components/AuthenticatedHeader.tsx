@@ -33,7 +33,9 @@ export const AuthenticatedHeader = ({
   const supabaseClient = useSupabaseClient();
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const { showMyNetworkModal } = useAppSelector((state) => state.ui);
+  const { showMyNetworkModal, contentSourceCurrentlyShowing } = useAppSelector(
+    (state) => state.ui
+  );
   const { username, activeContentSource, contentSources } = useAppSelector(
     (state) => state.account
   );
@@ -66,7 +68,7 @@ export const AuthenticatedHeader = ({
             fullHeight
             clickFn={() =>
               getAndSetVideoFromContentSource(
-                activeContentSource,
+                contentSourceCurrentlyShowing,
                 supabaseClient,
                 dispatch
               )
