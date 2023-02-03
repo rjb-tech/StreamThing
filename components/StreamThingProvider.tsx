@@ -122,7 +122,7 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
         <title>StreamThing</title>
         <link rel="icon" href="/favicon.png" />
       </Head>
-      <div className="h-screen w-screen transform-gpu">
+      <div className="h-screen w-screen transform-gpu overscroll-none">
         {/* Make sure the top positioning of this matches the height of the header component */}
         <main className="h-full w-full overscroll-none overflow-y-hidden flex items-center justify-center bg-black">
           {children}
