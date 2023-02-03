@@ -45,7 +45,7 @@ export const MyNetworkModal = () => {
                 )
               }
             >
-              {`Channels (${following.length + 1})`}
+              {`Friends (${following.length + 1})`}
               {/* 1 added here to count current user's channel too */}
             </Tab>
             <Tab
