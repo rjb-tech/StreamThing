@@ -8,15 +8,22 @@ import {
 import { BaseModal } from "./BaseModal";
 import { ContentSourcesTab } from "./ContentSourcesTab";
 import { ChannelsTab } from "./ChannelsTab";
+import { InformationCircleIcon } from "@heroicons/react/20/solid";
+import { useRef } from "react";
 
 export const MyNetworkModal = () => {
   const dispatch = useAppDispatch();
+  const channelsTabTooltip = useRef<HTMLDivElement>(null);
+  const contentTabTooltip = useRef<HTMLDivElement>(null);
   const { showMyNetworkModal, myNetworkSelectedIndex } = useAppSelector(
     (state) => state.ui
   );
   const { contentSources, following } = useAppSelector(
     (state) => state.account
   );
+
+  const isChannelsTab = myNetworkSelectedIndex === 0;
+  const isContentTab = myNetworkSelectedIndex === 1;
 
   function closeModal() {
     dispatch(setShowMyNetworkModal(false));
@@ -45,8 +52,45 @@ export const MyNetworkModal = () => {
                 )
               }
             >
-              {`Friends (${following.length + 1})`}
-              {/* 1 added here to count current user's channel too */}
+              <div className="w-fit flex items-center justify-center space-x-4 mx-auto">
+                <span
+                  className={`transition-all ${
+                    isChannelsTab ? "visible opacity-100" : "translate-x-4"
+                  }`}
+                >
+                  {`Friends (${following.length + 1})`}
+                </span>{" "}
+                {/* 1 added here ^^ to count current user's channel too */}
+                <span
+                  className={`transition-all duration-100 ${
+                    isChannelsTab ? "opacity-100" : "opacity-0"
+                  }`}
+                >
+                  <InformationCircleIcon
+                    className="w-4 h-4 cursor-default"
+                    onMouseOver={(e) => {
+                      channelsTabTooltip.current?.classList.replace(
+                        "opacity-0",
+                        "opacity-100"
+                      );
+                    }}
+                    onMouseLeave={(e) => {
+                      channelsTabTooltip.current?.classList.replace(
+                        "opacity-100",
+                        "opacity-0"
+                      );
+                    }}
+                  />
+                  <div
+                    ref={channelsTabTooltip}
+                    className="absolute w-64 h-fit p-4 mt-4 bg-gray-900 rounded-md border-2 border-[#9A97D8]/[0.3] transition-all opacity-0 z-50"
+                  >
+                    <p className="relative w-full h-full text-start text-white">
+                      Add friends to your network and see their channels here.
+                    </p>
+                  </div>
+                </span>
+              </div>
             </Tab>
             <Tab
               className={({ selected }) =>
@@ -59,7 +103,47 @@ export const MyNetworkModal = () => {
                 )
               }
             >
-              {`Content (${contentSources.length})`}
+              <div className="w-fit flex items-center justify-center space-x-4 mx-auto">
+                <span
+                  className={`transition-all ${
+                    isContentTab ? "visible opacity-100" : "translate-x-4"
+                  }`}
+                >
+                  {`Content (${contentSources.length})`}
+                </span>{" "}
+                {/* 1 added here ^^ to count current user's channel too */}
+                <span
+                  className={`transition-all duration-100 ${
+                    isContentTab ? "opacity-100" : "opacity-0"
+                  }`}
+                >
+                  <InformationCircleIcon
+                    className="w-4 h-4 cursor-pointer"
+                    onMouseOver={(e) => {
+                      contentTabTooltip.current?.classList.replace(
+                        "opacity-0",
+                        "opacity-100"
+                      );
+                    }}
+                    onMouseLeave={(e) => {
+                      contentTabTooltip.current?.classList.replace(
+                        "opacity-100",
+                        "opacity-0"
+                      );
+                    }}
+                  />
+                  <div
+                    ref={contentTabTooltip}
+                    className="absolute w-64 h-fit p-4 mt-4 bg-gray-900 rounded-md border-2 border-[#9A97D8]/[0.3] transition-all opacity-0"
+                  >
+                    <p className="relative w-full h-full text-start text-white">
+                      Your active content source shuffles every hour, or when
+                      you add a new source. You can also elevate and show any
+                      content source at any time.
+                    </p>
+                  </div>
+                </span>
+              </div>
             </Tab>
           </Tab.List>
           <Tab.Panels className="h-fit w-full">

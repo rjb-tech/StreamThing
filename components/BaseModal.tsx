@@ -46,7 +46,7 @@ export const BaseModal = ({
               >
                 <Dialog.Panel
                   className={classNames(
-                    "flex flex-col justify-between items-center max-w-md h-fit transform overflow-hidden rounded-2xl bg-gray-700 p-6 text-left align-middle shadow-xl transition-all text-white",
+                    "flex flex-col justify-between items-center max-w-md h-fit transform overflow-visible rounded-2xl bg-gray-700 p-6 text-left align-middle shadow-xl transition-all text-white",
                     wide ? "w-[28rem]" : "w-80"
                   )}
                 >
