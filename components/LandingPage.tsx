@@ -8,6 +8,8 @@ import { StreamThingButton } from "./StreamThingButton";
 
 export const LandingPage = () => {
   const supabase = useSupabaseClient();
+  const tooManyLoginsMessage =
+    "For security purposes, you can only request this once every 60 seconds";
 
   const [linkSent, setLinkSent] = useState<boolean>(false);
 
@@ -22,10 +24,22 @@ export const LandingPage = () => {
         },
       });
 
+      console.log(error?.message);
+
       if (error)
-        toast.error(`No account associated with ${values.email}`, {
-          position: toast.POSITION.TOP_CENTER,
-        });
+        switch (error.message) {
+          case tooManyLoginsMessage:
+            toast.info(
+              "You can only request a login link once every 60 seconds. Please check your email, or try again shortly.",
+              { position: toast.POSITION.TOP_CENTER }
+            );
+            break;
+          default:
+            toast.error(`No account associated with ${values.email}`, {
+              position: toast.POSITION.TOP_CENTER,
+            });
+            break;
+        }
       else setLinkSent(true);
     },
     validate: (values) => {},
