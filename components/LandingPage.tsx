@@ -24,8 +24,6 @@ export const LandingPage = () => {
         },
       });
 
-      console.log(error?.message);
-
       if (error)
         switch (error.message) {
           case tooManyLoginsMessage:
