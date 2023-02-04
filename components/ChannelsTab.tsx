@@ -1,8 +1,11 @@
+import { Switch } from "@headlessui/react";
+import { PlayIcon, SparklesIcon } from "@heroicons/react/20/solid";
 import { XMarkIcon, TvIcon } from "@heroicons/react/24/outline";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import classNames from "classnames";
 import { useFormik } from "formik";
 import Image from "next/image";
+import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { setChannelCurrentlyViewing } from "../redux/slices/accountSlice";
 import {
@@ -20,6 +23,7 @@ export const ChannelsTab = () => {
   const user = useUser();
   const dispatch = useAppDispatch();
   const supabaseClient = useSupabaseClient();
+  const [enabled, setEnabled] = useState<boolean>(false);
   const { contentSourceCurrentlyShowing } = useAppSelector((state) => state.ui);
   const {
     following,
@@ -60,7 +64,7 @@ export const ChannelsTab = () => {
     <div className="h-full w-full">
       <div className="scroll-area following w-full h-60 mx-auto border border-gray-600 my-4 p-4 rounded overflow-y-scroll space-y-4 bg-gray-600">
         <div
-          className={`w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-lg hover:scale-[101%] transition-all ${
+          className={`w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-lg hover:scale-[101%] transition-all z-30 ${
             user?.id === channelCurrentlyViewing
               ? "border-2 border-[#EDAE49]"
               : ""
@@ -68,20 +72,20 @@ export const ChannelsTab = () => {
           key={0}
         >
           <div
-            onClick={() => {
-              if (contentSourceCurrentlyShowing !== activeContentSource) {
-                dispatch(setMinimizeHeader(true));
-                dispatch(setChannelCurrentlyViewing(user?.id || ""));
+            // onClick={() => {
+            //   if (contentSourceCurrentlyShowing !== activeContentSource) {
+            //     dispatch(setMinimizeHeader(true));
+            //     dispatch(setChannelCurrentlyViewing(user?.id || ""));
 
-                getAndSetVideoFromContentSource(
-                  activeContentSource,
-                  supabaseClient,
-                  dispatch
-                );
-              }
+            //     getAndSetVideoFromContentSource(
+            //       activeContentSource,
+            //       supabaseClient,
+            //       dispatch
+            //     );
+            //   }
 
-              dispatch(setShowMyNetworkModal(false));
-            }}
+            //   dispatch(setShowMyNetworkModal(false));
+            // }}
             className="w-full flex items-center mx-2 cursor-pointer"
           >
             <Image
@@ -106,6 +110,30 @@ export const ChannelsTab = () => {
                     : "No active content"}
                 </span>
               </div>
+            </span>
+            <span className="w-full flex justify-end">
+              <Switch
+                checked={enabled}
+                onChange={setEnabled}
+                className={`${
+                  enabled ? "bg-gray-600" : "bg-gray-600"
+                } relative inline-flex h-6 w-11 items-center transition-all rounded-full`}
+              >
+                {enabled ? (
+                  <span className="absolute left-0">
+                    <SparklesIcon className="h-3 w-3 ml-1" />
+                  </span>
+                ) : (
+                  <span className="absolute right-0">
+                    <PlayIcon className="h-3 w-3 mr-1" />
+                  </span>
+                )}
+                <span
+                  className={`${
+                    enabled ? "translate-x-6" : "translate-x-1"
+                  } inline-block h-4 w-4 transform rounded-full bg-white transition-all`}
+                />
+              </Switch>
             </span>
           </div>
         </div>
