@@ -24,6 +24,7 @@ import {
   getAndSetVideoFromContentSource,
   sendFollow,
   sendUnfollow,
+  toggleShuffleMode,
 } from "./SupabaseHelpers";
 
 export const ChannelsTab = () => {
@@ -145,7 +146,8 @@ export const ChannelsTab = () => {
               <Switch
                 checked={shuffleMode}
                 onChange={() => {
-                  dispatch(setShuffleMode(!shuffleMode));
+                  if (user)
+                    toggleShuffleMode(user?.id, supabaseClient, dispatch);
                 }}
                 className={`${
                   shuffleMode ? "bg-[#EF436B]/[0.5]" : "bg-[#182E63]/[0.5]"
