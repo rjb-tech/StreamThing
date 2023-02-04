@@ -6,7 +6,7 @@ import {
   UserIcon,
   TvIcon,
   ArrowsRightLeftIcon,
-  SparklesIcon,
+  SignalIcon,
 } from "@heroicons/react/20/solid";
 import {
   resetUI,
@@ -140,10 +140,7 @@ export const AuthenticatedHeader = ({
                         active ? "opacity-80 text-white" : "text-white"
                       } group flex w-full items-center justify-between rounded-md px-2 py-2 text-sm`}
                     >
-                      <SparklesIcon
-                        className="mr-2 h-5 w-5"
-                        aria-hidden="true"
-                      />
+                      <SignalIcon className="mr-2 h-5 w-5" aria-hidden="true" />
                       Discord
                     </Link>
                   )}
