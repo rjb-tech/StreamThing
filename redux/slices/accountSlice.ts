@@ -13,6 +13,7 @@ interface StreamThingAccountState {
   contentSources: string[];
   activeContentSource: string;
   channelCurrentlyViewing: string;
+  shuffleMode: boolean;
 }
 
 const initialState: StreamThingAccountState = {
@@ -25,6 +26,7 @@ const initialState: StreamThingAccountState = {
   contentSources: [],
   activeContentSource: "",
   channelCurrentlyViewing: "",
+  shuffleMode: false,
 };
 
 export const accountSlice = createSlice({
@@ -58,6 +60,9 @@ export const accountSlice = createSlice({
     setChannelCurrentlyViewing: (state, action: PayloadAction<string>) => {
       state.channelCurrentlyViewing = action.payload;
     },
+    setShuffleMode: (state, action: PayloadAction<boolean>) => {
+      state.shuffleMode = action.payload;
+    },
     resetAccount: () => initialState,
   },
 });
@@ -73,6 +78,7 @@ export const {
   setContentSources,
   setActiveContentSource,
   setChannelCurrentlyViewing,
+  setShuffleMode,
 } = accountSlice.actions;
 
 export default accountSlice.reducer;

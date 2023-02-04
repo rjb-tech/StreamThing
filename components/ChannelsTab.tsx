@@ -11,7 +11,10 @@ import { useFormik } from "formik";
 import Image from "next/image";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { setChannelCurrentlyViewing } from "../redux/slices/accountSlice";
+import {
+  setChannelCurrentlyViewing,
+  setShuffleMode,
+} from "../redux/slices/accountSlice";
 import {
   setMinimizeHeader,
   setShowMyNetworkModal,
@@ -27,7 +30,6 @@ export const ChannelsTab = () => {
   const user = useUser();
   const dispatch = useAppDispatch();
   const supabaseClient = useSupabaseClient();
-  const [enabled, setEnabled] = useState<boolean>(false);
   const [shuffleTooltipHovered, setShuffleTooltipHovered] =
     useState<boolean>(false);
   const { contentSourceCurrentlyShowing } = useAppSelector((state) => state.ui);
@@ -37,6 +39,7 @@ export const ChannelsTab = () => {
     avatarUrl,
     activeContentSource,
     channelCurrentlyViewing,
+    shuffleMode,
   } = useAppSelector((state) => state.account);
 
   const formik = useFormik({
@@ -132,7 +135,7 @@ export const ChannelsTab = () => {
                   }`}
                 >
                   <p className="relative w-full h-full text-start text-white">
-                    {enabled
+                    {shuffleMode
                       ? "Your channel is in shuffle mode and showing random videos from all your added content sources. Toggle to switch to standard mode."
                       : "Your channel is in standard mode and showing random videos only from the currently active content source. Toggle to switch to shuffle mode."}
                   </p>
@@ -140,13 +143,15 @@ export const ChannelsTab = () => {
               </div>
 
               <Switch
-                checked={enabled}
-                onChange={setEnabled}
+                checked={shuffleMode}
+                onChange={() => {
+                  dispatch(setShuffleMode(!shuffleMode));
+                }}
                 className={`${
-                  enabled ? "bg-[#EF436B]/[0.5]" : "bg-[#182E63]/[0.5]"
+                  shuffleMode ? "bg-[#EF436B]/[0.5]" : "bg-[#182E63]/[0.5]"
                 } relative inline-flex h-6 w-11 items-center transition-all rounded-full`}
               >
-                {enabled ? (
+                {shuffleMode ? (
                   <span className="absolute left-0">
                     <SparklesIcon className="h-3 w-3 ml-1" />
                   </span>
@@ -157,7 +162,7 @@ export const ChannelsTab = () => {
                 )}
                 <span
                   className={`${
-                    enabled ? "translate-x-6" : "translate-x-1"
+                    shuffleMode ? "translate-x-6" : "translate-x-1"
                   } inline-block h-4 w-4 transform rounded-full bg-white transition-all`}
                 />
               </Switch>

@@ -11,6 +11,7 @@ import {
   setContentSources,
   setActiveContentSource,
   setChannelCurrentlyViewing,
+  setShuffleMode,
 } from "../redux/slices/accountSlice";
 
 import type { UserRecord } from "./types";
@@ -47,6 +48,7 @@ export async function getProfile(
       dispatch(setContentSources(data.content_sources));
       dispatch(setFollowing(explodedFollowingRecords));
       dispatch(setActiveContentSource(data.active_content_source));
+      dispatch(setShuffleMode(data.shuffle_mode));
     }
   } catch (error) {
     toast.error("Error loading user data", {
