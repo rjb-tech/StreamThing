@@ -93,7 +93,10 @@ export const ChannelsTab = () => {
             />
             <span className="pl-4 flex flex-col">
               <div>{username}</div>
-              <div className="flex space-x-3 items-center">
+              <div
+                className="flex space-x-3 items-center"
+                title={`${username}'s active content source`}
+              >
                 <TvIcon className="h-4 w-4" />
                 <span>
                   {activeContentSource
@@ -144,7 +147,10 @@ export const ChannelsTab = () => {
                 />
                 <span className="pl-4 flex flex-col">
                   <div>{channel.username}</div>
-                  <div className="flex space-x-3 items-center">
+                  <div
+                    className="flex space-x-3 items-center"
+                    title={`${channel.username}'s active content source`}
+                  >
                     <TvIcon className="h-4 w-4" />
                     <span>
                       {channel.activeContentSource
