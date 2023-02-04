@@ -1,5 +1,9 @@
 import { Switch } from "@headlessui/react";
-import { PlayIcon, SparklesIcon } from "@heroicons/react/20/solid";
+import {
+  InformationCircleIcon,
+  PlayIcon,
+  SparklesIcon,
+} from "@heroicons/react/20/solid";
 import { XMarkIcon, TvIcon } from "@heroicons/react/24/outline";
 import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import classNames from "classnames";
@@ -24,6 +28,8 @@ export const ChannelsTab = () => {
   const dispatch = useAppDispatch();
   const supabaseClient = useSupabaseClient();
   const [enabled, setEnabled] = useState<boolean>(false);
+  const [shuffleTooltipHovered, setShuffleTooltipHovered] =
+    useState<boolean>(true);
   const { contentSourceCurrentlyShowing } = useAppSelector((state) => state.ui);
   const {
     following,
@@ -62,9 +68,9 @@ export const ChannelsTab = () => {
 
   return (
     <div className="h-full w-full">
-      <div className="scroll-area following w-full h-60 mx-auto border border-gray-600 my-4 p-4 rounded overflow-y-scroll space-y-4 bg-gray-600">
+      <div className="scroll-area following w-full h-60 mx-auto border border-gray-600 my-4 p-4 rounded overflow-x-visible overflow-y-scroll space-y-4 bg-gray-600">
         <div
-          className={`w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-lg hover:scale-[101%] transition-all z-30 ${
+          className={`w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-xl hover:overflow-visible transition-all hover:z-40 ${
             user?.id === channelCurrentlyViewing
               ? "border-2 border-[#EDAE49]"
               : ""
@@ -111,7 +117,28 @@ export const ChannelsTab = () => {
                 </span>
               </div>
             </span>
-            <span className="w-full flex justify-end">
+            <span className="w-full flex justify-end items-center space-x-2">
+              <div>
+                <InformationCircleIcon
+                  onMouseEnter={() => setShuffleTooltipHovered(true)}
+                  onMouseLeave={() => setShuffleTooltipHovered(false)}
+                  className="w-4 h-4 cursor-default"
+                />
+                <div
+                  className={`absolute w-64 h-fit p-4 mt-4 bg-gray-900 rounded-md border-2 border-[#9A97D8]/[0.3] transition-all duration-200 ${
+                    shuffleTooltipHovered
+                      ? "opacity-100 translate-y-0 visible"
+                      : "opacity-0 -translate-y-2 invisible"
+                  }`}
+                >
+                  <p className="relative w-full h-full text-start text-white">
+                    {enabled
+                      ? "Your channel is in shuffle mode and showing random videos from all your added content sources. Toggle to switch to standard mode."
+                      : "Your channel is in standard mode and showing random videos only from the currently active content source. Toggle to switch to shuffle mode."}
+                  </p>
+                </div>
+              </div>
+
               <Switch
                 checked={enabled}
                 onChange={setEnabled}
@@ -141,7 +168,7 @@ export const ChannelsTab = () => {
           const isActiveChannel = channel.id === channelCurrentlyViewing;
           return (
             <div
-              className={`w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-lg hover:scale-[101%] transition-all ${
+              className={`w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-xl transition-all ${
                 isActiveChannel ? "border-2 border-[#EDAE49]" : ""
               }`}
               key={index + 1}
