@@ -121,6 +121,13 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
       <Head>
         <title>StreamThing</title>
         <link rel="icon" href="/favicon.png" />
+        {process.env.DEPLOYMENT_ENV === "prod" && (
+          <script
+            defer
+            data-domain="streamthing.io"
+            src="https://plausible.io/js/script.js"
+          ></script>
+        )}
       </Head>
       <div className="h-screen w-screen transform-gpu overscroll-none">
         {/* Make sure the top positioning of this matches the height of the header component */}
