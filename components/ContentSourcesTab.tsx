@@ -73,7 +73,7 @@ export const ContentSourcesTab = () => {
 
   return (
     <div className="h-fit w-full">
-      <div className="scroll-area content-sources w-full h-60 mx-auto border border-gray-600 my-4 p-4 rounded overflow-y-scroll space-y-4 bg-gray-600 scroll-smooth">
+      <div className="scroll-area content-source relative z-30 s w-full h-60 mx-auto border border-gray-600 my-4 p-4 rounded overflow-y-scroll space-y-4 bg-gray-600 scroll-smooth">
         {[...contentSources].reverse().map((sourceLink, index) => {
           const source = new URL(sourceLink);
           const isFromYoutube = source.host.includes("youtube.com");

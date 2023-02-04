@@ -9,12 +9,18 @@ import { BaseModal } from "./BaseModal";
 import { ContentSourcesTab } from "./ContentSourcesTab";
 import { ChannelsTab } from "./ChannelsTab";
 import { InformationCircleIcon } from "@heroicons/react/20/solid";
-import { useRef } from "react";
+import { useRef, useState } from "react";
 
 export const MyNetworkModal = () => {
   const dispatch = useAppDispatch();
   const channelsTabTooltip = useRef<HTMLDivElement>(null);
   const contentTabTooltip = useRef<HTMLDivElement>(null);
+
+  const [channelsTabTooltipHovered, setChannelsTabTooltipHovered] =
+    useState<boolean>(false);
+  const [contentTabTooltipHovered, setContentTabTooltipHovered] =
+    useState<boolean>(false);
+
   const { showMyNetworkModal, myNetworkSelectedIndex } = useAppSelector(
     (state) => state.ui
   );
@@ -69,21 +75,18 @@ export const MyNetworkModal = () => {
                   <InformationCircleIcon
                     className="w-4 h-4 cursor-default"
                     onMouseOver={(e) => {
-                      channelsTabTooltip.current?.classList.replace(
-                        "opacity-0",
-                        "opacity-100"
-                      );
+                      setChannelsTabTooltipHovered(true);
                     }}
                     onMouseLeave={(e) => {
-                      channelsTabTooltip.current?.classList.replace(
-                        "opacity-100",
-                        "opacity-0"
-                      );
+                      setChannelsTabTooltipHovered(false);
                     }}
                   />
                   <div
-                    ref={channelsTabTooltip}
-                    className="absolute w-64 h-fit p-4 mt-4 bg-gray-900 rounded-md border-2 border-[#9A97D8]/[0.3] transition-all opacity-0 z-50"
+                    className={`absolute w-64 h-fit p-4 mt-4 bg-gray-900 rounded-md border-2 border-[#9A97D8]/[0.3] transition-all duration-200 z-20 ${
+                      channelsTabTooltipHovered
+                        ? "opacity-100 translate-y-0 visible"
+                        : "opacity-0 -translate-y-2 invisible"
+                    }`}
                   >
                     <p className="relative w-full h-full text-start text-white">
                       Add friends to your network and see their channels here.
@@ -120,25 +123,22 @@ export const MyNetworkModal = () => {
                   <InformationCircleIcon
                     className="w-4 h-4 cursor-pointer"
                     onMouseOver={(e) => {
-                      contentTabTooltip.current?.classList.replace(
-                        "opacity-0",
-                        "opacity-100"
-                      );
+                      setContentTabTooltipHovered(true);
                     }}
                     onMouseLeave={(e) => {
-                      contentTabTooltip.current?.classList.replace(
-                        "opacity-100",
-                        "opacity-0"
-                      );
+                      setContentTabTooltipHovered(false);
                     }}
                   />
                   <div
-                    ref={contentTabTooltip}
-                    className="absolute w-64 h-fit p-4 mt-4 bg-gray-900 rounded-md border-2 border-[#9A97D8]/[0.3] transition-all opacity-0"
+                    className={`absolute w-64 h-fit p-4 mt-4 bg-gray-900 rounded-md border-2 border-[#9A97D8]/[0.3] transition-all duration-200 z-50 ${
+                      contentTabTooltipHovered
+                        ? "opacity-100 translate-y-0 visible"
+                        : "opacity-0 -translate-y-2 invisible"
+                    }`}
                   >
                     <p className="relative w-full h-full text-start text-white">
-                      Your active content source shuffles every hour, or when
-                      you add a new source. You can also elevate and show any
+                      Your active content source shuffles every hour or when you
+                      add a new source. You can also elevate and show any
                       content source at any time.
                     </p>
                   </div>
