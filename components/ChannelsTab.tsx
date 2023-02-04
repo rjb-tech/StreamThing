@@ -29,7 +29,7 @@ export const ChannelsTab = () => {
   const supabaseClient = useSupabaseClient();
   const [enabled, setEnabled] = useState<boolean>(false);
   const [shuffleTooltipHovered, setShuffleTooltipHovered] =
-    useState<boolean>(true);
+    useState<boolean>(false);
   const { contentSourceCurrentlyShowing } = useAppSelector((state) => state.ui);
   const {
     following,
@@ -143,7 +143,7 @@ export const ChannelsTab = () => {
                 checked={enabled}
                 onChange={setEnabled}
                 className={`${
-                  enabled ? "bg-gray-600" : "bg-gray-600"
+                  enabled ? "bg-[#EF436B]/[0.5]" : "bg-[#182E63]/[0.5]"
                 } relative inline-flex h-6 w-11 items-center transition-all rounded-full`}
               >
                 {enabled ? (
