@@ -69,13 +69,13 @@ export const ChannelsTab = () => {
     },
   });
 
-  let formattedActiveContentSource;
-  if (activeContentSource === "shuffle_mode")
-    formattedActiveContentSource = "Shuffle Mode";
-  else
-    formattedActiveContentSource = activeContentSource
-      ? new URL(activeContentSource).pathname.replace("/", "").replace("@", "")
+  function formatActiveContentSource(contentSource: string) {
+    if (contentSource === "shuffle_mode") return "Shuffle Mode";
+
+    return contentSource !== null
+      ? new URL(contentSource).pathname.replace("/", "").replace("@", "")
       : "No active content";
+  }
 
   function handleMyChannelClick() {
     dispatch(setMinimizeHeader(true));
@@ -153,7 +153,7 @@ export const ChannelsTab = () => {
                   title={`${username}'s active content source`}
                 >
                   <TvIcon className="h-4 w-4" />
-                  <span>{formattedActiveContentSource}</span>
+                  <span>{formatActiveContentSource(activeContentSource)}</span>
                 </div>
               </span>
             </span>
@@ -251,11 +251,7 @@ export const ChannelsTab = () => {
                   >
                     <TvIcon className="h-4 w-4" />
                     <span>
-                      {channel.activeContentSource
-                        ? new URL(channel.activeContentSource).pathname
-                            .replace("/", "")
-                            .replace("@", "")
-                        : "No active content"}
+                      {formatActiveContentSource(channel.activeContentSource)}
                     </span>
                   </div>
                 </span>
