@@ -70,6 +70,14 @@ export const ChannelsTab = () => {
     },
   });
 
+  let formattedActiveContentSource;
+  if (activeContentSource === "shuffle_mode")
+    formattedActiveContentSource = "Shuffle Mode";
+  else
+    formattedActiveContentSource = activeContentSource
+      ? new URL(activeContentSource).pathname.replace("/", "").replace("@", "")
+      : "No active content";
+
   return (
     <div className="h-full w-full">
       <div className="scroll-area following w-full h-60 mx-auto border border-gray-600 my-4 p-4 rounded overflow-x-visible overflow-y-scroll space-y-4 bg-gray-600">
@@ -81,47 +89,43 @@ export const ChannelsTab = () => {
           }`}
           key={0}
         >
-          <div
-            // onClick={() => {
-            //   if (contentSourceCurrentlyShowing !== activeContentSource) {
-            //     dispatch(setMinimizeHeader(true));
-            //     dispatch(setChannelCurrentlyViewing(user?.id || ""));
+          <div className="w-full flex items-center justify-between mx-2 cursor-pointer">
+            <span
+              className="w-full flex items-center"
+              onClick={() => {
+                if (contentSourceCurrentlyShowing !== activeContentSource) {
+                  dispatch(setMinimizeHeader(true));
+                  dispatch(setChannelCurrentlyViewing(user?.id || ""));
 
-            //     getAndSetVideoFromContentSource(
-            //       activeContentSource,
-            //       supabaseClient,
-            //       dispatch
-            //     );
-            //   }
+                  getAndSetVideoFromContentSource(
+                    activeContentSource,
+                    supabaseClient,
+                    dispatch
+                  );
+                }
 
-            //   dispatch(setShowMyNetworkModal(false));
-            // }}
-            className="w-full flex items-center mx-2 cursor-pointer"
-          >
-            <Image
-              className="rounded-full h-10 w-10"
-              alt={`${username}`}
-              width={100}
-              height={100}
-              src={avatarUrl || ""}
-            />
-            <span className="pl-4 flex flex-col">
-              <div>{username}</div>
-              <div
-                className="flex space-x-3 items-center"
-                title={`${username}'s active content source`}
-              >
-                <TvIcon className="h-4 w-4" />
-                <span>
-                  {activeContentSource
-                    ? new URL(activeContentSource).pathname
-                        .replace("/", "")
-                        .replace("@", "")
-                    : "No active content"}
-                </span>
-              </div>
+                dispatch(setShowMyNetworkModal(false));
+              }}
+            >
+              <Image
+                className="rounded-full h-10 w-10"
+                alt={`${username}`}
+                width={100}
+                height={100}
+                src={avatarUrl || ""}
+              />
+              <span className="pl-4 flex flex-col">
+                <div>{username}</div>
+                <div
+                  className="flex w-fit space-x-3 items-center"
+                  title={`${username}'s active content source`}
+                >
+                  <TvIcon className="h-4 w-4" />
+                  <span>{formattedActiveContentSource}</span>
+                </div>
+              </span>
             </span>
-            <span className="w-full flex justify-end items-center space-x-2">
+            <span className="w-fit flex justify-end items-center space-x-2">
               <div>
                 <InformationCircleIcon
                   onMouseEnter={() => setShuffleTooltipHovered(true)}
@@ -147,7 +151,12 @@ export const ChannelsTab = () => {
                 checked={shuffleMode}
                 onChange={() => {
                   if (user)
-                    toggleShuffleMode(user?.id, supabaseClient, dispatch);
+                    toggleShuffleMode(
+                      user.id,
+                      shuffleMode,
+                      supabaseClient,
+                      dispatch
+                    );
                 }}
                 className={`${
                   shuffleMode ? "bg-[#EF436B]/[0.5]" : "bg-[#182E63]/[0.5]"

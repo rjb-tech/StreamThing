@@ -386,6 +386,7 @@ export async function updateActiveContentSource(
 
 export async function toggleShuffleMode(
   userId: string,
+  currentShuffleMode: boolean,
   supabaseClient: SupabaseClient,
   dispatch: AppDispatch
 ) {
@@ -393,12 +394,14 @@ export async function toggleShuffleMode(
     const { data, error } = await supabaseClient
       .rpc("toggle_shuffle_mode", {
         user_id: userId,
+        current_shuffle_mode: currentShuffleMode,
       })
       .single();
 
     if (error) throw error;
 
     dispatch(setShuffleMode(data));
+    getProfile(userId, supabaseClient, dispatch);
   } catch (error) {}
 }
 
