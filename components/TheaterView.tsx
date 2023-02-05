@@ -1,7 +1,19 @@
+import {
+  ArrowRightOnRectangleIcon,
+  ForwardIcon,
+  TvIcon,
+  UserIcon,
+} from "@heroicons/react/20/solid";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
 import { useRef, useState } from "react";
 import ReactPlayer from "react-player";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import {
+  setShowAccountModal,
+  setShowLogoutConfirmationModal,
+  setShowMyNetworkModal,
+} from "../redux/slices/uiSlice";
+import { AccountModal } from "./AccountModal";
 import { AuthenticatedHeader } from "./AuthenticatedHeader";
 import {
   getAndSetShuffleModeVideo,
@@ -10,10 +22,18 @@ import {
 
 export default function TheaterView() {
   const player = useRef<HTMLDivElement>(null);
+  const [auxPanelMode, setAuxPanelMode] = useState<string>("default");
   const supabaseClient = useSupabaseClient();
   const dispatch = useAppDispatch();
-  const { activeStream, contentSourceCurrentlyShowing, minimizeHeader } =
-    useAppSelector((state) => state.ui);
+  const {
+    activeStream,
+    contentSourceCurrentlyShowing,
+    minimizeHeader,
+    mobileMenuOpen,
+    showAccountModal,
+    showMyNetworkModal,
+    showLogoutConfirmationModal,
+  } = useAppSelector((state) => state.ui);
   const { channelCurrentlyViewing } = useAppSelector((state) => state.account);
 
   const [videoLoaded, setVideoLoaded] = useState<boolean>(false);
@@ -34,6 +54,51 @@ export default function TheaterView() {
         >
           <AuthenticatedHeader videoLoaded={videoLoaded} />
         </div>
+        <span
+          className={`absolute flex flex-col justify-around mt-28 sm:hidden top-0 left-0 py-4 px-2 w-full h-fit transition-all duration-300 z-40 ${
+            mobileMenuOpen ? "opacity-100" : " opacity-0 invisible"
+          } ${minimizeHeader ? "bg-black" : "bg-white/[0.05]"}`}
+        >
+          <span className="relative flex w-full justify-around">
+            <UserIcon
+              className="h-7 w-7 text-white cursor-pointer"
+              onClick={() => {
+                dispatch(setShowAccountModal(!showAccountModal));
+              }}
+            />
+            <TvIcon
+              className="h-6 w-6 text-white cursor-pointer"
+              onClick={() => {
+                dispatch(setShowMyNetworkModal(!showMyNetworkModal));
+              }}
+            />
+            <ForwardIcon
+              className="h-6 w-6 text-white cursor-pointer"
+              onClick={() => {
+                if (contentSourceCurrentlyShowing === "shuffle_mode")
+                  getAndSetShuffleModeVideo(
+                    channelCurrentlyViewing,
+                    supabaseClient,
+                    dispatch
+                  );
+                else
+                  getAndSetVideoFromContentSource(
+                    contentSourceCurrentlyShowing,
+                    supabaseClient,
+                    dispatch
+                  );
+              }}
+            />
+            <ArrowRightOnRectangleIcon
+              className="h-6 w-6 text-white cursor-pointer"
+              onClick={() =>
+                dispatch(
+                  setShowLogoutConfirmationModal(!showLogoutConfirmationModal)
+                )
+              }
+            />
+          </span>
+        </span>
 
         <div
           ref={player}

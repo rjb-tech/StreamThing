@@ -9,11 +9,13 @@ interface StreamThingMainState {
   showAddFriendModal: boolean;
   showAddContentSourceModal: boolean;
   showMyNetworkModal: boolean;
+  showLogoutConfirmationModal: boolean;
   activeStream: string;
   contentSourceBeingAdded: boolean;
   myNetworkSelectedIndex: number;
   contentSourceCurrentlyShowing: string;
   minimizeHeader: boolean;
+  mobileMenuOpen: boolean;
 }
 
 // Define the initial state using that type
@@ -24,11 +26,13 @@ const initialState: StreamThingMainState = {
   showAddFriendModal: false,
   showAddContentSourceModal: false,
   showMyNetworkModal: false,
+  showLogoutConfirmationModal: false,
   activeStream: "",
   contentSourceBeingAdded: false,
   myNetworkSelectedIndex: 0,
   contentSourceCurrentlyShowing: "",
   minimizeHeader: false,
+  mobileMenuOpen: false,
 };
 
 export const uiSlice = createSlice({
@@ -53,6 +57,9 @@ export const uiSlice = createSlice({
     setShowMyNetworkModal: (state, action: PayloadAction<boolean>) => {
       state.showMyNetworkModal = action.payload;
     },
+    setShowLogoutConfirmationModal: (state, action: PayloadAction<boolean>) => {
+      state.showLogoutConfirmationModal = action.payload;
+    },
     setActiveStream: (state, action: PayloadAction<string>) => {
       state.activeStream = action.payload;
     },
@@ -71,6 +78,9 @@ export const uiSlice = createSlice({
     setMinimizeHeader: (state, action: PayloadAction<boolean>) => {
       state.minimizeHeader = action.payload;
     },
+    setMobileMenuOpen: (state, action: PayloadAction<boolean>) => {
+      state.mobileMenuOpen = action.payload;
+    },
     resetUI: () => initialState,
   },
 });
@@ -82,12 +92,14 @@ export const {
   setShowAddFriendModal,
   setShowAddContentSourceModal,
   setShowMyNetworkModal,
+  setShowLogoutConfirmationModal,
   setActiveStream,
   resetUI,
   setContentSourceBeingAdded,
   setMyNetworkSelectedIndex,
   setContentSourceCurrentlyShowing,
   setMinimizeHeader,
+  setMobileMenuOpen,
 } = uiSlice.actions;
 
 export default uiSlice.reducer;
