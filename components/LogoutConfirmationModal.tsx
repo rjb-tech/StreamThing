@@ -1,10 +1,18 @@
+import { useSupabaseClient } from "@supabase/auth-helpers-react";
+import { useRouter } from "next/router";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { setShowLogoutConfirmationModal } from "../redux/slices/uiSlice";
+import { resetAccount } from "../redux/slices/accountSlice";
+import {
+  resetUI,
+  setShowLogoutConfirmationModal,
+} from "../redux/slices/uiSlice";
 import { BaseModal } from "./BaseModal";
 import { StreamThingButton } from "./StreamThingButton";
 
 export const LogoutConfirmationModal = () => {
+  const router = useRouter();
   const dispatch = useAppDispatch();
+  const supabaseClient = useSupabaseClient();
   const { showLogoutConfirmationModal } = useAppSelector((state) => state.ui);
   return (
     <BaseModal
@@ -22,6 +30,12 @@ export const LogoutConfirmationModal = () => {
           innerText="Skedaddle"
           fullHeight
           fullWidth
+          clickFn={async () => {
+            await supabaseClient.auth.signOut();
+            dispatch(resetAccount());
+            dispatch(resetUI());
+            router.push("/");
+          }}
         />
       </div>
     </BaseModal>
