@@ -121,7 +121,7 @@ export const MyNetworkModal = () => {
                   }`}
                 >
                   <InformationCircleIcon
-                    className="w-4 h-4 cursor-pointer"
+                    className="w-4 h-4 cursor-default"
                     onMouseOver={(e) => {
                       setContentTabTooltipHovered(true);
                     }}
@@ -139,7 +139,7 @@ export const MyNetworkModal = () => {
                     <p className="relative w-full h-full text-start text-white">
                       Your active content source shuffles every hour or when you
                       add a new source. You can also elevate and show any
-                      content source at any time.
+                      content source at any time when in standard mode.
                     </p>
                   </div>
                 </span>

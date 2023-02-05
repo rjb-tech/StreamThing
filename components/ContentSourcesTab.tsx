@@ -16,7 +16,7 @@ export const ContentSourcesTab = () => {
   const user = useUser();
   const dispatch = useAppDispatch();
   const supabaseClient = useSupabaseClient();
-  const { contentSources, activeContentSource } = useAppSelector(
+  const { contentSources, activeContentSource, shuffleMode } = useAppSelector(
     (state) => state.account
   );
   const hasSources = contentSources.length > 0;
@@ -130,7 +130,7 @@ export const ContentSourcesTab = () => {
                 </Link>
               )}
               <span className="flex">
-                {activeContentSource !== sourceLink && (
+                {activeContentSource !== sourceLink && !shuffleMode && (
                   <ChevronDoubleUpIcon
                     title="Elevate to active source"
                     className="h-7 w-7 pr-2 cursor-pointer"
