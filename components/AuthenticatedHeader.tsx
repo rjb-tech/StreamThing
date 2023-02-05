@@ -12,6 +12,7 @@ import {
   Bars3BottomLeftIcon,
   XMarkIcon,
   UserCircleIcon,
+  ForwardIcon,
 } from "@heroicons/react/20/solid";
 import {
   resetUI,
@@ -94,7 +95,7 @@ export const AuthenticatedHeader = ({
                 );
             }}
           >
-            <ArrowsRightLeftIcon className="h-5 w-5 ml-2" />
+            <ForwardIcon className="h-5 w-5 ml-2" />
           </StreamThingButton>
         </div>
 
