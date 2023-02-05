@@ -9,9 +9,12 @@ import { useSupabaseClient, useUser } from "@supabase/auth-helpers-react";
 import classNames from "classnames";
 import { useFormik } from "formik";
 import Image from "next/image";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
-import { setChannelCurrentlyViewing } from "../redux/slices/accountSlice";
+import {
+  setActiveContentSource,
+  setChannelCurrentlyViewing,
+} from "../redux/slices/accountSlice";
 import {
   setContentSourceCurrentlyShowing,
   setMinimizeHeader,
@@ -115,6 +118,23 @@ export const ChannelsTab = () => {
 
     dispatch(setShowMyNetworkModal(false));
   }
+
+  useEffect(() => {
+    if (shuffleMode === true)
+      dispatch(setContentSourceCurrentlyShowing("shuffle_mode"));
+    else {
+      if (channelCurrentlyViewing === user?.id)
+        dispatch(setContentSourceCurrentlyShowing(activeContentSource));
+      else {
+        const channelToUse = following.filter(
+          (channel) => channel.id === channelCurrentlyViewing
+        )[0];
+        dispatch(
+          setContentSourceCurrentlyShowing(channelToUse?.activeContentSource)
+        );
+      }
+    }
+  }, [shuffleMode]);
 
   return (
     <div className="h-full w-full">
