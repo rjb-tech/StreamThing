@@ -338,7 +338,7 @@ export async function removeContentSource(
   }
 }
 
-export async function getShuffleModeVideo(
+export async function getAndSetShuffleModeVideo(
   userId: string,
   supabaseClient: SupabaseClient,
   dispatch: AppDispatch

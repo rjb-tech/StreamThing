@@ -11,17 +11,16 @@ import { useFormik } from "formik";
 import Image from "next/image";
 import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
+import { setChannelCurrentlyViewing } from "../redux/slices/accountSlice";
 import {
-  setChannelCurrentlyViewing,
-  setShuffleMode,
-} from "../redux/slices/accountSlice";
-import {
+  setContentSourceCurrentlyShowing,
   setMinimizeHeader,
   setShowMyNetworkModal,
 } from "../redux/slices/uiSlice";
 import { StreamThingButton } from "./StreamThingButton";
 import {
   getAndSetVideoFromContentSource,
+  getAndSetShuffleModeVideo,
   sendFollow,
   sendUnfollow,
   toggleShuffleMode,
@@ -78,6 +77,45 @@ export const ChannelsTab = () => {
       ? new URL(activeContentSource).pathname.replace("/", "").replace("@", "")
       : "No active content";
 
+  function handleMyChannelClick() {
+    dispatch(setMinimizeHeader(true));
+    dispatch(setChannelCurrentlyViewing(user?.id || ""));
+
+    if (activeContentSource === "shuffle_mode") {
+      dispatch(setContentSourceCurrentlyShowing("shuffle_mode"));
+      getAndSetShuffleModeVideo(user?.id || "", supabaseClient, dispatch);
+    } else {
+      getAndSetVideoFromContentSource(
+        activeContentSource,
+        supabaseClient,
+        dispatch
+      );
+    }
+
+    dispatch(setShowMyNetworkModal(false));
+  }
+
+  function handleFriendChannelClick(
+    channelId: string,
+    channelContentSource: string
+  ) {
+    dispatch(setMinimizeHeader(true));
+    dispatch(setChannelCurrentlyViewing(channelId));
+
+    if (channelContentSource === "shuffle_mode") {
+      dispatch(setContentSourceCurrentlyShowing("shuffle_mode"));
+      getAndSetShuffleModeVideo(channelId, supabaseClient, dispatch);
+    } else {
+      getAndSetVideoFromContentSource(
+        channelContentSource,
+        supabaseClient,
+        dispatch
+      );
+    }
+
+    dispatch(setShowMyNetworkModal(false));
+  }
+
   return (
     <div className="h-full w-full">
       <div className="scroll-area following w-full h-60 mx-auto border border-gray-600 my-4 p-4 rounded overflow-x-visible overflow-y-scroll space-y-4 bg-gray-600">
@@ -93,18 +131,12 @@ export const ChannelsTab = () => {
             <span
               className="w-full flex items-center"
               onClick={() => {
-                if (contentSourceCurrentlyShowing !== activeContentSource) {
-                  dispatch(setMinimizeHeader(true));
-                  dispatch(setChannelCurrentlyViewing(user?.id || ""));
-
-                  getAndSetVideoFromContentSource(
-                    activeContentSource,
-                    supabaseClient,
-                    dispatch
-                  );
+                if (
+                  channelCurrentlyViewing !== user?.id ||
+                  contentSourceCurrentlyShowing !== activeContentSource
+                ) {
+                  handleMyChannelClick();
                 }
-
-                dispatch(setShowMyNetworkModal(false));
               }}
             >
               <Image
@@ -192,20 +224,15 @@ export const ChannelsTab = () => {
               <div
                 onClick={() => {
                   if (
+                    channelCurrentlyViewing !== channel.id ||
                     contentSourceCurrentlyShowing !==
-                    channel.activeContentSource
+                      channel.activeContentSource
                   ) {
-                    dispatch(setMinimizeHeader(true));
-                    dispatch(setChannelCurrentlyViewing(channel.id));
-
-                    getAndSetVideoFromContentSource(
-                      channel.activeContentSource,
-                      supabaseClient,
-                      dispatch
+                    handleFriendChannelClick(
+                      channel.id,
+                      channel.activeContentSource
                     );
                   }
-
-                  dispatch(setShowMyNetworkModal(false));
                 }}
                 className="w-full flex items-center mx-2 cursor-pointer"
               >

@@ -3,7 +3,10 @@ import { useRef, useState } from "react";
 import ReactPlayer from "react-player";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import { AuthenticatedHeader } from "./AuthenticatedHeader";
-import { getAndSetVideoFromContentSource } from "./SupabaseHelpers";
+import {
+  getAndSetShuffleModeVideo,
+  getAndSetVideoFromContentSource,
+} from "./SupabaseHelpers";
 
 export default function TheaterView() {
   const player = useRef<HTMLDivElement>(null);
@@ -11,6 +14,7 @@ export default function TheaterView() {
   const dispatch = useAppDispatch();
   const { activeStream, contentSourceCurrentlyShowing, minimizeHeader } =
     useAppSelector((state) => state.ui);
+  const { channelCurrentlyViewing } = useAppSelector((state) => state.account);
 
   const [videoLoaded, setVideoLoaded] = useState<boolean>(false);
 
@@ -40,11 +44,18 @@ export default function TheaterView() {
         >
           <ReactPlayer
             onEnded={() => {
-              getAndSetVideoFromContentSource(
-                contentSourceCurrentlyShowing,
-                supabaseClient,
-                dispatch
-              );
+              if (contentSourceCurrentlyShowing === "shuffle_mode")
+                getAndSetShuffleModeVideo(
+                  channelCurrentlyViewing,
+                  supabaseClient,
+                  dispatch
+                );
+              else
+                getAndSetVideoFromContentSource(
+                  contentSourceCurrentlyShowing,
+                  supabaseClient,
+                  dispatch
+                );
             }}
             onReady={() => {
               setVideoLoaded(true);

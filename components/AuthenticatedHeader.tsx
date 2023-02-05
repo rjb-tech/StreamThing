@@ -19,7 +19,10 @@ import { StreamThingButton } from "./StreamThingButton";
 import { resetAccount } from "../redux/slices/accountSlice";
 import { useRouter } from "next/router";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { getAndSetVideoFromContentSource } from "./SupabaseHelpers";
+import {
+  getAndSetShuffleModeVideo,
+  getAndSetVideoFromContentSource,
+} from "./SupabaseHelpers";
 import Image from "next/image";
 import Link from "next/link";
 
@@ -36,9 +39,12 @@ export const AuthenticatedHeader = ({
   const { showMyNetworkModal, contentSourceCurrentlyShowing } = useAppSelector(
     (state) => state.ui
   );
-  const { username, activeContentSource, contentSources } = useAppSelector(
-    (state) => state.account
-  );
+  const {
+    username,
+    activeContentSource,
+    contentSources,
+    channelCurrentlyViewing,
+  } = useAppSelector((state) => state.account);
 
   return (
     <header
@@ -66,13 +72,20 @@ export const AuthenticatedHeader = ({
           <StreamThingButton
             innerText="Next Video"
             fullHeight
-            clickFn={() =>
-              getAndSetVideoFromContentSource(
-                contentSourceCurrentlyShowing,
-                supabaseClient,
-                dispatch
-              )
-            }
+            clickFn={() => {
+              if (contentSourceCurrentlyShowing === "shuffle_mode")
+                getAndSetShuffleModeVideo(
+                  channelCurrentlyViewing,
+                  supabaseClient,
+                  dispatch
+                );
+              else
+                getAndSetVideoFromContentSource(
+                  contentSourceCurrentlyShowing,
+                  supabaseClient,
+                  dispatch
+                );
+            }}
           >
             <ArrowsRightLeftIcon className="h-5 w-5 ml-2" />
           </StreamThingButton>
