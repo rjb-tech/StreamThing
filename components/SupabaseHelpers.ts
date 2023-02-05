@@ -338,6 +338,30 @@ export async function removeContentSource(
   }
 }
 
+export async function getShuffleModeVideo(
+  userId: string,
+  supabaseClient: SupabaseClient,
+  dispatch: AppDispatch
+) {
+  try {
+    const { data: videoId, error } = await supabaseClient.rpc(
+      "get_shuffle_mode_video",
+      {
+        user_id: userId,
+      }
+    );
+
+    if (error) throw error;
+
+    dispatch(setContentSourceCurrentlyShowing("shuffle_mode"));
+    dispatch(setActiveStream(`https://www.youtube.com/watch?v=${videoId}`));
+  } catch {
+    toast.error("Error getting video", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+  }
+}
+
 export async function getAndSetVideoFromContentSource(
   contentSourceLink: string,
   supabaseClient: SupabaseClient,
@@ -402,7 +426,11 @@ export async function toggleShuffleMode(
 
     dispatch(setShuffleMode(data));
     getProfile(userId, supabaseClient, dispatch);
-  } catch (error) {}
+  } catch (error) {
+    toast.error("Error setting shuffle mode", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+  }
 }
 
 async function getContentSources(
