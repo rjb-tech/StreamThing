@@ -415,7 +415,7 @@ export async function toggleShuffleMode(
   dispatch: AppDispatch
 ) {
   try {
-    const { data, error } = await supabaseClient
+    const { data: shuffleMode, error } = await supabaseClient
       .rpc("toggle_shuffle_mode", {
         user_id: userId,
         current_shuffle_mode: currentShuffleMode,
@@ -424,7 +424,7 @@ export async function toggleShuffleMode(
 
     if (error) throw error;
 
-    dispatch(setShuffleMode(data));
+    dispatch(setShuffleMode(shuffleMode));
     getProfile(userId, supabaseClient, dispatch);
   } catch (error) {
     toast.error("Error setting shuffle mode", {
