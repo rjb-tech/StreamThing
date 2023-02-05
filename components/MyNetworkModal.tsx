@@ -73,7 +73,7 @@ export const MyNetworkModal = () => {
                   }`}
                 >
                   <InformationCircleIcon
-                    className="w-4 h-4 cursor-default"
+                    className="w-5 h-5 md:w-4 md:h-4 cursor-default"
                     onMouseOver={(e) => {
                       setChannelsTabTooltipHovered(true);
                     }}
@@ -121,7 +121,7 @@ export const MyNetworkModal = () => {
                   }`}
                 >
                   <InformationCircleIcon
-                    className="w-4 h-4 cursor-default"
+                    className="w-5 h-5 md:w-4 md:h-4 cursor-default"
                     onMouseOver={(e) => {
                       setContentTabTooltipHovered(true);
                     }}
@@ -130,7 +130,7 @@ export const MyNetworkModal = () => {
                     }}
                   />
                   <div
-                    className={`absolute w-64 p-4 mt-4 bg-gray-900 rounded-md border-2 border-[#9A97D8]/[0.3] transition-all duration-200 z-50 ${
+                    className={`absolute right-0 w-64 p-4 mt-4 bg-gray-900 rounded-md border-2 border-[#9A97D8]/[0.3] transition-all duration-200 z-50 ${
                       contentTabTooltipHovered
                         ? "opacity-100 translate-y-0 visible"
                         : "opacity-0 -translate-y-2 invisible"
