@@ -82,7 +82,7 @@ export const MyNetworkModal = () => {
                     }}
                   />
                   <div
-                    className={`absolute w-64 h-fit p-4 mt-4 bg-gray-900 rounded-md border-2 border-[#9A97D8]/[0.3] transition-all duration-200 z-20 ${
+                    className={`absolute w-64 p-4 mt-4 bg-gray-900 rounded-md border-2 border-[#9A97D8]/[0.3] transition-all duration-200 z-20 ${
                       channelsTabTooltipHovered
                         ? "opacity-100 translate-y-0 visible"
                         : "opacity-0 -translate-y-2 invisible"
@@ -130,7 +130,7 @@ export const MyNetworkModal = () => {
                     }}
                   />
                   <div
-                    className={`absolute w-64 h-fit p-4 mt-4 bg-gray-900 rounded-md border-2 border-[#9A97D8]/[0.3] transition-all duration-200 z-50 ${
+                    className={`absolute w-64 p-4 mt-4 bg-gray-900 rounded-md border-2 border-[#9A97D8]/[0.3] transition-all duration-200 z-50 ${
                       contentTabTooltipHovered
                         ? "opacity-100 translate-y-0 visible"
                         : "opacity-0 -translate-y-2 invisible"

@@ -196,7 +196,7 @@ export const ChannelsTab = () => {
                   className="w-4 h-4 cursor-default"
                 />
                 <div
-                  className={`absolute w-64 h-fit p-4 mt-4 bg-gray-900 rounded-md border-2 border-[#9A97D8]/[0.3] transition-all duration-200 ${
+                  className={`absolute w-64 p-4 mt-4 bg-gray-900 rounded-md border-2 border-[#9A97D8]/[0.3] transition-all duration-200 ${
                     shuffleTooltipHovered
                       ? "opacity-100 translate-y-0 visible"
                       : "opacity-0 -translate-y-2 invisible"
