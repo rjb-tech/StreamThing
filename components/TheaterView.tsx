@@ -72,23 +72,25 @@ export default function TheaterView() {
                 dispatch(setShowMyNetworkModal(!showMyNetworkModal));
               }}
             />
-            <ForwardIcon
-              className="h-6 w-6 text-white cursor-pointer"
-              onClick={() => {
-                if (contentSourceCurrentlyShowing === "shuffle_mode")
-                  getAndSetShuffleModeVideo(
-                    channelCurrentlyViewing,
-                    supabaseClient,
-                    dispatch
-                  );
-                else
-                  getAndSetVideoFromContentSource(
-                    contentSourceCurrentlyShowing,
-                    supabaseClient,
-                    dispatch
-                  );
-              }}
-            />
+            {videoLoaded && (
+              <ForwardIcon
+                className="h-6 w-6 text-white cursor-pointer"
+                onClick={() => {
+                  if (contentSourceCurrentlyShowing === "shuffle_mode")
+                    getAndSetShuffleModeVideo(
+                      channelCurrentlyViewing,
+                      supabaseClient,
+                      dispatch
+                    );
+                  else
+                    getAndSetVideoFromContentSource(
+                      contentSourceCurrentlyShowing,
+                      supabaseClient,
+                      dispatch
+                    );
+                }}
+              />
+            )}
             <ArrowRightOnRectangleIcon
               className="h-6 w-6 text-white cursor-pointer"
               onClick={() =>
