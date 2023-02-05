@@ -151,7 +151,7 @@ export const ChannelsTab = () => {
     <div className="h-full w-full">
       <div className="scroll-area following w-full h-60 mx-auto border border-gray-600 my-4 p-4 rounded overflow-x-visible overflow-y-scroll space-y-4 bg-gray-600">
         <div
-          className={`w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-xl hover:overflow-visible transition-all hover:z-40 ${
+          className={`w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-lg hover:overflow-visible transition-all hover:z-40 ${
             user?.id === channelCurrentlyViewing
               ? "border-2 border-[#EDAE49]"
               : ""
@@ -247,7 +247,7 @@ export const ChannelsTab = () => {
           const isActiveChannel = channel.id === channelCurrentlyViewing;
           return (
             <div
-              className={`w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-xl transition-all ${
+              className={`w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-lg transition-all ${
                 isActiveChannel ? "border-2 border-[#EDAE49]" : ""
               }`}
               key={index + 1}
