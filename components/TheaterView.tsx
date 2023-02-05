@@ -1,5 +1,6 @@
 import {
   ArrowRightOnRectangleIcon,
+  ForwardIcon,
   TvIcon,
   UserIcon,
 } from "@heroicons/react/20/solid";
@@ -69,6 +70,23 @@ export default function TheaterView() {
               className="h-6 w-6 text-white cursor-pointer"
               onClick={() => {
                 dispatch(setShowMyNetworkModal(!showMyNetworkModal));
+              }}
+            />
+            <ForwardIcon
+              className="h-6 w-6 text-white cursor-pointer"
+              onClick={() => {
+                if (contentSourceCurrentlyShowing === "shuffle_mode")
+                  getAndSetShuffleModeVideo(
+                    channelCurrentlyViewing,
+                    supabaseClient,
+                    dispatch
+                  );
+                else
+                  getAndSetVideoFromContentSource(
+                    contentSourceCurrentlyShowing,
+                    supabaseClient,
+                    dispatch
+                  );
               }}
             />
             <ArrowRightOnRectangleIcon
