@@ -16,7 +16,7 @@ export const ContentSourcesTab = () => {
   const user = useUser();
   const dispatch = useAppDispatch();
   const supabaseClient = useSupabaseClient();
-  const { contentSources, activeContentSource } = useAppSelector(
+  const { contentSources, activeContentSource, shuffleMode } = useAppSelector(
     (state) => state.account
   );
   const hasSources = contentSources.length > 0;
@@ -84,7 +84,7 @@ export const ContentSourcesTab = () => {
           return (
             <div
               className={classNames(
-                "w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-lg hover:scale-[101%] transition-all",
+                "w-full h-fit flex items-center py-2 space-x-6 bg-gray-500 rounded-lg shadow-md hover:shadow-lg transition-all",
                 { "border-2 border-[#EDAE49]": isActiveSource }
               )}
               key={index}
@@ -130,7 +130,7 @@ export const ContentSourcesTab = () => {
                 </Link>
               )}
               <span className="flex">
-                {activeContentSource !== sourceLink && (
+                {activeContentSource !== sourceLink && !shuffleMode && (
                   <ChevronDoubleUpIcon
                     title="Elevate to active source"
                     className="h-7 w-7 pr-2 cursor-pointer"

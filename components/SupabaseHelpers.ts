@@ -11,6 +11,7 @@ import {
   setContentSources,
   setActiveContentSource,
   setChannelCurrentlyViewing,
+  setShuffleMode,
 } from "../redux/slices/accountSlice";
 
 import type { UserRecord } from "./types";
@@ -47,6 +48,7 @@ export async function getProfile(
       dispatch(setContentSources(data.content_sources));
       dispatch(setFollowing(explodedFollowingRecords));
       dispatch(setActiveContentSource(data.active_content_source));
+      dispatch(setShuffleMode(data.shuffle_mode));
     }
   } catch (error) {
     toast.error("Error loading user data", {
@@ -336,6 +338,30 @@ export async function removeContentSource(
   }
 }
 
+export async function getAndSetShuffleModeVideo(
+  userId: string,
+  supabaseClient: SupabaseClient,
+  dispatch: AppDispatch
+) {
+  try {
+    const { data: videoId, error } = await supabaseClient.rpc(
+      "get_shuffle_mode_video",
+      {
+        user_id: userId,
+      }
+    );
+
+    if (error) throw error;
+
+    dispatch(setContentSourceCurrentlyShowing("shuffle_mode"));
+    dispatch(setActiveStream(`https://www.youtube.com/watch?v=${videoId}`));
+  } catch {
+    toast.error("Error getting video", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
+  }
+}
+
 export async function getAndSetVideoFromContentSource(
   contentSourceLink: string,
   supabaseClient: SupabaseClient,
@@ -379,6 +405,31 @@ export async function updateActiveContentSource(
     getProfile(userId, supabaseClient, dispatch);
   } catch (error) {
     toast.error(`Error elevating ${contentLink}. Please try again`);
+  }
+}
+
+export async function toggleShuffleMode(
+  userId: string,
+  currentShuffleMode: boolean,
+  supabaseClient: SupabaseClient,
+  dispatch: AppDispatch
+) {
+  try {
+    const { data: shuffleMode, error } = await supabaseClient
+      .rpc("toggle_shuffle_mode", {
+        user_id: userId,
+        current_shuffle_mode: currentShuffleMode,
+      })
+      .single();
+
+    if (error) throw error;
+
+    dispatch(setShuffleMode(shuffleMode));
+    getProfile(userId, supabaseClient, dispatch);
+  } catch (error) {
+    toast.error("Error setting shuffle mode", {
+      position: toast.POSITION.BOTTOM_CENTER,
+    });
   }
 }
 
