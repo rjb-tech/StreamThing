@@ -136,6 +136,17 @@ export const ChannelsTab = () => {
     }
   }, [shuffleMode]);
 
+  useEffect(() => {
+    const channelQueried = following.filter(
+      (channel) => channel.id === channelCurrentlyViewing
+    )[0];
+
+    if (channelQueried)
+      dispatch(
+        setContentSourceCurrentlyShowing(channelQueried.activeContentSource)
+      );
+  }, [following]);
+
   return (
     <div className="h-full w-full">
       <div className="scroll-area following w-full h-60 mx-auto border border-gray-600 my-4 p-4 rounded overflow-x-visible overflow-y-scroll space-y-4 bg-gray-600">
