@@ -7,13 +7,21 @@ import {
   TvIcon,
   ArrowsRightLeftIcon,
   SignalIcon,
+  Bars2Icon,
+  Bars3Icon,
+  Bars3BottomLeftIcon,
+  XMarkIcon,
+  UserCircleIcon,
 } from "@heroicons/react/20/solid";
 import {
   resetUI,
+  setMobileMenuOpen,
   setMyNetworkSelectedIndex,
   setShowAccountModal,
   setShowMyNetworkModal,
 } from "../redux/slices/uiSlice";
+
+import { MyNetworkModal } from "./MyNetworkModal";
 
 import { StreamThingButton } from "./StreamThingButton";
 import { resetAccount } from "../redux/slices/accountSlice";
@@ -36,9 +44,8 @@ export const AuthenticatedHeader = ({
   const supabaseClient = useSupabaseClient();
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const { showMyNetworkModal, contentSourceCurrentlyShowing } = useAppSelector(
-    (state) => state.ui
-  );
+  const { showMyNetworkModal, contentSourceCurrentlyShowing, mobileMenuOpen } =
+    useAppSelector((state) => state.ui);
   const {
     username,
     activeContentSource,
@@ -48,7 +55,7 @@ export const AuthenticatedHeader = ({
 
   return (
     <header
-      className={`h-28 w-full py-4 px-8 flex items-center justify-between flex-none`}
+      className={`h-28 w-full py-4 px-8 flex items-center justify-between flex-auto`}
     >
       <Image
         src="/stream-thing-logo.png"
@@ -57,7 +64,7 @@ export const AuthenticatedHeader = ({
         width={250}
       />
 
-      <span className="w-fit flex justify-end space-x-4">
+      <span className="hidden sm:flex w-full justify-end space-x-4 flex-auto">
         {/* <StreamThingButton innerText="" fullHeight>
           <BellAlertIcon className="h-5 w-5" />
           <div className="absolute ml-12 mb-8 bg-pink-400 rounded-full w-2 h-2" />
@@ -66,7 +73,7 @@ export const AuthenticatedHeader = ({
 
         <div
           className={`h-fit w-fit duration-1000 ${
-            videoLoaded ? "opacity-100" : "opacity-0"
+            videoLoaded ? "opacity-100" : "opacity-0 invisible"
           }`}
         >
           <StreamThingButton
@@ -183,6 +190,29 @@ export const AuthenticatedHeader = ({
             </Menu.Items>
           </Transition>
         </Menu>
+      </span>
+
+      <span className="relative md:hidden w-full flex justify-end">
+        <div
+          className="w-fit h-fit cursor-pointer space-y-2 flex flex-col justify-center p-2"
+          onClick={() => dispatch(setMobileMenuOpen(!mobileMenuOpen))}
+        >
+          <div
+            className={`block w-6 h-0.5 bg-white rounded-xl transition-all duration-300, ${
+              mobileMenuOpen ? "-rotate-45 translate-y-3" : "rotate-0"
+            }`}
+          />
+          <div
+            className={`block w-6 h-0.5 bg-white rounded-xl transition-all duration-300 ${
+              mobileMenuOpen ? "opacity-0" : "opacity-100"
+            }`}
+          />
+          <div
+            className={`block w-6 h-0.5 bg-white rounded-xl transition-all duration-300 ${
+              mobileMenuOpen ? "rotate-45 -translate-y-2" : "rotate-0"
+            }`}
+          />
+        </div>
       </span>
     </header>
   );

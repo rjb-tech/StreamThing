@@ -18,6 +18,7 @@ import {
 import {
   setContentSourceCurrentlyShowing,
   setMinimizeHeader,
+  setMobileMenuOpen,
   setShowMyNetworkModal,
 } from "../redux/slices/uiSlice";
 import { StreamThingButton } from "./StreamThingButton";
@@ -96,6 +97,7 @@ export const ChannelsTab = () => {
     }
 
     dispatch(setShowMyNetworkModal(false));
+    dispatch(setMobileMenuOpen(false));
   }
 
   function handleFriendChannelClick(
@@ -117,6 +119,7 @@ export const ChannelsTab = () => {
     }
 
     dispatch(setShowMyNetworkModal(false));
+    dispatch(setMobileMenuOpen(false));
   }
 
   useEffect(() => {
