@@ -5,7 +5,7 @@ import {
   UserIcon,
 } from "@heroicons/react/20/solid";
 import { useSupabaseClient } from "@supabase/auth-helpers-react";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ReactPlayer from "react-player";
 import { useAppDispatch, useAppSelector } from "../redux/hooks";
 import {
@@ -21,7 +21,7 @@ import {
 } from "./SupabaseHelpers";
 
 export default function TheaterView() {
-  const player = useRef<HTMLDivElement>(null);
+  const playerRef = useRef<ReactPlayer>(null);
   const [auxPanelMode, setAuxPanelMode] = useState<string>("default");
   const supabaseClient = useSupabaseClient();
   const dispatch = useAppDispatch();
@@ -103,13 +103,13 @@ export default function TheaterView() {
         </span>
 
         <div
-          ref={player}
           className={`video-player flex items-end relative
           w-full transition-all ${
             videoLoaded ? "opacity-100 duration-[1200ms]" : "opacity-0"
           } ${minimizeHeader ? "h-full duration-1000" : "h-0"}`}
         >
           <ReactPlayer
+            ref={playerRef}
             onEnded={() => {
               if (contentSourceCurrentlyShowing === "shuffle_mode")
                 getAndSetShuffleModeVideo(
@@ -130,7 +130,7 @@ export default function TheaterView() {
             playing
             config={{ youtube: { playerVars: { controls: 1 } } }}
             url={activeStream}
-            volume={1}
+            volume={0.25}
             muted={false}
             height="100%"
             width="100%"
