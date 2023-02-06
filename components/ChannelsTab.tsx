@@ -246,7 +246,7 @@ export const ChannelsTab = () => {
             </span>
           </div>
         </div>
-        {following.map((channel, index) => {
+        {[...following].reverse().map((channel, index) => {
           const isActiveChannel = channel.id === channelCurrentlyViewing;
           return (
             <div
