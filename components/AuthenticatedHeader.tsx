@@ -200,7 +200,7 @@ export const AuthenticatedHeader = ({
         >
           <div
             className={`block w-6 h-0.5 bg-white rounded-xl transition-all duration-300, ${
-              mobileMenuOpen ? "-rotate-45 translate-y-3" : "rotate-0"
+              mobileMenuOpen ? "-rotate-45 translate-y-2.5" : "rotate-0"
             }`}
           />
           <div
@@ -210,7 +210,7 @@ export const AuthenticatedHeader = ({
           />
           <div
             className={`block w-6 h-0.5 bg-white rounded-xl transition-all duration-300 ${
-              mobileMenuOpen ? "rotate-45 -translate-y-2" : "rotate-0"
+              mobileMenuOpen ? "rotate-45 -translate-y-2.5" : "rotate-0"
             }`}
           />
         </div>
