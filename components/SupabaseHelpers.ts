@@ -295,7 +295,7 @@ export async function addContentSource(
         });
         break;
       case "content_sources_full":
-        toast.error("You can only add 20 content sources", {
+        toast.error("You've reached you're maximum number of content sources", {
           position: toast.POSITION.BOTTOM_CENTER,
         });
         break;
