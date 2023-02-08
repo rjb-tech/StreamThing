@@ -121,6 +121,13 @@ export const StreamThingProvider = ({ children }: ProviderProps) => {
       <Head>
         <title>StreamThing</title>
         <link rel="icon" href="/favicon.png" />
+        <meta
+          name="description"
+          content="Add your friends and favorite online content to curate a personalized video network of your own. It's like cable, but better."
+        />
+        <meta name="robots" content="index, nofollow" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charSet="UTF-8" />
         {process.env.DEPLOYMENT_ENV === "prod" && (
           <script
             defer
